@@ -68,7 +68,7 @@ public class DBConnector {
             conn = (Connection) DriverManager.getConnection(url + "?user=" + userName + "&password=" + password + "&serverTimezone=UTC" + "&useSSL=false");
             if (conn != null) {
                 Statement stmt = (Statement) conn.createStatement();
-                stmt.executeQuery("USE F1 ");
+                stmt.executeQuery("LsStock");
 
                 System.out.println("Connexió a base de dades "+url+" ... Ok");
             }
