@@ -29,30 +29,34 @@ public class MainView extends JFrame {
 
 
         //Pestanya Top 10
-            JPanel panel2=new JPanel();
-
+            JPanel jpTop10=new JPanel();
             //continguts del panell
-            JLabel et_p2=new JLabel("Estas en el panel 2");
-            panel2.add(et_p2);
+            JLabel jlTop10=new JLabel("Top 10 Text");
+            jpTop10.add(jlTop10);
 
-            jTPpestanyes.addTab("Panel 2", panel2);
+            jTPpestanyes.addTab("Top 10", jpTop10);
 
 
 
 
 
         //Pestanya 3
-            JPanel panel3=new JPanel();
+            JPanel jpBots=new JPanel();
              //continguts del panell
-            JLabel et_p3=new JLabel("Estas en el panel 3");
-            panel3.add(et_p3);
+            JLabel jlBots=new JLabel("Bots");
+            jpBots.add(jlBots);
 
-            jTPpestanyes.addTab("Panel 3", panel3);
+            jTPpestanyes.addTab("Bots Text", jpBots);
 
         // ho posem al contenidor general
         getContentPane().add(jTPpestanyes);
 
 
 
+    }
+
+    public static void main(String[] args){
+
+        MainView vista = new MainView();
     }
 }
