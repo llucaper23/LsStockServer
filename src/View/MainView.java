@@ -22,6 +22,7 @@ public class MainView extends JFrame {
         JLabel et_p1=new JLabel("Estas en el panel 1");
         panel1.add(et_p1);
 
+
         //Añadimos un nombre de la pestaña y el panel
         pestañas.addTab("Panel 1", panel1);
 
