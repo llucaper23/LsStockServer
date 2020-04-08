@@ -10,6 +10,7 @@ public class MainView extends JFrame {
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         setExtendedState(MAXIMIZED_BOTH);
         setVisible(true);
+        setResizable(false);
         setTitle("LS - Stocks");
 
         //fem les pestanyes --> TabbedPane
@@ -19,20 +20,16 @@ public class MainView extends JFrame {
         // Creem els diferents panells que els afegirem com a pestanyes
 
         // Pestanya Acciones per user
-            JPanel jpAccionsXUser=new JPanel();
+            JPanel jpAccionsXUser=new UserShareView();
 
-            //continguts del panell
-            JLabel jlAccionsxUser=new JLabel("Accions X Usuari text");
-            jpAccionsXUser.add(jlAccionsxUser);
             //l'afegim
             jTPpestanyes.addTab("Accions X Usuari", jpAccionsXUser);
 
 
         //Pestanya Top 10
-            JPanel jpTop10=new JPanel();
+            JPanel jpTop10=new Top10View();
             //continguts del panell
-            JLabel jlTop10=new JLabel("Top 10 Text");
-            jpTop10.add(jlTop10);
+
 
             jTPpestanyes.addTab("Top 10", jpTop10);
 
@@ -41,12 +38,11 @@ public class MainView extends JFrame {
 
 
         //Pestanya 3
-            JPanel jpBots=new JPanel();
+            JPanel jpBots=new BotsView();
              //continguts del panell
-            JLabel jlBots=new JLabel("Bots");
-            jpBots.add(jlBots);
 
-            jTPpestanyes.addTab("Bots Text", jpBots);
+
+            jTPpestanyes.addTab("Bots", jpBots);
 
         // ho posem al contenidor general
         getContentPane().add(jTPpestanyes);
@@ -57,6 +53,9 @@ public class MainView extends JFrame {
 
     public static void main(String[] args){
 
+
         MainView vista = new MainView();
+
+
     }
 }

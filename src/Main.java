@@ -1,5 +1,3 @@
-import View.MainView;
-
 import javax.swing.*;
 
 public class Main {
