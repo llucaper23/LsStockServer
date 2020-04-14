@@ -42,3 +42,16 @@ CREATE TABLE Bot(
     PRIMARY KEY (bot_id),
     FOREIGN KEY (company_id) REFERENCES Company (company_id)
 );
+
+DROP TABLE IF EXISTS History;
+CREATE TABLE History(
+	history_id INT AUTO_INCREMENT,
+    max_share_price FLOAT,
+    min_share_price FLOAT,
+    open_share_price FLOAT,
+    close_share_price FLOAT,
+    datetime DATE,
+    company_id INT,
+    PRIMARY KEY (history_id),
+    FOREIGN KEY (company_id) REFERENCES Company (company_id)
+);
