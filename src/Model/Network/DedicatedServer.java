@@ -58,7 +58,12 @@ public class DedicatedServer extends Thread {
             DataInputStream dataInput = new DataInputStream(sClient.getInputStream());
             objectOut = new ObjectOutputStream(sClient.getOutputStream());
             while (isOn) {
+                int option = dataInput.readInt();
+                if (option == REGISTER_REQUEST){
+                }
+                if (option == LOGIN_REQUEST) {
 
+                }
             }
         } catch (IOException e1) {
             // en cas derror aturem el servidor dedicat
