@@ -1,6 +1,7 @@
 package Model.Network;
 
 import Model.Database.DAO.*;
+import Model.User;
 
 import java.io.*;
 import java.net.Socket;
@@ -31,6 +32,7 @@ public class DedicatedServer extends Thread {
         this.isOn = false;
         this.sClient = sClient;
         try {
+            // creem els canals de comunicacio
             this.objectOut = new ObjectOutputStream(sClient.getOutputStream());
             this.objectIn = new ObjectInputStream(sClient.getInputStream());
         } catch (IOException e) {
@@ -58,20 +60,25 @@ public class DedicatedServer extends Thread {
         String in;
         String[] aux;
         try {
-            // creem els canals de comunicacio
-            DataInputStream dataInput = new DataInputStream(sClient.getInputStream());
-            objectOut = new ObjectOutputStream(sClient.getOutputStream());
+
             while (isOn) {
-                int option = dataInput.readInt();
+                int option = objectIn.readInt();
                 if (option == REGISTER_REQUEST){
+                    User registerUser = (User) objectIn.readObject();
+                    boolean registerOk = userDAO.registerUser(registerUser);
+                    objectOut.writeBoolean(registerOk);
                 }
                 if (option == LOGIN_REQUEST) {
-
+                    User userLogin = (User) objectIn.readObject();
+                    boolean loginOk = userDAO.canUserLogin(userLogin);
+                    objectOut.writeBoolean(loginOk);
                 }
             }
         } catch (IOException e1) {
             // en cas derror aturem el servidor dedicat
             stopDedicatedServer();
+        } catch (ClassNotFoundException e) {
+            e.printStackTrace();
         }
     }
 }
