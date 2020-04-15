@@ -12,7 +12,7 @@ public class MainView extends JFrame {
         setExtendedState(MAXIMIZED_BOTH);
         setVisible(true);
 
-        setSize(1440,808);// fixem el temany de la finestra
+
         setResizable(false);
         setTitle("LS - Stocks");
 
@@ -52,6 +52,7 @@ public class MainView extends JFrame {
         getContentPane().add(jTPpestanyes);
 
         //Dimension mida = this.getSize();
+        setSize(1300,800);// fixem el temany de la finestra
 
     }
 
