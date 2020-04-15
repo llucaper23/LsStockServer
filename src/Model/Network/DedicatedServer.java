@@ -11,10 +11,24 @@ public class DedicatedServer extends Thread {
     private ObjectOutputStream objectOut;
     private Server server;
 
-    public DedicatedServer(boolean isOn, Socket sClient, ObjectOutputStream objectOut, Server server) {
-        this.isOn = isOn;
+    public DedicatedServer(Socket sClient, Server server) {
+        this.isOn = false;
         this.sClient = sClient;
         this.objectOut = objectOut;
         this.server = server;
+    }
+
+    public void startDedicatedServer() {
+        // iniciem el servidor dedicat
+        isOn = true;
+        this.start();
+    }
+
+    public void stopDedicatedServer() {
+        // aturem el servidor dedicat
+        this.isOn = false;
+        this.interrupt();
+        // eliminem el servidor dedicat del conjunt de servidors dedicats
+        server.remove(this);
     }
 }

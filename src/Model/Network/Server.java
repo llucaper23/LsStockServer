@@ -1,6 +1,7 @@
 package Model.Network;
 
 import java.io.IOException;
+import java.io.ObjectOutputStream;
 import java.net.ServerSocket;
 import java.net.Socket;
 import java.util.ArrayList;
@@ -14,9 +15,15 @@ public class Server extends Thread{
     private boolean isOn;
 
     public Server() {
-        isOn = false;
-        dedicatedServerList = new ArrayList<>();
-        serverSocket = null;
+
+        try {
+            isOn = false;
+            dedicatedServerList = new ArrayList<>();
+            this.serverSocket = new ServerSocket(PORT);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+
     }
 
     public void startServer() {
@@ -45,7 +52,7 @@ public class Server extends Thread{
                 System.out.println("Waiting for a client...");
                 Socket socket = serverSocket.accept();
 
-                DedicatedServer dedicatedServer = new DedicatedServer(socket, dedicatedServerList);
+                DedicatedServer dedicatedServer = new DedicatedServer(socket,this);
                 dedicatedServerList.add(dedicatedServer);
                 dedicatedServer.start();
                 System.out.println("Client connected");
@@ -63,5 +70,18 @@ public class Server extends Thread{
             }
         }
     }
+
+    void updateAllClients () {
+        ObjectOutputStream outStream;
+        for (DedicatedServer dServer : dedicatedServerList) {
+
+        }
+    }
+
+    void remove (DedicatedServer dedicatedServer) {
+        dedicatedServerList.remove(dedicatedServer);
+        // invoquem el metode del servidor que mostra els servidors dedicats actuals
+        showClients();
+    }
 }
-}
+
