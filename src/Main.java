@@ -8,5 +8,6 @@ public class Main {
         Server server = new Server();
         server.startServer();
         MainViewController mvc = new MainViewController(mainView, server);
+        mainView.setVisible(true);
     }
 }

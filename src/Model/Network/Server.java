@@ -1,5 +1,7 @@
 package Model.Network;
 
+import Model.Database.DBConnector;
+
 import java.io.IOException;
 import java.io.ObjectOutputStream;
 import java.net.ServerSocket;
@@ -9,7 +11,7 @@ import java.util.ArrayList;
 public class Server extends Thread{
     private static final int PORT = 34568;
     private ServerSocket serverSocket;
-
+    private DBConnector dbConnector;
     private ArrayList<DedicatedServer> dedicatedServerList;
     private boolean isRunning;
     private boolean isOn;
