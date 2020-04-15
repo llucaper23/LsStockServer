@@ -2,9 +2,7 @@ package Model.Network;
 
 import Model.Database.DAO.*;
 
-import java.io.DataInputStream;
-import java.io.IOException;
-import java.io.ObjectOutputStream;
+import java.io.*;
 import java.net.Socket;
 
 public class DedicatedServer extends Thread {
@@ -17,6 +15,7 @@ public class DedicatedServer extends Thread {
     private BotDAO botDAO;
     private Socket sClient;
     private ObjectOutputStream objectOut;
+    private ObjectInputStream objectIn;
     private Server server;
     private static final int REGISTER_REQUEST = 1;
     private static final int LOGIN_REQUEST = 2;
@@ -31,7 +30,12 @@ public class DedicatedServer extends Thread {
     public DedicatedServer(Socket sClient, Server server) {
         this.isOn = false;
         this.sClient = sClient;
-        this.objectOut = objectOut;
+        try {
+            this.objectOut = new ObjectOutputStream(sClient.getOutputStream());
+            this.objectIn = new ObjectInputStream(sClient.getInputStream());
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
         this.server = server;
     }
 
