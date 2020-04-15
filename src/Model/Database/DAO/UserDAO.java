@@ -10,7 +10,7 @@ public class UserDAO {
     public boolean registerUser(User user){
         boolean exists = false;
         try{
-            String query = "SELECT COUNT(user_id) from User WHERE nickname = '" + user.getNickName() + "' AND email = '" + user.getEmail() + "' AND password = '" + user.getPassword() + "';";
+            String query = "SELECT COUNT(user_id) FROM User WHERE nickname = '" + user.getNickName() + "' AND email = '" + user.getEmail() + "' AND password = '" + user.getPassword() + "';";
             ResultSet rs = DBConnector.getInstance().selectQuery(query);
             while (rs.next()){
                 if (rs.getInt("COUNT") == 0){
@@ -31,7 +31,7 @@ public class UserDAO {
     public boolean canUserLogin(User user){
         boolean logged = false;
         try{
-            String query = "SELECT COUNT(user_id) from User WHERE nickname = '" + user.getNickName() + "' AND email = '" + user.getEmail() + "' AND password = '" + user.getPassword() + "';";
+            String query = "SELECT COUNT(user_id) FROM User WHERE nickname = '" + user.getNickName() + "' AND email = '" + user.getEmail() + "' AND password = '" + user.getPassword() + "';";
             ResultSet rs = DBConnector.getInstance().selectQuery(query);
             while (rs.next()){
                 if (rs.getInt("COUNT") == 0){
