@@ -57,10 +57,7 @@ public class DedicatedServer extends Thread {
     }
 
     public void run() {
-        String in;
-        String[] aux;
         try {
-
             while (isOn) {
                 int option = objectIn.readInt();
                 if (option == REGISTER_REQUEST){
