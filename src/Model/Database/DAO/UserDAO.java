@@ -13,7 +13,7 @@ public class UserDAO {
     public boolean registerUser(User user){
         boolean exists = false;
         try{
-            String query = "SELECT COUNT(user_id) from User WHERE nickname = '" + user.getNickName() + "' AND email = '" + user.getEmail() + "' AND password = '" + getMD5(user.getPassword()) + "';";
+            String query = "SELECT COUNT(user_id) from User WHERE nickname = '" + user.getNickName() + "' AND email = '" + user.getEmail() + "' AND password = '" + user.getPassword() + "';";
             ResultSet rs = DBConnector.getInstance().selectQuery(query);
             while (rs.next()){
                 if (rs.getInt("COUNT") == 0){
@@ -34,13 +34,15 @@ public class UserDAO {
     public boolean canUserLogin(User user){
         boolean logged = false;
         try{
-            String query = "SELECT COUNT(user_id) from User WHERE nickname = '" + user.getNickName() + "' AND email = '" + user.getEmail() + "' AND password = '" + getMD5(user.getPassword()) + "';";
+            String query = "SELECT COUNT(user_id) from User WHERE nickname = '" + user.getNickName() + "' AND email = '" + user.getEmail() + "' AND password = '" + user.getPassword() + "';";
             ResultSet rs = DBConnector.getInstance().selectQuery(query);
             while (rs.next()){
                 if (rs.getInt("COUNT") == 0){
                     logged = false;
                 }else{
                     logged = true;
+                    String query2 = "UPDATE User SET isLogged = true";
+                    DBConnector.getInstance().updateQuery(query2);
                 }
             }
         }catch (SQLException e){
@@ -49,22 +51,4 @@ public class UserDAO {
         }
         return logged;
     }
-
-    public static String getMD5(String input) {
-        try {
-            MessageDigest md = MessageDigest.getInstance("MD5");
-            byte[] messageDigest = md.digest(input.getBytes());
-            BigInteger number = new BigInteger(1, messageDigest);
-            String hashtext = number.toString(16);
-
-            while (hashtext.length() < 32) {
-                hashtext = "0" + hashtext;
-            }
-            return hashtext;
-        }
-        catch (NoSuchAlgorithmException e) {
-            throw new RuntimeException(e);
-        }
-    }
-
 }
