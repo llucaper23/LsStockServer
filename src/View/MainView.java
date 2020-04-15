@@ -1,6 +1,7 @@
 package View;
 
 import javax.swing.*;
+import java.awt.*;
 
 public class MainView extends JFrame {
 
@@ -10,8 +11,11 @@ public class MainView extends JFrame {
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         setExtendedState(MAXIMIZED_BOTH);
         setVisible(true);
+
+        setSize(1440,808);// fixem el temany de la finestra
         setResizable(false);
         setTitle("LS - Stocks");
+
 
         //fem les pestanyes --> TabbedPane
         JTabbedPane jTPpestanyes=new JTabbedPane();
@@ -47,7 +51,7 @@ public class MainView extends JFrame {
         // ho posem al contenidor general
         getContentPane().add(jTPpestanyes);
 
-
+        //Dimension mida = this.getSize();
 
     }
 
