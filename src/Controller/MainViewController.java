@@ -1,6 +1,6 @@
 package Controller;
 
-import Model.Network.Network;
+import Model.Network.Server;
 import View.MainView;
 
 import java.awt.event.ActionEvent;
@@ -9,11 +9,11 @@ import java.awt.event.ActionListener;
 public class MainViewController implements ActionListener {
 
     private MainView mainView;
-    private Network network;
+    private Server server;
 
-    public MainViewController(MainView mainView, Network network) {
+    public MainViewController(MainView mainView, Server server) {
         this.mainView = mainView;
-        this.network = network;
+        this.server = server;
     }
 
     @Override
