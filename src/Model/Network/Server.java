@@ -21,7 +21,7 @@ public class Server extends Thread{
             isOn = false;
             dedicatedServerList = new ArrayList<>();
             this.serverSocket = new ServerSocket(NetworkConfiguration.SERVER_PORT);
-            DBConnector.init(NetworkConfiguration.DB_USER, NetworkConfiguration.DB_PASS, NetworkConfiguration.getDbAddress());
+            DBConnector.init(NetworkConfiguration.DB_USER, NetworkConfiguration.DB_PASS, NetworkConfiguration.DB_ADDRESS);
         } catch (IOException e) {
             e.printStackTrace();
         }

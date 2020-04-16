@@ -1,13 +1,6 @@
 package Model.Database;
 
-import Model.Network.NetworkConfiguration;
-import com.mysql.jdbc.Connection;
-import com.mysql.jdbc.Statement;
-
-
-import java.sql.DriverManager;
-import java.sql.ResultSet;
-import java.sql.SQLException;
+import java.sql.*;
 
 
 public class DBConnector {
@@ -20,6 +13,7 @@ public class DBConnector {
     private static Connection conn;
     private static Statement s;
     private static DBConnector instance = null;
+    private static String dbName = "lsstock";
 
     /**
      *Constructor de la clase
@@ -68,8 +62,9 @@ public class DBConnector {
     public void connect() {
         try {
             Class.forName("com.mysql.jdbc.Connection");
-            String url = String.format("jdbc:mysql://lsstock-database.mysql.database.azure.com:3306/lsstock?verifyServerCertificate=true&useSSL=true&requireSSL=false");
-            conn = (Connection) DriverManager.getConnection(url, NetworkConfiguration.DB_USER, NetworkConfiguration.DB_PASS);
+            String url ="jdbc:mysql://lsstock-database.mysql.database.azure.com:3306/lsstock?useSSL=true&requireSSL=false";
+            conn = DriverManager.getConnection(url, "ls_stock@lsstock-database", "Hola123$");
+
             if (conn != null) {
                 Statement stmt = (Statement) conn.createStatement();
                 stmt.executeQuery("LsStock");
