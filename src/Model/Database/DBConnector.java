@@ -1,5 +1,7 @@
 package Model.Database;
 
+import Model.Network.NetworkConfiguration;
+
 import java.sql.*;
 
 
@@ -62,17 +64,16 @@ public class DBConnector {
     public void connect() {
         try {
             Class.forName("com.mysql.jdbc.Connection");
+
             String url ="jdbc:mysql://lsstock-database.mysql.database.azure.com:3306/lsstock?useSSL=true&requireSSL=false";
-            conn = DriverManager.getConnection(url, "ls_stock@lsstock-database", "Hola123$");
+            conn = DriverManager.getConnection(url, "ls_stock@lsstock-database", NetworkConfiguration.DB_PASS);
 
             if (conn != null) {
-                Statement stmt = (Statement) conn.createStatement();
-                stmt.executeQuery("LsStock");
-
                 System.out.println("Connexió a base de dades "+url+" ... Ok");
             }
         }
         catch(SQLException ex) {
+            ex.printStackTrace();
             System.out.println("Problema al connectanos a la BBDD --> "+url);
         }
         catch(ClassNotFoundException ex) {
