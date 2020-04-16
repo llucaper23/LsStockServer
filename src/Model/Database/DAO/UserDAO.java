@@ -10,12 +10,12 @@ public class UserDAO {
     public boolean registerUser(User user){
         boolean exists = false;
         try{
-            String query = "SELECT COUNT(user_id) as num_users FROM User WHERE nickname = '" + user.getNickName() + "' AND email = '" + user.getEmail() + "' AND password = '" + user.getPassword() + "';";
+            String query = "SELECT COUNT(user_id) as num_users FROM User WHERE nickname = '" + user.getNickName() + "' AND email = '" + user.getEmail() + "';";
             ResultSet rs = DBConnector.getInstance().selectQuery(query);
             while (rs.next()){
                 if (rs.getInt("num_users") == 0){
                     exists = false;
-                    String query2 = "INSERT INTO User (nickname, email, password, money, isLogged) VALUES ("+user.toString() +");";
+                    String query2 = "INSERT INTO User (nickname, email, password, money, is_logged) VALUES ("+user.toString() +");";
                     DBConnector.getInstance().insertQuery(query2);
                 }else{
                     exists = true;

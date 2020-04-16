@@ -65,6 +65,7 @@ public class DedicatedServer extends Thread {
                     User registerUser = (User) objectIn.readObject();
                     boolean registerOk = userDAO.registerUser(registerUser);
                     objectOut.writeBoolean(registerOk);
+                    objectOut.flush();
                 }
                 if (option == LOGIN_REQUEST) {
                     User userLogin = (User) objectIn.readObject();
