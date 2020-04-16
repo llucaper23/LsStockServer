@@ -46,8 +46,6 @@ public class Server extends Thread{
 
     public void run() {
         try {
-
-            ServerSocket serverSocket = new ServerSocket(NetworkConfiguration.SERVER_PORT);
             isRunning = true;
 
             while (isRunning) {
