@@ -65,11 +65,11 @@ public class DBConnector {
         try {
             Class.forName("com.mysql.jdbc.Connection");
 
-            String url ="jdbc:mysql://lsstock-database.mysql.database.azure.com:3306/lsstock?useSSL=true&requireSSL=false";
-            conn = DriverManager.getConnection(url, "ls_stock@lsstock-database", NetworkConfiguration.DB_PASS);
+            String url ="jdbc:mysql://" + NetworkConfiguration.DB_ADDRESS + ":3306/lsstock?useSSL=true&requireSSL=false";
+            conn = DriverManager.getConnection(url, NetworkConfiguration.DB_USER, NetworkConfiguration.DB_PASS);
 
             if (conn != null) {
-                System.out.println("Connexió a base de dades "+url+" ... Ok");
+                System.out.println("Connexió a base de dades "+NetworkConfiguration.DB_ADDRESS+" ... Ok");
             }
         }
         catch(SQLException ex) {

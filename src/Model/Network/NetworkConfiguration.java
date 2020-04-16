@@ -9,15 +9,4 @@ public class NetworkConfiguration {
     public static final String DB_USER = "ls_stock@lsstock-database";
     public static final String DB_PASS = "Hola123$";
 
-    public static String getDbAddress() {
-        return DB_ADDRESS;
-    }
-
-    public static String getDbUser() {
-        return DB_USER;
-    }
-
-    public static String getDbPass() {
-        return DB_PASS;
-    }
 }
