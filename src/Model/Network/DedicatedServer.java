@@ -31,6 +31,7 @@ public class DedicatedServer extends Thread {
     public DedicatedServer(Socket sClient, Server server) {
         this.isOn = false;
         this.sClient = sClient;
+        userDAO = new UserDAO();
         try {
             // creem els canals de comunicacio
             this.objectOut = new ObjectOutputStream(sClient.getOutputStream());

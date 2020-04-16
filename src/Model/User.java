@@ -70,7 +70,7 @@ public class User implements Serializable {
 
     @Override
     public String toString() {
-        return nickName + '\'' +
+        return '\'' + nickName + '\'' +
                 ", '" + email + '\'' +
                 ", '" + password + '\'' +
                 ", " + money +

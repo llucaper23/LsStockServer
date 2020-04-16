@@ -54,7 +54,7 @@ public class Server extends Thread{
 
                 DedicatedServer dedicatedServer = new DedicatedServer(socket,this);
                 dedicatedServerList.add(dedicatedServer);
-                dedicatedServer.start();
+                dedicatedServer.startDedicatedServer();
                 System.out.println("Client connected");
 
             }
