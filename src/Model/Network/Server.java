@@ -9,7 +9,7 @@ import java.net.Socket;
 import java.util.ArrayList;
 
 public class Server extends Thread{
-    private static final int PORT = 34568;
+
     private ServerSocket serverSocket;
     private DBConnector dbConnector;
     private ArrayList<DedicatedServer> dedicatedServerList;
@@ -21,7 +21,7 @@ public class Server extends Thread{
         try {
             isOn = false;
             dedicatedServerList = new ArrayList<>();
-            this.serverSocket = new ServerSocket(PORT);
+            this.serverSocket = new ServerSocket(NetworkConfiguration.SERVER_PORT);
         } catch (IOException e) {
             e.printStackTrace();
         }
@@ -47,7 +47,7 @@ public class Server extends Thread{
     public void run() {
         try {
 
-            ServerSocket serverSocket = new ServerSocket(PORT);
+            ServerSocket serverSocket = new ServerSocket(NetworkConfiguration.SERVER_PORT);
             isRunning = true;
 
             while (isRunning) {
