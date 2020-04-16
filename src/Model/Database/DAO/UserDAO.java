@@ -32,14 +32,14 @@ public class UserDAO {
     public boolean canUserLogin(User user){
         boolean logged = false;
         try{
-            String query = "SELECT COUNT(user_id) FROM User WHERE nickname = '" + user.getNickName() + "' AND email = '" + user.getEmail() + "' AND password = '" + user.getPassword() + "';";
+            String query = "SELECT COUNT(user_id) as num_users FROM User WHERE nickname = '" + user.getNickName() + "' AND email = '" + user.getEmail() + "' AND password = '" + user.getPassword() + "';";
             ResultSet rs = DBConnector.getInstance().selectQuery(query);
             while (rs.next()){
-                if (rs.getInt("COUNT") == 0){
+                if (rs.getInt("num_users") == 0){
                     logged = false;
                 }else{
                     logged = true;
-                    String query2 = "UPDATE User SET isLogged = true";
+                    String query2 = "UPDATE User SET is_logged = true";
                     DBConnector.getInstance().updateQuery(query2);
                 }
             }
