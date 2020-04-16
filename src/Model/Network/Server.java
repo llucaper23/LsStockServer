@@ -46,8 +46,8 @@ public class Server extends Thread{
 
     public void run() {
         try {
-            isRunning = true;
 
+            isRunning = true;
             while (isRunning) {
                 System.out.println("Waiting for a client...");
                 Socket socket = serverSocket.accept();
