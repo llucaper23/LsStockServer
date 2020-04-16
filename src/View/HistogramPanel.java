@@ -7,7 +7,7 @@ import java.awt.*;
 import java.util.ArrayList;
 import java.util.List;
 
-public class HistogramPanel extends JPanel {
+public class HistogramPanel extends JPanel {            // es l'encarregat d'anr afecgint barretes , el cridarem tantes vegades com barres volguem
 
     private int histogramHeight = 650;          // !!!el panell es redimensions segons les mides de les barres
     private int barWidth = 110;
