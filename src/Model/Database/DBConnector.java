@@ -1,5 +1,6 @@
 package Model.Database;
 
+import Model.Network.NetworkConfiguration;
 import com.mysql.jdbc.Connection;
 import com.mysql.jdbc.Statement;
 
@@ -67,7 +68,8 @@ public class DBConnector {
     public void connect() {
         try {
             Class.forName("com.mysql.jdbc.Connection");
-            conn = (Connection) DriverManager.getConnection(url + "?user=" + userName + "&password=" + password + "&serverTimezone=UTC" + "&useSSL=false");
+            String url = String.format("jdbc:mysql://lsstock-database.mysql.database.azure.com:3306/lsstock?verifyServerCertificate=true&useSSL=true&requireSSL=false");
+            conn = (Connection) DriverManager.getConnection(url, NetworkConfiguration.DB_USER, NetworkConfiguration.DB_PASS);
             if (conn != null) {
                 Statement stmt = (Statement) conn.createStatement();
                 stmt.executeQuery("LsStock");

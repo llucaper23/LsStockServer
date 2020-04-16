@@ -11,7 +11,6 @@ import java.util.ArrayList;
 public class Server extends Thread{
 
     private ServerSocket serverSocket;
-    private DBConnector dbConnector;
     private ArrayList<DedicatedServer> dedicatedServerList;
     private boolean isRunning;
     private boolean isOn;
@@ -22,6 +21,7 @@ public class Server extends Thread{
             isOn = false;
             dedicatedServerList = new ArrayList<>();
             this.serverSocket = new ServerSocket(NetworkConfiguration.SERVER_PORT);
+            DBConnector.init(NetworkConfiguration.DB_USER, NetworkConfiguration.DB_PASS, NetworkConfiguration.getDbAddress());
         } catch (IOException e) {
             e.printStackTrace();
         }
