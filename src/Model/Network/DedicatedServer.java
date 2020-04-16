@@ -59,7 +59,7 @@ public class DedicatedServer extends Thread {
     public void run() {
         try {
             while (isOn) {
-                int option = objectIn.readInt();
+                int option = objectIn.read();
                 if (option == REGISTER_REQUEST){
                     User registerUser = (User) objectIn.readObject();
                     boolean registerOk = userDAO.registerUser(registerUser);
