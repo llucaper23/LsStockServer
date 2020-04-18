@@ -73,6 +73,9 @@ public class DedicatedServer extends Thread {
                     boolean loginOk = userDAO.canUserLogin(userLogin);
                     objectOut.writeBoolean(loginOk);
                     objectOut.flush();
+                    if (!loginOk) {
+                        objectOut.writeUTF("");
+                    }
                     this.user = userDAO.getUser(userLogin.getNickName());
                     objectOut.writeObject(user);
                     objectOut.flush();
@@ -83,6 +86,7 @@ public class DedicatedServer extends Thread {
             }
         } catch (IOException e1) {
             // en cas derror aturem el servidor dedicat
+            userDAO.logOut(user);
             stopDedicatedServer();
         } catch (ClassNotFoundException e) {
             e.printStackTrace();
