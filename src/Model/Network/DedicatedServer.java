@@ -75,6 +75,7 @@ public class DedicatedServer extends Thread {
                     objectOut.flush();
                     this.user = userDAO.getUser(userLogin.getNickName());
                     objectOut.writeObject(user);
+                    objectOut.flush();
                 }
                 if (option == LOGOUT) {
                     userDAO.logOut(user);
