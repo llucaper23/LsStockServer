@@ -71,6 +71,8 @@ public class DedicatedServer extends Thread {
                     User userLogin = (User) objectIn.readObject();
                     boolean loginOk = userDAO.canUserLogin(userLogin);
                     objectOut.writeBoolean(loginOk);
+                    objectOut.flush();
+                    objectOut.writeObject(userLogin);
                 }
             }
         } catch (IOException e1) {
