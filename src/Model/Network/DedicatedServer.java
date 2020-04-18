@@ -1,7 +1,6 @@
 package Model.Network;
 
 import Model.Database.DAO.*;
-import Model.User;
 
 import java.io.*;
 import java.net.Socket;
