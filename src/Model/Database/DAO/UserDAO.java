@@ -39,7 +39,7 @@ public class UserDAO {
                     logged = false;
                 }else{
                     logged = true;
-                    String query2 = "UPDATE User SET is_logged = 1";
+                    String query2 = "UPDATE User SET is_logged = 1 WHERE nickname = " + user.getNickName() + ";";
                     DBConnector.getInstance().updateQuery(query2);
                 }
             }
