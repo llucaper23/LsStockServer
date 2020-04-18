@@ -1,6 +1,7 @@
 package Model.Network;
 
 import Model.Database.DAO.*;
+import Model.User;
 
 import java.io.*;
 import java.net.Socket;
@@ -9,6 +10,7 @@ public class DedicatedServer extends Thread {
 
     private boolean isOn;
     private UserDAO userDAO;
+    private User user;
     private UserCompanyDAO userCompanyDAO;
     private HistoryDAO historyDAO;
     private CompanyDAO companyDAO;
@@ -71,7 +73,11 @@ public class DedicatedServer extends Thread {
                     boolean loginOk = userDAO.canUserLogin(userLogin);
                     objectOut.writeBoolean(loginOk);
                     objectOut.flush();
-                    objectOut.writeObject(userLogin);
+                    this.user = userDAO.getUser(userLogin.getNickName());
+                    objectOut.writeObject(user);
+                }
+                if (option == LOGOUT) {
+                    userDAO.logOut(user);
                 }
             }
         } catch (IOException e1) {

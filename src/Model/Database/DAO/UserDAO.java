@@ -6,6 +6,8 @@ import Model.User;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 
+import static javax.swing.UIManager.getString;
+
 public class UserDAO {
     public boolean registerUser(User user){
         boolean ok = false;
@@ -49,5 +51,32 @@ public class UserDAO {
             return false;
         }
         return logged;
+    }
+
+    public void logOut(User user){
+        String query2 = "UPDATE User SET is_logged = 0 WHERE nickname = " + user.getNickName() + ";";
+        DBConnector.getInstance().updateQuery(query2);
+    }
+
+    public User getUser(String nickName) {
+        try {
+            String query = "SELECT u.nickName, u.email, u.password, u.money, u.is_logged FROM User as u WHERE nickname = '" + nickName + "';";
+            ResultSet rs = DBConnector.getInstance().selectQuery(query);
+            while (rs.next()) {
+                String name = rs.getString("nickName");
+                String email = rs.getString("email");
+                String password = rs.getString("password");
+                int money = rs.getInt("money");
+                boolean isLogged = rs.getBoolean("is_logged");
+                User user = new User(name, email, password, money, isLogged);
+                return user;
+            }
+        }catch (SQLException e){
+            e.printStackTrace();
+            System.out.println("SQL Syntax Error");
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return null;
     }
 }
