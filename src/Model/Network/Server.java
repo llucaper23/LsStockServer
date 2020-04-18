@@ -1,7 +1,10 @@
 package Model.Network;
 
 import Model.Database.DBConnector;
+import com.google.gson.Gson;
+import com.google.gson.stream.JsonReader;
 
+import java.io.FileReader;
 import java.io.IOException;
 import java.io.ObjectOutputStream;
 import java.net.ServerSocket;
@@ -14,14 +17,24 @@ public class Server extends Thread{
     private ArrayList<DedicatedServer> dedicatedServerList;
     private boolean isRunning;
     private boolean isOn;
+    NetworkConfiguration nc;
 
     public Server() {
+        Gson gson = new Gson();
+        String path = "data/config.json";
 
+        //llegim json i ordenem els arrays de Mix i Type
+        try {
+            JsonReader reader = new JsonReader(new FileReader(path));
+            this.nc = gson.fromJson(reader, NetworkConfiguration.class);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
         try {
             isOn = false;
             dedicatedServerList = new ArrayList<>();
-            this.serverSocket = new ServerSocket(NetworkConfiguration.SERVER_PORT);
-            DBConnector.init(NetworkConfiguration.DB_USER, NetworkConfiguration.DB_PASS, NetworkConfiguration.DB_ADDRESS);
+            this.serverSocket = new ServerSocket(nc.getServerPort());
+            DBConnector.init(nc);
         } catch (IOException e) {
             e.printStackTrace();
         }

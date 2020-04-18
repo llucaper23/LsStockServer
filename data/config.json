@@ -1,0 +1,7 @@
+{
+  "SERVER_IP": "localhost",
+  "SERVER_PORT": 34567,
+  "DB_ADDRESS": "lsstock-database.mysql.database.azure.com",
+  "DB_USER": "ls_stock@lsstock-database",
+  "DB_PASS": "Hola123$"
+}
