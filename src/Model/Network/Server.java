@@ -22,15 +22,10 @@ public class Server extends Thread{
     public Server() {
         Gson gson = new Gson();
         String path = "data/config.json";
-
-        //llegim json i ordenem els arrays de Mix i Type
         try {
+            //llegim json
             JsonReader reader = new JsonReader(new FileReader(path));
             this.nc = gson.fromJson(reader, NetworkConfiguration.class);
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-        try {
             isOn = false;
             dedicatedServerList = new ArrayList<>();
             this.serverSocket = new ServerSocket(nc.getServerPort());

@@ -1,7 +1,7 @@
 {
-  "SERVER_IP": "localhost",
-  "SERVER_PORT": 34567,
-  "DB_ADDRESS": "lsstock-database.mysql.database.azure.com",
-  "DB_USER": "ls_stock@lsstock-database",
-  "DB_PASS": "Hola123$"
+  "serverIp": "localhost",
+  "serverPort": 34567,
+  "dbAddress": "lsstock-database.mysql.database.azure.com",
+  "dbUser": "ls_stock@lsstock-database",
+  "dbPass": "Hola123$"
 }
