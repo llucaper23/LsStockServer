@@ -22,6 +22,7 @@ public class UserDAO {
                 }
             }
         }catch (SQLException e){
+            e.printStackTrace();
             System.out.println("SQL Syntax Error");
             return false;
         }
@@ -31,19 +32,20 @@ public class UserDAO {
     public boolean canUserLogin(User user){
         boolean logged = false;
         try{
-            String query = "SELECT COUNT(user_id) as num_users FROM User WHERE nickname = '" + user.getNickName() + "' AND email = '" + user.getEmail() + "' AND password = '" + user.getPassword() + "';";
+            String query = "SELECT COUNT(user_id) as num_users FROM User WHERE nickname = '" + user.getNickName() + "' AND password = '" + user.getPassword() + "' AND is_logged = 0;";
             ResultSet rs = DBConnector.getInstance().selectQuery(query);
             while (rs.next()){
                 if (rs.getInt("num_users") == 0){
                     logged = false;
                 }else{
                     logged = true;
-                    String query2 = "UPDATE User SET is_logged = true";
+                    String query2 = "UPDATE User SET is_logged = 1";
                     DBConnector.getInstance().updateQuery(query2);
                 }
             }
         }catch (SQLException e){
-            System.out.println("Error connecting to the Database");
+            e.printStackTrace();
+            System.out.println("SQL Syntax Error");
             return false;
         }
         return logged;
