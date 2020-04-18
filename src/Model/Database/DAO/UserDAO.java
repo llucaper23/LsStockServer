@@ -1,6 +1,7 @@
 package Model.Database.DAO;
 
 import Model.Database.DBConnector;
+import Model.User;
 
 import java.sql.ResultSet;
 import java.sql.SQLException;
