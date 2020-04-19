@@ -74,8 +74,8 @@ public class DedicatedServer extends Thread {
                     boolean loginOk = userDAO.canUserLogin(userLogin);
                     objectOut.writeBoolean(loginOk);
                     objectOut.flush();
-                    if (!loginOk){
-                        this.user = userDAO.getUser(userLogin.getNickName());
+                    if (loginOk){
+                        this.user = userDAO.getUser(userLogin.getNickName(), userLogin.getEmail());
                         objectOut.writeObject(user);
                         objectOut.flush();
                     }

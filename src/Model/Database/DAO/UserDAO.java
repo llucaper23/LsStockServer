@@ -70,17 +70,24 @@ public class UserDAO {
         DBConnector.getInstance().updateQuery(query2);
     }
 
-    public User getUser(String nickName) {
+    public User getUser(String nickName, String email) {
         try {
-            String query = "SELECT u.nickName, u.email, u.password, u.money, u.is_logged FROM User as u WHERE nickname = '" + nickName + "';";
+            String query;
+            if (nickName.isEmpty()) {
+                query = "SELECT u.nickName, u.email, u.password, u.money, u.is_logged FROM User as u WHERE email = '" + email + "';";
+
+            } else {
+                query = "SELECT u.nickName, u.email, u.password, u.money, u.is_logged FROM User as u WHERE nickname = '" + nickName + "';";
+
+            }
             ResultSet rs = DBConnector.getInstance().selectQuery(query);
             while (rs.next()) {
-                String name = rs.getString("nickName");
-                String email = rs.getString("email");
+                nickName = rs.getString("nickName");
+                email = rs.getString("email");
                 String password = rs.getString("password");
                 int money = rs.getInt("money");
                 boolean isLogged = rs.getBoolean("is_logged");
-                User user = new User(name, email, password, money, isLogged);
+                User user = new User(nickName, email, password, money, isLogged);
                 return user;
             }
         }catch (SQLException e){
