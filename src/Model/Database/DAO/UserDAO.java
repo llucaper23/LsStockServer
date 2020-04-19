@@ -16,7 +16,7 @@ public class UserDAO {
             ResultSet rs = DBConnector.getInstance().selectQuery(query);
             while (rs.next()){
                 if (rs.getInt("num_users") == 0){
-                    String query2 = "INSERT INTO User (nickname, email, password, money, is_logged) VALUES ("+user.toString() +");";
+                    String query2 = "INSERT INTO User (nickname, email, password, money, is_logged) VALUES ("+ user.toString() +");";
                     DBConnector.getInstance().insertQuery(query2);
                     ok = true;
                 }else{
@@ -48,7 +48,12 @@ public class UserDAO {
                     logged = false;
                 }else{
                     logged = true;
-                    String query2 = "UPDATE User SET is_logged = 1 WHERE nickname = '" + user.getNickName() + "';";
+                    String query2;
+                    if (user.getNickName().isEmpty()){
+                        query2 = "UPDATE User SET is_logged = 1 WHERE email = '" + user.getEmail() + "';";
+                    }else {
+                        query2 = "UPDATE User SET is_logged = 1 WHERE nickname = '" + user.getNickName() + "';";
+                    }
                     DBConnector.getInstance().updateQuery(query2);
                 }
             }
