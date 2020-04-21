@@ -10,7 +10,7 @@ public class MainView extends JFrame {
         //configurem finestra
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         setExtendedState(MAXIMIZED_BOTH);
-        setVisible(true);
+        setVisible(false);
 
 
         setResizable(false);
@@ -56,11 +56,4 @@ public class MainView extends JFrame {
 
     }
 
-    public static void main(String[] args){
-
-
-        MainView vista = new MainView();
-
-
-    }
 }

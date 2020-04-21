@@ -1,7 +1,10 @@
 package Model.Network;
 
 import Model.Database.DBConnector;
+import com.google.gson.Gson;
+import com.google.gson.stream.JsonReader;
 
+import java.io.FileReader;
 import java.io.IOException;
 import java.io.ObjectOutputStream;
 import java.net.ServerSocket;
@@ -14,14 +17,19 @@ public class Server extends Thread{
     private ArrayList<DedicatedServer> dedicatedServerList;
     private boolean isRunning;
     private boolean isOn;
+    NetworkConfiguration nc;
 
     public Server() {
-
+        Gson gson = new Gson();
+        String path = "data/config.json";
         try {
+            //llegim json
+            JsonReader reader = new JsonReader(new FileReader(path));
+            this.nc = gson.fromJson(reader, NetworkConfiguration.class);
             isOn = false;
             dedicatedServerList = new ArrayList<>();
-            this.serverSocket = new ServerSocket(NetworkConfiguration.SERVER_PORT);
-            DBConnector.init(NetworkConfiguration.DB_USER, NetworkConfiguration.DB_PASS, NetworkConfiguration.getDbAddress());
+            this.serverSocket = new ServerSocket(nc.getServerPort());
+            DBConnector.init(nc);
         } catch (IOException e) {
             e.printStackTrace();
         }
@@ -46,15 +54,15 @@ public class Server extends Thread{
 
     public void run() {
         try {
-            isRunning = true;
 
+            isRunning = true;
             while (isRunning) {
                 System.out.println("Waiting for a client...");
                 Socket socket = serverSocket.accept();
 
                 DedicatedServer dedicatedServer = new DedicatedServer(socket,this);
                 dedicatedServerList.add(dedicatedServer);
-                dedicatedServer.start();
+                dedicatedServer.startDedicatedServer();
                 System.out.println("Client connected");
 
             }

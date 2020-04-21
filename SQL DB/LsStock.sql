@@ -9,6 +9,7 @@ CREATE TABLE User(
     email VARCHAR(255),
     password VARCHAR(255),
     money FLOAT,
+    is_logged BOOLEAN,
     PRIMARY KEY (user_id),
     UNIQUE KEY (nickname, email)
 );

@@ -1,13 +1,8 @@
 package View;
 
-import org.jfree.chart.ChartFactory;
-import org.jfree.chart.ChartPanel;
-import org.jfree.chart.JFreeChart;
-import org.jfree.chart.plot.PlotOrientation;
-import org.jfree.data.category.DefaultCategoryDataset;
-
 import javax.swing.*;
 import java.awt.*;
+
 
 public class Top10View extends JPanel {
 
@@ -15,28 +10,19 @@ public class Top10View extends JPanel {
     final int MAX_WIDTH = 1250;
 
     public Top10View() {
-        JPanel jpGraficas =new JPanel();
 
+        // farem el set dels valors que tinguem en la nostre BD --> son inventants , tocara canviarlos despres per les dades reals, s'ha d'eliinar la classe
+        HistogramPanel panel = new HistogramPanel();
 
-        // farem el set dels valors que tinguem en la nostre BD
-
-        DefaultCategoryDataset dataset = new DefaultCategoryDataset();
-
-        // Visitas del sitio web 1
+        // agefim les 10 comapnyies !!!WARNING nomes esta dimensionat per 10, si els volguessin posat mes o reduir tocaraia cnviar la capçalera de HistogrmPanel
         for (int i = 0; i < 10; i++) {
-            dataset.setValue(i*10, "Companyia", "Telefonica"+i);
+
+            panel.addHistogramColumn("Telefonica" + i, i * 10, Color.RED);
         }
 
-        JFreeChart chart = ChartFactory.createBarChart3D("", "Companyia", "Valor", dataset, PlotOrientation.VERTICAL, false, true, false);
+        panel.layoutHistogram();
 
-        ChartPanel chartPanel = new ChartPanel( chart );
-        chartPanel.setPreferredSize(new Dimension( MAX_WIDTH , MAX_HEIGHT ) );
-
-        jpGraficas.add(chartPanel);
-
-        this.add(jpGraficas,BorderLayout.CENTER);
+        this.add(panel);
     }
-
-
 
 }

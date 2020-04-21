@@ -1,13 +1,8 @@
 package Model.Database;
 
 import Model.Network.NetworkConfiguration;
-import com.mysql.jdbc.Connection;
-import com.mysql.jdbc.Statement;
 
-
-import java.sql.DriverManager;
-import java.sql.ResultSet;
-import java.sql.SQLException;
+import java.sql.*;
 
 
 public class DBConnector {
@@ -20,17 +15,20 @@ public class DBConnector {
     private static Connection conn;
     private static Statement s;
     private static DBConnector instance = null;
+    private static String dbName = "lsstock";
+    private NetworkConfiguration nc;
 
     /**
      *Constructor de la clase
      * @param usr usuario de la BBDD
      * @param pass contraseña de la BBDD
      */
-    private DBConnector(String usr, String pass, String url) {
+    private DBConnector(String usr, String pass, String url, NetworkConfiguration nc) {
         this.userName = usr;
         this.password = pass;
         this.instance = null;
         this.url = url;
+        this.nc = nc;
 
     }
 
@@ -44,12 +42,11 @@ public class DBConnector {
 
     /**
      *Método que inicializa la clase
-     * @param usr usuario de la BBDD
-     * @param psw contraseña de la BBDD.
+     * @param  nc network config
      * @return instancia de la clase
      */
-    public static DBConnector init(String usr,String psw, String url){
-        instance = new DBConnector(usr,psw,url);
+    public static DBConnector init(NetworkConfiguration nc){
+        instance = new DBConnector(nc.getDbUser(), nc.getDbPass(), nc.getDbAddress(), nc);
         instance.connect();
         return instance;
     }
@@ -68,16 +65,16 @@ public class DBConnector {
     public void connect() {
         try {
             Class.forName("com.mysql.jdbc.Connection");
-            String url = String.format("jdbc:mysql://lsstock-database.mysql.database.azure.com:3306/lsstock?verifyServerCertificate=true&useSSL=true&requireSSL=false");
-            conn = (Connection) DriverManager.getConnection(url, NetworkConfiguration.DB_USER, NetworkConfiguration.DB_PASS);
-            if (conn != null) {
-                Statement stmt = (Statement) conn.createStatement();
-                stmt.executeQuery("LsStock");
 
-                System.out.println("Connexió a base de dades "+url+" ... Ok");
+            String url ="jdbc:mysql://" + nc.getDbAddress() + ":3306/lsstock?useSSL=true&requireSSL=false";
+            conn = DriverManager.getConnection(url, nc.getDbUser(), nc.getDbPass());
+
+            if (conn != null) {
+                System.out.println("Connexió a base de dades " + nc.getDbAddress() + " ... Ok");
             }
         }
         catch(SQLException ex) {
+            ex.printStackTrace();
             System.out.println("Problema al connectanos a la BBDD --> "+url);
         }
         catch(ClassNotFoundException ex) {

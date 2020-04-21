@@ -3,13 +3,16 @@ package Model.Network;
 import Model.Database.DAO.*;
 import Model.User;
 
-import java.io.*;
+import java.io.IOException;
+import java.io.ObjectInputStream;
+import java.io.ObjectOutputStream;
 import java.net.Socket;
 
 public class DedicatedServer extends Thread {
 
     private boolean isOn;
     private UserDAO userDAO;
+    private User user;
     private UserCompanyDAO userCompanyDAO;
     private HistoryDAO historyDAO;
     private CompanyDAO companyDAO;
@@ -31,6 +34,7 @@ public class DedicatedServer extends Thread {
     public DedicatedServer(Socket sClient, Server server) {
         this.isOn = false;
         this.sClient = sClient;
+        userDAO = new UserDAO();
         try {
             // creem els canals de comunicacio
             this.objectOut = new ObjectOutputStream(sClient.getOutputStream());
@@ -40,7 +44,6 @@ public class DedicatedServer extends Thread {
         }
         this.server = server;
     }
-
 
     public void startDedicatedServer() {
         // iniciem el servidor dedicat
@@ -59,20 +62,31 @@ public class DedicatedServer extends Thread {
     public void run() {
         try {
             while (isOn) {
-                int option = objectIn.readInt();
+                int option = objectIn.read();
                 if (option == REGISTER_REQUEST){
                     User registerUser = (User) objectIn.readObject();
                     boolean registerOk = userDAO.registerUser(registerUser);
                     objectOut.writeBoolean(registerOk);
+                    objectOut.flush();
                 }
                 if (option == LOGIN_REQUEST) {
                     User userLogin = (User) objectIn.readObject();
                     boolean loginOk = userDAO.canUserLogin(userLogin);
                     objectOut.writeBoolean(loginOk);
+                    objectOut.flush();
+                    if (loginOk){
+                        this.user = userDAO.getUser(userLogin.getNickName(), userLogin.getEmail());
+                        objectOut.writeObject(user);
+                        objectOut.flush();
+                    }
+                }
+                if (option == LOGOUT) {
+                   userDAO.logOut(user);
                 }
             }
         } catch (IOException e1) {
             // en cas derror aturem el servidor dedicat
+            userDAO.logOut(user);
             stopDedicatedServer();
         } catch (ClassNotFoundException e) {
             e.printStackTrace();
