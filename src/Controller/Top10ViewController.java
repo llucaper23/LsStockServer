@@ -15,6 +15,9 @@ public class Top10ViewController implements ActionListener {
 
     public Top10ViewController(Top10View top10View) {
         this.top10View = top10View;
+        CompanyDAO dadesCompany = new CompanyDAO();
+        ArrayList<Company> llistaCompany = dadesCompany.getTop10Companies();
+        top10View.novesAccions(llistaCompany);
     }
 
 
