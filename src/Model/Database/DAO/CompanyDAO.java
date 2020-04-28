@@ -2,12 +2,10 @@ package Model.Database.DAO;
 
 import Model.Company;
 import Model.Database.DBConnector;
-import Model.User;
 
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
-import java.util.concurrent.ConcurrentMap;
 
 public class CompanyDAO {
 
@@ -20,7 +18,7 @@ public class CompanyDAO {
             while (rs.next()) {
                 companyId = rs.getInt("company_id");
                 String companyName = rs.getString("companyName");
-                float sharePrice = rs.getFloat("email");
+                float sharePrice = rs.getFloat("share_price");
                 return new Company(companyId, companyName, sharePrice);
             }
         } catch (SQLException e) {
