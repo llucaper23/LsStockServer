@@ -82,7 +82,6 @@ public class DedicatedServer extends Thread {
                 }
                 if (option == LOGOUT) {
                    userDAO.logOut(user);
-                   stopDedicatedServer();
                 }
             }
         } catch (IOException e1) {
