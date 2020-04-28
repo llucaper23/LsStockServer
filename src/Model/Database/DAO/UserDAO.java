@@ -102,7 +102,7 @@ public class UserDAO {
 
     public void setMoney(User user){
         try {
-            String query = "UPDATE User SET money = " + user.getMoney() + " WHERE nickname = " + user.getNickName();
+            String query = "UPDATE User SET money = " + user.getMoney() + " WHERE nickname = " + user.getNickName() + ";";
             DBConnector.getInstance().updateQuery(query);
         } catch (Exception e) {
             e.printStackTrace();
