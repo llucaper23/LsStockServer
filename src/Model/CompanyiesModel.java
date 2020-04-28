@@ -2,8 +2,6 @@ package Model;
 
 public class CompanyiesModel {
 
-
-
     private String nomCompanyia;
     private float nAccions;
     private float preuAccio;

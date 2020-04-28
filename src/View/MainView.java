@@ -1,5 +1,8 @@
 package View;
 
+import Controller.MainViewController;
+import Controller.Top10ViewController;
+
 import javax.swing.*;
 
 
@@ -34,7 +37,6 @@ public class MainView extends JFrame {
             JPanel jpTop10=new Top10View();
             //continguts del panell
 
-
             jTPpestanyes.addTab("Top 10", jpTop10);
 
 
@@ -43,6 +45,7 @@ public class MainView extends JFrame {
 
         //Pestanya 3
             JPanel jpBots=new BotsView();
+
              //continguts del panell
 
 
