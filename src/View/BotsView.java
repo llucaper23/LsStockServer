@@ -1,5 +1,7 @@
 package View;
 
+import Model.CompanyiesModel;
+
 import javax.swing.*;
 import javax.swing.border.TitledBorder;
 import javax.swing.table.DefaultTableModel;
@@ -17,6 +19,8 @@ public class BotsView extends JPanel {
     final String DESACTIVAR_BOT = "DESACTIVAR BOT";
     final String DELETE_BOT = "EL·LIMINAR BOT";
 
+    //Action's Listenners
+    public static final String CREATE_BOT_BUTTON_COMMAND = "CREATE_BOT_BUTTON_COMMAND";
 
     public BotsView() {
 
@@ -204,6 +208,8 @@ public class BotsView extends JPanel {
             jpBotoBot.setLayout(new BorderLayout());
 
             JButton jbCrearBot = new JButton("CREAR BOT");
+            jbCrearBot.setActionCommand(CREATE_BOT_BUTTON_COMMAND);
+
             jpBotoBot.add(jbCrearBot,BorderLayout.CENTER);
             jpBotoBot.setPreferredSize(new Dimension(200, 60));
             jpBotoBot.setMaximumSize(new Dimension(200, 60));
