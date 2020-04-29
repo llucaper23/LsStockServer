@@ -1,5 +1,7 @@
 package Model.Network;
 
+import Model.Company;
+import Model.Database.DAO.CompanyDAO;
 import Model.Database.DBConnector;
 import com.google.gson.Gson;
 import com.google.gson.stream.JsonReader;
@@ -82,7 +84,7 @@ public class Server extends Thread{
     void updateAllClients () {
         ObjectOutputStream outStream;
         for (DedicatedServer dServer : dedicatedServerList) {
-
+            dServer.updateAllCompanies();
         }
     }
 

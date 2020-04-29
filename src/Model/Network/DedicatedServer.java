@@ -1,5 +1,6 @@
 package Model.Network;
 
+import Model.Company;
 import Model.Database.DAO.*;
 import Model.User;
 
@@ -7,6 +8,7 @@ import java.io.IOException;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
 import java.net.Socket;
+import java.util.ArrayList;
 
 public class DedicatedServer extends Thread {
 
@@ -35,6 +37,7 @@ public class DedicatedServer extends Thread {
         this.isOn = false;
         this.sClient = sClient;
         userDAO = new UserDAO();
+        companyDAO = new CompanyDAO();
         try {
             // creem els canals de comunicacio
             this.objectOut = new ObjectOutputStream(sClient.getOutputStream());
@@ -89,6 +92,22 @@ public class DedicatedServer extends Thread {
             userDAO.logOut(user);
             stopDedicatedServer();
         } catch (ClassNotFoundException e) {
+            e.printStackTrace();
+        }
+    }
+
+    public void updateAllCompanies(){
+        try {
+            ArrayList<Company> companies = companyDAO.getAllCompanies();
+            objectOut.writeInt(ALL_COMPANIES);
+            objectOut.flush();
+            objectOut.writeInt(companies.size());
+            objectOut.flush();
+            for (Company c : companies) {
+                objectOut.writeObject(c);
+                objectOut.flush();
+            }
+        } catch (IOException e) {
             e.printStackTrace();
         }
     }

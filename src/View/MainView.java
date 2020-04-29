@@ -1,12 +1,15 @@
 package View;
 
+import Controller.MainViewController;
+import Controller.Top10ViewController;
+
 import javax.swing.*;
-import java.awt.*;
+
 
 public class MainView extends JFrame {
 
 
-    public MainView(){
+    public MainView(Top10View t10v){
         //configurem finestra
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         setExtendedState(MAXIMIZED_BOTH);
@@ -31,9 +34,8 @@ public class MainView extends JFrame {
 
 
         //Pestanya Top 10
-            JPanel jpTop10=new Top10View();
+            JPanel jpTop10=t10v;
             //continguts del panell
-
 
             jTPpestanyes.addTab("Top 10", jpTop10);
 
@@ -43,6 +45,7 @@ public class MainView extends JFrame {
 
         //Pestanya 3
             JPanel jpBots=new BotsView();
+
              //continguts del panell
 
 

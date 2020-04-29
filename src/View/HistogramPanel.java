@@ -26,7 +26,6 @@ public class HistogramPanel extends JPanel {            // es l'encarregat d'anr
         barPanel = new JPanel( new GridLayout(1, 0, barGap, 0) );
         //Border outer = new MatteBorder(1, 1, 1, 1, Color.BLACK);
 
-
         TitledBorder title;
         title = BorderFactory.createTitledBorder(BorderFactory.createLoweredBevelBorder(), "Valor accions per Empresa");
         title.setTitleJustification(TitledBorder.CENTER);
@@ -42,7 +41,7 @@ public class HistogramPanel extends JPanel {            // es l'encarregat d'anr
         add(labelPanel, BorderLayout.PAGE_END);
     }
 
-    public void addHistogramColumn(String label, int value, Color color)
+    public void addHistogramColumn(String label, float value, Color color)
     {
         Bar bar = new Bar(label, value, color);
         bars.add( bar );
@@ -53,7 +52,7 @@ public class HistogramPanel extends JPanel {            // es l'encarregat d'anr
         barPanel.removeAll();
         labelPanel.removeAll();
 
-        int maxValue = 0;
+        float maxValue = 0;
 
         for (Bar bar: bars)
             maxValue = Math.max(maxValue, bar.getValue());
@@ -65,7 +64,7 @@ public class HistogramPanel extends JPanel {            // es l'encarregat d'anr
             label.setHorizontalAlignment(JLabel.CENTER);
             label.setVerticalTextPosition(JLabel.TOP);
             label.setVerticalAlignment(JLabel.BOTTOM);
-            int barHeight = (bar.getValue() * histogramHeight) / maxValue;
+            int barHeight = (int) ((bar.getValue() * histogramHeight) / maxValue);
             Icon icon = new ColorIcon(bar.getColor(), barWidth, barHeight);
             label.setIcon( icon );
             barPanel.add( label );
@@ -79,10 +78,10 @@ public class HistogramPanel extends JPanel {            // es l'encarregat d'anr
     private class Bar
     {
         private String label;
-        private int value;
+        private float value;
         private Color color;
 
-        public Bar(String label, int value, Color color)
+        public Bar(String label, float value, Color color)
         {
             this.label = label;
             this.value = value;
@@ -94,7 +93,7 @@ public class HistogramPanel extends JPanel {            // es l'encarregat d'anr
             return label;
         }
 
-        public int getValue()
+        public float getValue()
         {
             return value;
         }

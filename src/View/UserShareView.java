@@ -1,10 +1,13 @@
 package View;
 
+import Model.CompanyiesModel;
+
 import javax.swing.*;
 import javax.swing.border.TitledBorder;
 import javax.swing.table.DefaultTableModel;
 import java.awt.*;
 import java.util.ArrayList;
+
 
 public class UserShareView extends JPanel {
     ArrayList<CompanyiesModel> dades; // a canviar per les dades reals de la taula
@@ -16,7 +19,7 @@ public class UserShareView extends JPanel {
 
        dades = new ArrayList<CompanyiesModel>();
        for (int i = 0; i < 50 ; i++) {
-           dades.add(i,new CompanyiesModel("Telefonica S.A. "+i));
+           dades.add(i,new CompanyiesModel("Telefonica S.A. "+i));      // aqui obtindrem  les adades que ha
        }
 
        setLayout(new BorderLayout());
@@ -33,6 +36,7 @@ public class UserShareView extends JPanel {
 
        for (int i = 0; i < 20; i++) {       // caldra canviarho pels nomes dle users i tota l pesca
            JButton bottnet = new JButton("<NOM_USER> "+i);
+           bottnet.setActionCommand("h"+i); // caldra passarli el nom del user per tal de que sigui el listener del boto
            bottnet.setPreferredSize(new Dimension(300,50));
            bottnet.setMaximumSize(new Dimension(300,50));
            jpllistaUsers.add(bottnet);

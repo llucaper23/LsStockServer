@@ -6,8 +6,6 @@ import Model.User;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 
-import static javax.swing.UIManager.getString;
-
 public class UserDAO {
     public boolean registerUser(User user){
         boolean ok = false;
@@ -74,20 +72,21 @@ public class UserDAO {
         try {
             String query;
             if (nickName.isEmpty()) {
-                query = "SELECT u.nickName, u.email, u.password, u.money, u.is_logged FROM User as u WHERE email = '" + email + "';";
+                query = "SELECT u.user_id, u.nickName, u.email, u.password, u.money, u.is_logged FROM User as u WHERE email = '" + email + "';";
 
             } else {
-                query = "SELECT u.nickName, u.email, u.password, u.money, u.is_logged FROM User as u WHERE nickname = '" + nickName + "';";
+                query = "SELECT u.user_id, u.nickName, u.email, u.password, u.money, u.is_logged FROM User as u WHERE nickname = '" + nickName + "';";
 
             }
             ResultSet rs = DBConnector.getInstance().selectQuery(query);
             while (rs.next()) {
+                int user_id = rs.getInt("user_id");
                 nickName = rs.getString("nickName");
                 email = rs.getString("email");
                 String password = rs.getString("password");
                 int money = rs.getInt("money");
                 boolean isLogged = rs.getBoolean("is_logged");
-                User user = new User(nickName, email, password, money, isLogged);
+                User user = new User(user_id, nickName, email, password, money, isLogged);
                 return user;
             }
         }catch (SQLException e){
@@ -97,5 +96,14 @@ public class UserDAO {
             e.printStackTrace();
         }
         return null;
+    }
+
+    public void setMoney(User user){
+        try {
+            String query = "UPDATE User SET money = " + user.getMoney() + " WHERE nickname = " + user.getNickName() + ";";
+            DBConnector.getInstance().updateQuery(query);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
     }
 }

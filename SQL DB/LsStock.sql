@@ -56,3 +56,20 @@ CREATE TABLE History(
     PRIMARY KEY (history_id),
     FOREIGN KEY (company_id) REFERENCES Company (company_id)
 );
+
+INSERT INTO Company(company_name, share_price) VALUES ('Marcen Maricon', 40.0);
+INSERT INTO Company(company_name, share_price) VALUES ('ACCIONA', 91.0000);
+INSERT INTO Company(company_name, share_price) VALUES ('ACERINOX', 6.7200);
+INSERT INTO Company(company_name, share_price) VALUES ('AENA', 115.9000);
+INSERT INTO Company(company_name, share_price) VALUES ('BA.SABADELL', 0.3544);
+INSERT INTO Company(company_name, share_price) VALUES ('BANKIA', 0.8948);
+INSERT INTO Company(company_name, share_price) VALUES ('BBVA', 2.9270);
+INSERT INTO Company(company_name, share_price) VALUES ('CELLNEX', 48.6200);
+INSERT INTO Company(company_name, share_price) VALUES ('ENDESA', 19.9100);
+INSERT INTO Company(company_name, share_price) VALUES ('IBERDROLA', 9.0760);
+INSERT INTO Company(company_name, share_price) VALUES ('CAIXABANK', 1.5780);
+INSERT INTO Company(company_name, share_price) VALUES ('INDITEX', 23.3200);
+INSERT INTO Company(company_name, share_price) VALUES ('MAPFRE'	,1.6460);
+INSERT INTO Company(company_name, share_price) VALUES ('MEDIASET', 3.2400);
+INSERT INTO Company(company_name, share_price) VALUES ('REPSOL', 7.9120);
+INSERT INTO Company(company_name, share_price) VALUES ('TELEFONICA', 4.0550);

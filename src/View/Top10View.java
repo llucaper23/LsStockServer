@@ -1,28 +1,43 @@
 package View;
 
+import Model.Company;
+import Model.Database.DAO.CompanyDAO;
+
 import javax.swing.*;
 import java.awt.*;
+import java.util.ArrayList;
 
 
 public class Top10View extends JPanel {
 
     final int MAX_HEIGHT = 700;
     final int MAX_WIDTH = 1250;
+    final int MAX_COMPANYIES = 9;
+    ArrayList<Company> llistaCompany = new ArrayList<>();
 
     public Top10View() {
 
         // farem el set dels valors que tinguem en la nostre BD --> son inventants , tocara canviarlos despres per les dades reals, s'ha d'eliinar la classe
+
+    }
+    public void novesAccions(ArrayList<Company> llistaCompany){
+        this.llistaCompany = llistaCompany;
+        System.out.println("");
+
         HistogramPanel panel = new HistogramPanel();
 
         // agefim les 10 comapnyies !!!WARNING nomes esta dimensionat per 10, si els volguessin posat mes o reduir tocaraia cnviar la capçalera de HistogrmPanel
-        for (int i = 0; i < 10; i++) {
+        for (int i = MAX_COMPANYIES; i > -1; i--) {
 
-            panel.addHistogramColumn("Telefonica" + i, i * 10, Color.RED);
+            panel.addHistogramColumn(this.llistaCompany.get(i).getCompanyName(),  this.llistaCompany.get(i).getSharePrice(), Color.RED);
+
         }
 
         panel.layoutHistogram();
 
         this.add(panel);
+
+
     }
 
 }
