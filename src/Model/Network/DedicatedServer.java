@@ -81,7 +81,6 @@ public class DedicatedServer extends Thread {
                         this.user = userDAO.getUser(userLogin.getNickName(), userLogin.getEmail());
                         objectOut.writeObject(user);
                         objectOut.flush();
-                        server.updateAllClients();
                     }
                 }
                 if (option == LOGOUT) {
