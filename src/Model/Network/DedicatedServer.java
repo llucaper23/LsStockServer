@@ -99,8 +99,7 @@ public class DedicatedServer extends Thread {
 
     public void updateAllCompanies(){
         try {
-            ArrayList<Company> companies = new ArrayList<>();
-            companies = companyDAO.getAllCompanies();
+            ArrayList<Company> companies = companyDAO.getAllCompanies();
             objectOut.writeInt(ALL_COMPANIES);
             objectOut.flush();
             objectOut.writeInt(companies.size());
