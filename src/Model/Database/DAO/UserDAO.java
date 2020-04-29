@@ -6,8 +6,6 @@ import Model.User;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 
-import static javax.swing.UIManager.getString;
-
 public class UserDAO {
     public boolean registerUser(User user){
         boolean ok = false;

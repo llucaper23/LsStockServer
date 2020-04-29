@@ -34,7 +34,7 @@ public class CompanyDAO {
         try {
             ArrayList <Company> companyList = new ArrayList<>();
             String query;
-            query = "SELECT * FROM Company ;";
+            query = "SELECT * FROM Company;";
 
             ResultSet rs = DBConnector.getInstance().selectQuery(query);
             while (rs.next()) {

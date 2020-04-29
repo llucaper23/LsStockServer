@@ -6,9 +6,9 @@ import View.MainView;
 
 public class Main {
     public static void main(String[] args) {
-        MainView mainView = new MainView();
         Server server = new Server();
         server.startServer();
+        MainView mainView = new MainView();
         MainViewController mvc = new MainViewController(mainView, server);
         mainView.setVisible(true);
         //BotsViewController botsController = new BotsViewController();
