@@ -3,6 +3,7 @@ package Controller;
 import Model.Bot;
 import View.BotsView;
 
+import javax.swing.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
@@ -21,14 +22,29 @@ public class BotsViewController implements ActionListener {
 
 
 
+            try {
+                botsView.getTextFieldNameCompanyia();
+                int idCompanyie = 0; // caldra obtenirlo amb el botsView.getTextFieldNameCompanyia();
+                float tempsActivacio =  botsView.getTextFieldTempsActivacio();
+                int ValueSlider = botsView.getSliderPercetnCompra();
+                String nameCompanyie = botsView.getTextFieldNameCompanyia();
+            } catch (NumberFormatException excepction) {
+                JOptionPane.showMessageDialog(null, "Els decimals son and punt");
+            }
+            catch (Exception ex){
+                JOptionPane.showMessageDialog(null, "Dades Incorrectes");
+            }
 
-            botsView.getTextFieldNameCompanyia();
-            int idCompanyie = 0; // caldra obtenirlo amb el botsView.getTextFieldNameCompanyia();
-            float tempsActivacio = botsView.getTextFieldTempsActivacio();
-            int ValueSlider = botsView.getSliderPercetnCompra();
-            String nameCompanyie = botsView.getTextFieldNameCompanyia();
+
+            botsView.resetTextFieldNameCompanyia();
+            botsView.resetTextFieldTempsActivacio();
+            botsView.resetSliderPercetnCompra();
+
+
+
+
             //Bot nouBot = new Bot(0,botsView.getSliderPercetnCompra(),botsView.getTextFieldTempsActivacio(),idCompanyie);
-            System.out.println("pitjat");
+            System.out.println("");
         }
 
 

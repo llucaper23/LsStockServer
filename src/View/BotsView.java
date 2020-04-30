@@ -30,8 +30,8 @@ public class BotsView extends JPanel {
     private ActionListener listener;
     //list of buttons -> els fem globals per a poder introduir a posteriori els acctions listeners
     private JButton jbCrearBot;
-    private JLabel jlbCompanyia;
-    private JLabel jlbTempsActivacio;
+    private JTextField jtfCompanyia;
+    private JTextField jtfTempsActivacio;
     private JSlider jsliPercentCompra;
 
     public BotsView() {
@@ -165,12 +165,12 @@ public class BotsView extends JPanel {
             final JPanel jpCompanyia = new JPanel(new GridLayout(1,2));
             jpCreacioBot.add(jpCompanyia);
 
-            jlbCompanyia = new JLabel("Companyia");
+            JLabel jlbCompanyia = new JLabel("Companyia");
             jlbCompanyia.setHorizontalAlignment(JLabel.LEFT);  //JPasswordField
             jpCompanyia.add(jlbCompanyia);
 
 
-            JTextField jtfCompanyia = new JTextField("");
+            jtfCompanyia = new JTextField("");
             jtfCompanyia.setEditable(true);
             jpCompanyia.add(jtfCompanyia);
             jpCompanyia.setPreferredSize(new Dimension(800, 40));
@@ -201,12 +201,12 @@ public class BotsView extends JPanel {
             final JPanel jpTempsAct = new JPanel(new GridLayout(1,2));
             jpCreacioBot.add(jpTempsAct);
 
-            jlbTempsActivacio = new JLabel("Temps d'activacio");
+            JLabel jlbTempsActivacio = new JLabel("Temps d'activacio");
             jlbTempsActivacio.setHorizontalAlignment(JLabel.LEFT);  //JPasswordField
             jpTempsAct.add(jlbTempsActivacio);
 
 
-            JTextField jtfTempsActivacio = new JTextField("");
+            jtfTempsActivacio = new JTextField("");
             jtfTempsActivacio.setEditable(true);
             jpTempsAct.add(jtfTempsActivacio);
             jpTempsAct.setPreferredSize(new Dimension(800, 40));
@@ -243,14 +243,17 @@ public class BotsView extends JPanel {
         this.add(jpUsuaris,BorderLayout.EAST);
         this.add(jpBotInfo,BorderLayout.CENTER);
     }
-    public void registerController(ActionListener listener){
-        jbCrearBot.addActionListener(listener);
-    }
-    public  String getTextFieldNameCompanyia(){
-        return  jlbCompanyia.getText();
-    }
-    public  float getTextFieldTempsActivacio(){ return  Float.parseFloat(jlbTempsActivacio.getText()); }
+    public void registerController(ActionListener listener){ jbCrearBot.addActionListener(listener); }
+
+    public  String getTextFieldNameCompanyia(){ return  jtfCompanyia.getText(); }
+    public  float getTextFieldTempsActivacio(){ return  Float.parseFloat(jtfTempsActivacio.getText()); }
     public  int getSliderPercetnCompra(){ return jsliPercentCompra.getValue()  ;}
+
+    public  void resetTextFieldNameCompanyia(){ jtfCompanyia.setText(""); }
+    public  void resetTextFieldTempsActivacio(){ jtfTempsActivacio.setText(""); }
+    public void resetSliderPercetnCompra(){jsliPercentCompra.setValue(50);}
+
+
 
 
 }
