@@ -9,7 +9,7 @@ import javax.swing.*;
 public class MainView extends JFrame {
 
 
-    public MainView(Top10View t10v){
+    public MainView(Top10View t10v, BotsView botsView){
         //configurem finestra
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         setExtendedState(MAXIMIZED_BOTH);
@@ -44,7 +44,7 @@ public class MainView extends JFrame {
 
 
         //Pestanya 3
-            JPanel jpBots=new BotsView();
+            JPanel jpBots=botsView;
 
              //continguts del panell
 
