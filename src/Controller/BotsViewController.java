@@ -2,23 +2,28 @@ package Controller;
 
 import Model.Bot;
 import Model.Company;
+import Model.Database.DAO.BotDAO;
 import Model.Database.DAO.CompanyDAO;
 import View.BotsView;
 
 import javax.swing.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.sql.SQLOutput;
 import java.util.ArrayList;
 
 public class BotsViewController implements ActionListener {
 
     private BotsView botsView;
-    private CompanyDAO companyies;
+    private CompanyDAO companyies = new CompanyDAO();
+
+    private BotDAO botBBDD = new BotDAO();
 
     final float MIN_TEMPS = 0;
     final float MAX_TEMPS = 2000;
     public BotsViewController(BotsView botsView) {
         this.botsView = botsView;
+        actualitzaLlistatBots();
 
     }
 
@@ -27,7 +32,34 @@ public class BotsViewController implements ActionListener {
 
         if (e.getActionCommand().equals(botsView.CREATE_BOT_BUTTON_COMMAND)){ // boto de crear bot
                 afegeixBot();
+        }else{ // si no han clicat els altres botons, vol dir que ha estat el del id del boto correponent
+            System.out.println("Boto BOts premut amb ID "+e.getActionCommand());
+
+            ArrayList<Bot> llistatBots = botBBDD.getAllBots();
+            int posBot = 0;
+
+            for (int i = 0; i < llistatBots.size(); i++) {
+                if (e.getActionCommand().equals(String.valueOf(llistatBots.get(i).getBotId()))){
+                    posBot = i;
+                }
+            }
+            String nomCompanyia = new String();
+            ArrayList<Company> listnomCompanyia = companyies.getAllCompanies();
+
+            for (int i = 0; i < listnomCompanyia.size() ; i++) {
+                if (listnomCompanyia.get(i).getCompanyId() == llistatBots.get(posBot).getCompanyId()){
+                    nomCompanyia = listnomCompanyia.get(i).getCompanyName();
+                }
+            }
+
+
+            float percentCompra = llistatBots.get(posBot).getBuyPercentage();
+            float tempsActivacio = llistatBots.get(posBot).getActivationTime();
+            String nomBot = e.getActionCommand(); // caldra cnaviar pel nom del bot corresponent
+
+            botsView.refreshConfigurationBotView(nomCompanyia,percentCompra,tempsActivacio,nomBot);
         }
+
 
 
 
@@ -45,7 +77,7 @@ public class BotsViewController implements ActionListener {
             botsView.getTextFieldNameCompanyia();
 
             float tempsActivacio =  botsView.getTextFieldTempsActivacio();
-            int ValueSlider = botsView.getSliderPercetnCompra();
+            int valueSlider = botsView.getSliderPercetnCompra();
             String nameCompanyie = botsView.getTextFieldNameCompanyia();
             if (tempsActivacio <= MIN_TEMPS || tempsActivacio >= MAX_TEMPS){
 
@@ -53,7 +85,7 @@ public class BotsViewController implements ActionListener {
 
             }else{
 
-                companyies = new CompanyDAO();
+
 
                 ArrayList<Company> totesCompanyies = companyies.getAllCompanies(); // predelete
 
@@ -61,8 +93,15 @@ public class BotsViewController implements ActionListener {
                 if (idCompanyie == -1){
                     JOptionPane.showMessageDialog(null, "Aquesta Companyia no existeix");
                 }else{
-                    // codi per afegir bots
 
+
+                    // codi per afegir bots
+                    Bot bot = new Bot(0,valueSlider,tempsActivacio,idCompanyie);
+                    botBBDD.insertBot(bot);
+                    ArrayList<Bot> llistatBots = botBBDD.getAllBots();
+
+                    actualitzaLlistatBots();
+                    System.out.println("");
                 }
             }
 
@@ -89,4 +128,12 @@ public class BotsViewController implements ActionListener {
 
 
     }
+
+    private void actualitzaLlistatBots(){
+
+        botsView.refreshBotsListfromView(botBBDD.getAllBots());
+
+    }
+
+    public void refreshNewData(){ actualitzaLlistatBots(); }
 }

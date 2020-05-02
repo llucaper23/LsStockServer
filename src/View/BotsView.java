@@ -8,6 +8,7 @@ import javax.swing.border.TitledBorder;
 import javax.swing.table.DefaultTableModel;
 import java.awt.*;
 import java.awt.event.ActionListener;
+import java.util.ArrayList;
 
 public class BotsView extends JPanel {
 
@@ -30,9 +31,17 @@ public class BotsView extends JPanel {
     private ActionListener listener;
     //list of buttons -> els fem globals per a poder introduir a posteriori els acctions listeners
     private JButton jbCrearBot;
+
+
+
     private JTextField jtfCompanyia;
     private JTextField jtfTempsActivacio;
     private JSlider jsliPercentCompra;
+    private JPanel jpcontainer;
+
+
+
+    private JPanel jpTaula;
 
     public BotsView() {
 
@@ -55,7 +64,7 @@ public class BotsView extends JPanel {
 
         }
 
-        JPanel jpcontainer = new JPanel(new FlowLayout(FlowLayout.RIGHT, 0, 0));
+        jpcontainer = new JPanel(new FlowLayout(FlowLayout.RIGHT, 0, 0));
         jpcontainer.add(jpllistaUsers);
         JScrollPane jspUsers = new JScrollPane(jpcontainer,JScrollPane.VERTICAL_SCROLLBAR_AS_NEEDED, JScrollPane.HORIZONTAL_SCROLLBAR_NEVER);
 
@@ -96,9 +105,9 @@ public class BotsView extends JPanel {
             // omplim amb els dades del bot que tindrime guardades a la BD
 
             Object [] fila = new Object[3];
-            fila[0] = "<NOM COMPANYIA>";
-            fila[1] = "<PERCENTANT COMPRA>"+ "%";
-            fila[2] = "<TEMPS ACTIVACIO>" + "sec";
+            fila[0] = " ";
+            fila[1] = " "+ "%";
+            fila[2] = " " + "sec";
 
             model.addRow(fila);
 
@@ -108,13 +117,13 @@ public class BotsView extends JPanel {
             jscrollInfooBot.setMaximumSize(new Dimension(MAX_WIDTH_PAGE, MAX_HEIGHT_BOT));
 
             // configurem mides i etc..
-            JPanel jpTaula = new JPanel();
+            jpTaula = new JPanel();
             jpTaula.setLayout(new BorderLayout());
             jpTaula.add(jscrollInfooBot,BorderLayout.CENTER);
             jpTaula.setPreferredSize(new Dimension(MAX_WIDTH_PAGE, MAX_HEIGHT_BOT));
             jpTaula.setMaximumSize(new Dimension(MAX_WIDTH_PAGE, MAX_HEIGHT_BOT));
 
-            title = BorderFactory.createTitledBorder(BorderFactory.createEmptyBorder(),"Confguracio - Bot:"+"<NOM_BOT>");// caldra posar el nom del usuari aqui
+            title = BorderFactory.createTitledBorder(BorderFactory.createEmptyBorder(),"Confguracio - Bot:"+"Siusplau Selecciona un Bot");// caldra posar el nom del usuari aqui
             title.setTitleJustification(TitledBorder.CENTER);
             title.setTitlePosition(TitledBorder.ABOVE_TOP);
 
@@ -243,7 +252,76 @@ public class BotsView extends JPanel {
         this.add(jpUsuaris,BorderLayout.EAST);
         this.add(jpBotInfo,BorderLayout.CENTER);
     }
-    public void registerController(ActionListener listener){ jbCrearBot.addActionListener(listener); }
+
+    public void refreshConfigurationBotView(String nomCompanyia, float percentCompra, float tempsActivacio, String nomBot){
+
+        JTable jtabla = new JTable();
+        DefaultTableModel model = (DefaultTableModel)jtabla.getModel();
+        model.addColumn("Companyia");
+        model.addColumn("Percentatge de Compra");
+        model.addColumn("Temps d'activacio");
+
+        // omplim amb els dades del bot que tindrime guardades a la BD
+
+        Object [] fila = new Object[3];
+        fila[0] = nomCompanyia; // nom Companyia
+        fila[1] = percentCompra+ "%"; // percent compta
+        fila[2] = tempsActivacio + "sec"; // temps Activacio
+
+        model.addRow(fila);
+
+        // creeem scroll per a que surtin les titols sombrejats
+        JScrollPane jscrollInfooBot = new JScrollPane(jtabla,JScrollPane.VERTICAL_SCROLLBAR_AS_NEEDED, JScrollPane.HORIZONTAL_SCROLLBAR_NEVER);
+        jscrollInfooBot.setPreferredSize(new Dimension(MAX_WIDTH_PAGE, MAX_HEIGHT_BOT));
+        jscrollInfooBot.setMaximumSize(new Dimension(MAX_WIDTH_PAGE, MAX_HEIGHT_BOT));
+
+        // configurem mides i etc..
+        jpTaula.removeAll();
+        jpTaula.setLayout(new BorderLayout());
+        jpTaula.add(jscrollInfooBot,BorderLayout.CENTER);
+
+        TitledBorder title = BorderFactory.createTitledBorder(BorderFactory.createEmptyBorder(), "Confguracio - Bot:" + nomBot);// caldra posar el nom del usuari aqui
+        title.setTitleJustification(TitledBorder.CENTER);
+        title.setTitlePosition(TitledBorder.ABOVE_TOP);
+
+        jpTaula.setBorder(title);
+        jpTaula.revalidate();
+        jpTaula.repaint();
+
+    }
+
+
+    public void refreshBotsListfromView(ArrayList<Bot> llistatBots){
+
+        jpcontainer.removeAll();
+
+        JPanel jpllistaUsers = new JPanel();
+        jpllistaUsers.setLayout(new BoxLayout(jpllistaUsers,BoxLayout.Y_AXIS));
+
+        for (int i = 0; i < llistatBots.size(); i++) {       // caldra canviarho pels size de bots que tinguem i fer els acctions listeneres
+            JButton bottnet = new JButton("ID: "+llistatBots.get(i).getBotId());
+            bottnet.setActionCommand(String.valueOf(llistatBots.get(i).getBotId()));
+            bottnet.addActionListener(listener);
+            bottnet.setPreferredSize(new Dimension(325,50));
+            bottnet.setMaximumSize(new Dimension(325,50));
+            jpllistaUsers.add(bottnet);
+
+        }
+
+        jpcontainer.add(jpllistaUsers);
+        jpcontainer.revalidate();
+        jpcontainer.repaint();
+    }
+
+
+
+
+
+
+    public void registerController(ActionListener listener){
+        jbCrearBot.addActionListener(listener);
+        this.listener = listener;
+    }
 
     public  String getTextFieldNameCompanyia(){ return  jtfCompanyia.getText(); }
     public  float getTextFieldTempsActivacio(){ return  Float.parseFloat(jtfTempsActivacio.getText()); }

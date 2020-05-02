@@ -18,8 +18,8 @@ public class Main {
         MainViewController mvc = new MainViewController(mainView, server);
         Top10ViewController t10c = new Top10ViewController(top10View);
         BotsViewController botsVC = new BotsViewController(botsView);
-
         botsView.registerController(botsVC);
+        botsVC.refreshNewData();        // necesari per a l'incorporacio dels listneres al ultim lllistat de bots creats
 
 
 
