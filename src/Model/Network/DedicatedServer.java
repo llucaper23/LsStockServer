@@ -83,6 +83,20 @@ public class DedicatedServer extends Thread {
                         objectOut.flush();
                     }
                 }
+                if (option == ALL_COMPANIES){
+                    ArrayList<Company> companies = companyDAO.getAllCompanies();
+                    if (companies == null){
+                        objectOut.writeInt(-1);
+                        objectOut.flush();
+                    }else{
+                        objectOut.writeInt(companies.size());
+                        objectOut.flush();
+                        for (int i = 0; i < companies.size(); i++) {
+                            objectOut.writeObject(companies.get(i));
+                            objectOut.flush();
+                        }
+                    }
+                }
                 if (option == LOGOUT) {
                    userDAO.logOut(user);
                 }

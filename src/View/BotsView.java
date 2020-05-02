@@ -1,11 +1,13 @@
 package View;
 
+import Model.Bot;
 import Model.CompanyiesModel;
 
 import javax.swing.*;
 import javax.swing.border.TitledBorder;
 import javax.swing.table.DefaultTableModel;
 import java.awt.*;
+import java.awt.event.ActionListener;
 
 public class BotsView extends JPanel {
 
@@ -21,6 +23,16 @@ public class BotsView extends JPanel {
 
     //Action's Listenners
     public static final String CREATE_BOT_BUTTON_COMMAND = "CREATE_BOT_BUTTON_COMMAND";
+
+
+
+    //Vars
+    private ActionListener listener;
+    //list of buttons -> els fem globals per a poder introduir a posteriori els acctions listeners
+    private JButton jbCrearBot;
+    private JTextField jtfCompanyia;
+    private JTextField jtfTempsActivacio;
+    private JSlider jsliPercentCompra;
 
     public BotsView() {
 
@@ -153,12 +165,12 @@ public class BotsView extends JPanel {
             final JPanel jpCompanyia = new JPanel(new GridLayout(1,2));
             jpCreacioBot.add(jpCompanyia);
 
-            final JLabel jlbCompanyia = new JLabel("Companyia");
+            JLabel jlbCompanyia = new JLabel("Companyia");
             jlbCompanyia.setHorizontalAlignment(JLabel.LEFT);  //JPasswordField
             jpCompanyia.add(jlbCompanyia);
 
 
-            JTextField jtfCompanyia = new JTextField("");
+            jtfCompanyia = new JTextField("");
             jtfCompanyia.setEditable(true);
             jpCompanyia.add(jtfCompanyia);
             jpCompanyia.setPreferredSize(new Dimension(800, 40));
@@ -173,7 +185,7 @@ public class BotsView extends JPanel {
             jpPercentCompra.add(jlbPercentatgeCompra);
 
 
-            JSlider jsliPercentCompra = new JSlider(JSlider.HORIZONTAL,0,100,50);
+            jsliPercentCompra = new JSlider(JSlider.HORIZONTAL,0,100,50);
             jsliPercentCompra.setMinorTickSpacing(5);
             jsliPercentCompra.setMajorTickSpacing(20);
             jsliPercentCompra.setPaintTicks(true);
@@ -189,12 +201,12 @@ public class BotsView extends JPanel {
             final JPanel jpTempsAct = new JPanel(new GridLayout(1,2));
             jpCreacioBot.add(jpTempsAct);
 
-            final JLabel jlbTempsActivacio = new JLabel("Temps d'activacio");
+            JLabel jlbTempsActivacio = new JLabel("Temps d'activacio");
             jlbTempsActivacio.setHorizontalAlignment(JLabel.LEFT);  //JPasswordField
             jpTempsAct.add(jlbTempsActivacio);
 
 
-            JTextField jtfTempsActivacio = new JTextField("");
+            jtfTempsActivacio = new JTextField("");
             jtfTempsActivacio.setEditable(true);
             jpTempsAct.add(jtfTempsActivacio);
             jpTempsAct.setPreferredSize(new Dimension(800, 40));
@@ -207,8 +219,9 @@ public class BotsView extends JPanel {
             JPanel jpBotoBot = new JPanel();
             jpBotoBot.setLayout(new BorderLayout());
 
-            JButton jbCrearBot = new JButton("CREAR BOT");
+            jbCrearBot = new JButton("CREAR BOT");
             jbCrearBot.setActionCommand(CREATE_BOT_BUTTON_COMMAND);
+            jbCrearBot.addActionListener(listener);
 
             jpBotoBot.add(jbCrearBot,BorderLayout.CENTER);
             jpBotoBot.setPreferredSize(new Dimension(200, 60));
@@ -230,4 +243,17 @@ public class BotsView extends JPanel {
         this.add(jpUsuaris,BorderLayout.EAST);
         this.add(jpBotInfo,BorderLayout.CENTER);
     }
+    public void registerController(ActionListener listener){ jbCrearBot.addActionListener(listener); }
+
+    public  String getTextFieldNameCompanyia(){ return  jtfCompanyia.getText(); }
+    public  float getTextFieldTempsActivacio(){ return  Float.parseFloat(jtfTempsActivacio.getText()); }
+    public  int getSliderPercetnCompra(){ return jsliPercentCompra.getValue()  ;}
+
+    public  void resetTextFieldNameCompanyia(){ jtfCompanyia.setText(""); }
+    public  void resetTextFieldTempsActivacio(){ jtfTempsActivacio.setText(""); }
+    public void resetSliderPercetnCompra(){jsliPercentCompra.setValue(50);}
+
+
+
+
 }

@@ -85,4 +85,28 @@ public class CompanyDAO {
             e.printStackTrace();
         }
     }
+
+    public int getCompanyId(String companyName){
+        int companyId = -1;
+        try{
+            String query = "SELECT c.company_id FROM Company as c WHERE c.company_name = '" + companyName + "';";
+            ResultSet rs = DBConnector.getInstance().selectQuery(query);
+            while (rs.next()){
+                companyId = rs.getInt("company_id");
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+            return -1;
+        }
+        return companyId;
+    }
+
+    public void insertCompany(Company company){
+        try {
+            String query = "INSERT INTO Company (company_name, share_price) VALUES (" + company.toString() + ");";
+            DBConnector.getInstance().insertQuery(query);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
 }

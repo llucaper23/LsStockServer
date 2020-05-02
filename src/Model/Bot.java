@@ -50,8 +50,7 @@ public class Bot implements Serializable {
 
     @Override
     public String toString() {
-        return botId +
-                ", " + buyPercentage +
+        return buyPercentage +
                 ", " + activationTime +
                 ", " + companyId;
     }
