@@ -69,7 +69,7 @@ public class BotDAO {
 
     public void deleteBot(Bot bot){
         try {
-            String query = "DELETE FROM Bot WHERE bot_id = " + bot.getBotId();
+            String query = "DELETE FROM Bot WHERE bot_id = " + bot.getBotId() + ";";
             DBConnector.getInstance().deleteQuery(query);
         }catch (Exception e){
             e.printStackTrace();
