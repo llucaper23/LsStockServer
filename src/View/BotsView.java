@@ -304,6 +304,42 @@ public class BotsView extends JPanel {
 
     }
 
+    public void esborraConfigurationBotView(){
+
+        JTable jtabla = new JTable();
+        DefaultTableModel model = (DefaultTableModel)jtabla.getModel();
+        model.addColumn("Companyia");
+        model.addColumn("Percentatge de Compra");
+        model.addColumn("Temps d'activacio");
+
+        // omplim amb els dades del bot que tindrime guardades a la BD
+
+        Object [] fila = new Object[3];
+        fila[0] = " ";
+        fila[1] = " "+ "%";
+        fila[2] = " " + "sec";
+
+        model.addRow(fila);
+
+        // creeem scroll per a que surtin les titols sombrejats
+        JScrollPane jscrollInfooBot = new JScrollPane(jtabla,JScrollPane.VERTICAL_SCROLLBAR_AS_NEEDED, JScrollPane.HORIZONTAL_SCROLLBAR_NEVER);
+        jscrollInfooBot.setPreferredSize(new Dimension(MAX_WIDTH_PAGE, MAX_HEIGHT_BOT));
+        jscrollInfooBot.setMaximumSize(new Dimension(MAX_WIDTH_PAGE, MAX_HEIGHT_BOT));
+
+        // configurem mides i etc..
+        jpTaula.removeAll();
+        jpTaula.setLayout(new BorderLayout());
+        jpTaula.add(jscrollInfooBot,BorderLayout.CENTER);
+
+        TitledBorder title = BorderFactory.createTitledBorder(BorderFactory.createEmptyBorder(), "Confguracio - Bot:" + "Siusplau Selecciona un Bot");// caldra posar el nom del usuari aqui
+        title.setTitleJustification(TitledBorder.CENTER);
+        title.setTitlePosition(TitledBorder.ABOVE_TOP);
+
+        jpTaula.setBorder(title);
+        jpTaula.revalidate();
+        jpTaula.repaint();
+
+    }
 
     public void refreshBotsListfromView(ArrayList<Bot> llistatBots){
 
@@ -318,6 +354,19 @@ public class BotsView extends JPanel {
             bottnet.addActionListener(listener);
             bottnet.setPreferredSize(new Dimension(325,50));
             bottnet.setMaximumSize(new Dimension(325,50));
+            if(llistatBots.get(i).isActive()){
+                bottnet.setBackground(Color.GREEN);
+                // these next two lines do the magic..
+                bottnet.setContentAreaFilled(false);
+                bottnet.setOpaque(true);
+
+            }else{
+                bottnet.setBackground(Color.RED);
+                // these next two lines do the magic..
+                bottnet.setContentAreaFilled(false);
+                bottnet.setOpaque(true);
+
+            }
             jpllistaUsers.add(bottnet);
 
         }

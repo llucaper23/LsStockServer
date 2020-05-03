@@ -54,6 +54,9 @@ public class BotsViewController implements ActionListener {
                     ArrayList<Bot> llistatBots = botBBDD.getAllBots();
                     Bot botActual = llistatBots.get(botSelecionat);
                     botBBDD.deleteBot(botActual);
+                    botSelecionat = -1;
+                    actualitzaLlistatBots();
+                    botsView.esborraConfigurationBotView();// caldra cridar al clear de la vista de les adades de la
                 }
                 break;
             default:
@@ -158,6 +161,8 @@ public class BotsViewController implements ActionListener {
         Bot botActual = llistatBots.get(botSelecionat);
         botActual.setActive(estat);
         botBBDD.changeBotStatus(botActual);
+
+        actualitzaLlistatBots();
 
         // falta cridar a la funcio que getiona tots el threads del bots
     }
