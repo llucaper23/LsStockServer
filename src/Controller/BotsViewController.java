@@ -50,8 +50,10 @@ public class BotsViewController implements ActionListener {
                 break;
             case BotsView.DELETE_BOT_BUTTON_COMMAND:
                 if (botSelecionat != -1){
-                    cambiarEstatBot(false);
-                    // faltara cridar a la funcio per a elimar el bot
+                    cambiarEstatBot(false); // primer el desactivem i despres l'eliminem
+                    ArrayList<Bot> llistatBots = botBBDD.getAllBots();
+                    Bot botActual = llistatBots.get(botSelecionat);
+                    botBBDD.deleteBot(botActual);
                 }
                 break;
             default:
@@ -151,6 +153,7 @@ public class BotsViewController implements ActionListener {
     }
     private void cambiarEstatBot(Boolean estat){
         ArrayList<Bot> llistatBots = botBBDD.getAllBots();
+        System.out.println("F");
         Bot botActual = llistatBots.get(botSelecionat);
         botActual.setActive(estat);
         botBBDD.changeBotStatus(botActual);

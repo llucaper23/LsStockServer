@@ -12,7 +12,7 @@ public class BotDAO {
 
     public void insertBot(Bot bot){
         try {
-            String query = "INSERT INTO BOT (buy_percentage, activation_time, company_id, isActive) VALUES (" + bot.toString() + ");";
+            String query = "INSERT INTO Bot (buy_percentage, activation_time, company_id, isActive) VALUES (" + bot.toString() + ");";
             DBConnector.getInstance().insertQuery(query);
         } catch (Exception e) {
             e.printStackTrace();
@@ -21,7 +21,7 @@ public class BotDAO {
 
     public ArrayList<Bot> getAllBots(){
         try{
-            String query = "SELECT * FROM BOT;";
+            String query = "SELECT * FROM Bot;";
             ResultSet rs = DBConnector.getInstance().selectQuery(query);
             ArrayList<Bot> bots = new ArrayList<>();
             while (rs.next()){
@@ -41,7 +41,7 @@ public class BotDAO {
 
     public ArrayList<Bot> getAllBotsFromCompany(int company_id){
         try{
-            String query = "SELECT * FROM BOT WHERE company_id = " + company_id + ";";
+            String query = "SELECT * FROM Bot WHERE company_id = " + company_id + ";";
             ResultSet rs = DBConnector.getInstance().selectQuery(query);
             ArrayList<Bot> bots = new ArrayList<>();
             while (rs.next()){
@@ -60,7 +60,7 @@ public class BotDAO {
 
     public void changeBotStatus(Bot bot){
         try{
-            String query = "UPDATE BOT SET isActive = " + bot.isActive() + "WHERE company_id = " + bot.getBotId() + ";";
+            String query = "UPDATE Bot SET isActive = " + bot.isActive() + "WHERE company_id = " + bot.getBotId() + ";";
             DBConnector.getInstance().updateQuery(query);
         } catch (Exception e){
             e.printStackTrace();
@@ -69,7 +69,7 @@ public class BotDAO {
 
     public void deleteBot(Bot bot){
         try {
-            String query = "DELETE FROM BOT WHERE bot_id = " + bot.getBotId();
+            String query = "DELETE FROM Bot WHERE bot_id = " + bot.getBotId();
             DBConnector.getInstance().deleteQuery(query);
         }catch (Exception e){
             e.printStackTrace();
