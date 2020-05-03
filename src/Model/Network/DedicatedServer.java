@@ -100,6 +100,7 @@ public class DedicatedServer extends Thread {
                 if (option == LOGOUT) {
                    userDAO.logOut(user);
                 }
+                /*
                 if (option == UPDATE_MONEY) {
                     User actualUser = (User) objectIn.readObject();
                     float updatedMoney = objectIn.readFloat();
@@ -121,6 +122,7 @@ public class DedicatedServer extends Thread {
 
                     //??? - actualitzar info a bbdd
                 }
+                 */
             }
         } catch (IOException e1) {
             // en cas derror aturem el servidor dedicat
