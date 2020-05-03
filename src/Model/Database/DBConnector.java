@@ -108,6 +108,7 @@ public class DBConnector {
             s.executeUpdate(query);
 
         } catch (SQLException ex) {
+            ex.printStackTrace();
             System.out.println("Problema al modificar --> " + ex.getSQLState());
         }
     }
