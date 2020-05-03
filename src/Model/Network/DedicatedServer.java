@@ -2,6 +2,7 @@ package Model.Network;
 
 import Model.Company;
 import Model.Database.DAO.*;
+import Model.Message;
 import Model.User;
 
 import java.io.IOException;
@@ -65,39 +66,34 @@ public class DedicatedServer extends Thread {
     public void run() {
         try {
             while (isOn) {
-                int option = objectIn.read();
-                if (option == REGISTER_REQUEST){
-                    User registerUser = (User) objectIn.readObject();
-                    boolean registerOk = userDAO.registerUser(registerUser);
-                    objectOut.writeBoolean(registerOk);
+                Message message = (Message) objectIn.readObject();
+                if (message.getRequestType() == REGISTER_REQUEST){
+                    message.setOk(userDAO.registerUser(message.getUser()));
+                    objectOut.writeObject(message);
                     objectOut.flush();
                 }
-                if (option == LOGIN_REQUEST) {
-                    User userLogin = (User) objectIn.readObject();
-                    boolean loginOk = userDAO.canUserLogin(userLogin);
-                    objectOut.writeBoolean(loginOk);
-                    objectOut.flush();
-                    if (loginOk){
-                        this.user = userDAO.getUser(userLogin.getNickName(), userLogin.getEmail());
-                        objectOut.writeObject(user);
+                if (message.getRequestType() == LOGIN_REQUEST) {
+                    message.setOk(userDAO.canUserLogin(message.getUser()));
+                    if (message.isOk()){
+                        this.user = userDAO.getUser(message.getUser().getNickName(), message.getUser().getEmail());
+                        message.setUser(this.user);
+                        objectOut.writeObject(message);
                         objectOut.flush();
                     }
                 }
-                if (option == ALL_COMPANIES){
+                if (message.getRequestType() == ALL_COMPANIES){
                     ArrayList<Company> companies = companyDAO.getAllCompanies();
                     if (companies == null){
-                        objectOut.writeInt(-1);
+                        message.setOk(false);
+                        objectOut.writeObject(message);
                         objectOut.flush();
                     }else{
-                        objectOut.writeInt(companies.size());
+                        message.setCompanyList(companies);
+                        objectOut.writeObject(message);
                         objectOut.flush();
-                        for (int i = 0; i < companies.size(); i++) {
-                            objectOut.writeObject(companies.get(i));
-                            objectOut.flush();
-                        }
                     }
                 }
-                if (option == LOGOUT) {
+                if (message.getRequestType() == LOGOUT) {
                    userDAO.logOut(user);
                 }
                 /*
