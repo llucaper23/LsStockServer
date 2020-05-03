@@ -123,6 +123,7 @@ public class BotsViewController implements ActionListener {
                     botBBDD.insertBot(bot);
                     ArrayList<Bot> llistatBots = botBBDD.getAllBots();
 
+
                     actualitzaLlistatBots();
                     System.out.println("");
                 }
