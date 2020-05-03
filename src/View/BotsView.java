@@ -24,6 +24,9 @@ public class BotsView extends JPanel {
 
     //Action's Listenners
     public static final String CREATE_BOT_BUTTON_COMMAND = "CREATE_BOT_BUTTON_COMMAND";
+    public static final String ACTIVAR_BOT_BUTTON_COMMAND = "ACTVAR_BOT_BUTTON_COMMAND";
+    public static final String DESACTIVAR_BOT_BUTTON_COMMAND = "DESACTIVAR_BOT_BUTTON_COMMAND";
+    public static final String DELETE_BOT_BUTTON_COMMAND = "DELETE_BOT_BUTTON_COMMAND";
 
 
 
@@ -31,6 +34,9 @@ public class BotsView extends JPanel {
     private ActionListener listener;
     //list of buttons -> els fem globals per a poder introduir a posteriori els acctions listeners
     private JButton jbCrearBot;
+    private JButton jbActivarBot;
+    private JButton jbDesactivarBot;
+    private JButton jbDeleteBot;
 
 
 
@@ -135,11 +141,19 @@ public class BotsView extends JPanel {
 
             jpBotonsIntermedis.setLayout(new BoxLayout(jpBotonsIntermedis,BoxLayout.X_AXIS));
 
-            JButton jbActivarBot = new JButton(ACTIVAR_BOT);
+            jbActivarBot = new JButton(ACTIVAR_BOT);
+            jbActivarBot.setActionCommand(ACTIVAR_BOT_BUTTON_COMMAND);
+            jbActivarBot.addActionListener(listener);
             jbActivarBot.setPreferredSize(new Dimension(BOTONS_CENTRALS_WIDTH,BOTONS_CENTRALS_HEIGHT));
-            JButton jbDesactivarBot = new JButton(DESACTIVAR_BOT);
+
+            jbDesactivarBot = new JButton(DESACTIVAR_BOT);
+            jbDesactivarBot.setActionCommand(DESACTIVAR_BOT_BUTTON_COMMAND);
+            jbDesactivarBot.addActionListener(listener);
             jbDesactivarBot.setPreferredSize(new Dimension(BOTONS_CENTRALS_WIDTH,BOTONS_CENTRALS_HEIGHT));
-            JButton jbDeleteBot = new JButton(DELETE_BOT);
+
+            jbDeleteBot = new JButton(DELETE_BOT);
+            jbDeleteBot.setActionCommand(DELETE_BOT_BUTTON_COMMAND);
+            jbDeleteBot.addActionListener(listener);
             jbDeleteBot.setPreferredSize(new Dimension(BOTONS_CENTRALS_WIDTH,BOTONS_CENTRALS_HEIGHT));
 
 
@@ -320,6 +334,10 @@ public class BotsView extends JPanel {
 
     public void registerController(ActionListener listener){
         jbCrearBot.addActionListener(listener);
+        jbActivarBot.addActionListener(listener);
+        jbDesactivarBot.addActionListener(listener);
+        jbDeleteBot.addActionListener(listener);
+
         this.listener = listener;
     }
 
