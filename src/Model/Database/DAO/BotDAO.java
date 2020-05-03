@@ -57,4 +57,13 @@ public class BotDAO {
             return null;
         }
     }
+
+    public void changeBotStatus(Bot bot){
+        try{
+            String query = "UPDATE BOT SET isActive = " + bot.isActive() + "WHERE company_id = " + bot.getBotId() + ";";
+            DBConnector.getInstance().updateQuery(query);
+        } catch (Exception e){
+            e.printStackTrace();
+        }
+    }
 }
