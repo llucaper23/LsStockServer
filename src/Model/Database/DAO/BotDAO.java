@@ -12,7 +12,7 @@ public class BotDAO {
 
     public void insertBot(Bot bot){
         try {
-            String query = "INSERT INTO BOT (buy_percentage, activation_time, company_id) VALUES (" + bot.toString() + ");";
+            String query = "INSERT INTO BOT (buy_percentage, activation_time, company_id, isActive) VALUES (" + bot.toString() + ");";
             DBConnector.getInstance().insertQuery(query);
         } catch (Exception e) {
             e.printStackTrace();
@@ -29,7 +29,8 @@ public class BotDAO {
                 float buy_percentage = rs.getFloat("buy_percentage");
                 float activation_time = rs.getFloat("activation_time");
                 int company_id = rs.getInt("company_id");
-                bots.add(new Bot(bot_id,buy_percentage,activation_time,company_id));
+                boolean isActive = rs.getBoolean("isActive");
+                bots.add(new Bot(bot_id,buy_percentage,activation_time,company_id, isActive));
             }
             return bots;
         } catch (SQLException e) {
@@ -47,7 +48,8 @@ public class BotDAO {
                 int bot_id = rs.getInt("bot_id");
                 float buy_percentage = rs.getFloat("buy_percentage");
                 float activation_time = rs.getFloat("activation_time");
-                bots.add(new Bot(bot_id,buy_percentage,activation_time,company_id));
+                boolean isActive = rs.getBoolean("isActive");
+                bots.add(new Bot(bot_id,buy_percentage,activation_time,company_id, isActive));
             }
             return bots;
         } catch (SQLException e) {

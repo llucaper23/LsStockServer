@@ -40,6 +40,7 @@ CREATE TABLE Bot(
     buy_percentage FLOAT,
     activation_time FLOAT,
     company_id INT,
+    isActive boolean,
     PRIMARY KEY (bot_id),
     FOREIGN KEY (company_id) REFERENCES Company (company_id)
 );
