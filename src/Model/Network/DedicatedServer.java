@@ -96,14 +96,13 @@ public class DedicatedServer extends Thread {
                 if (message.getRequestType() == LOGOUT) {
                    userDAO.logOut(user);
                 }
-                /*
-                if (option == UPDATE_MONEY) {
-                    User actualUser = (User) objectIn.readObject();
-                    float updatedMoney = objectIn.readFloat();
 
-                    //??? - actualitzar el valor de updatedMoney a actualUser. Buscar-lo entre tots users registrats
-
+                if (message.getRequestType() == UPDATE_MONEY) {
+                    message = (Message) objectIn.readObject();
+                    User user = message.getUser();
+                    userDAO.setMoney(user);
                 }
+                /*
                 if (option == SELL_SHARES) {
                     User actualUser = (User) objectIn.readObject();
                     Company actualCompany = (Company) objectIn.readObject();
@@ -117,8 +116,8 @@ public class DedicatedServer extends Thread {
                     float boughtShares = objectIn.readFloat();
 
                     //??? - actualitzar info a bbdd
-                }
-                 */
+                }*/
+
             }
         } catch (IOException e1) {
             // en cas derror aturem el servidor dedicat
