@@ -60,7 +60,7 @@ public class BotDAO {
 
     public void changeBotStatus(Bot bot){
         try{
-            String query = "UPDATE Bot SET isActive = " + bot.isActive() + " WHERE company_id = " + bot.getBotId() + ";";
+            String query = "UPDATE Bot SET isActive = " + bot.isActive() + " WHERE bot_id = " + bot.getBotId() + ";";
             DBConnector.getInstance().updateQuery(query);
         } catch (Exception e){
             e.printStackTrace();
