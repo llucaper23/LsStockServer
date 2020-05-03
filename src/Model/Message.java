@@ -8,13 +8,19 @@ public class Message implements Serializable {
     private int requestType;
     private ArrayList<Company> companyList;
     private User user;
+    private Company company;
+    private UserCompany userCompany;
+    private ArrayList<UserCompany> userCompanies;
     private boolean ok;
 
-    public Message(int requestType, ArrayList<Company> companyList, User user, boolean ok) {
+    public Message(int requestType, ArrayList<Company> companyList, User user, boolean ok, Company company, UserCompany userCompany, ArrayList<UserCompany> userCompanies) {
         this.requestType = requestType;
         this.companyList = companyList;
         this.user = user;
         this.ok = ok;
+        this.company = company;
+        this.userCompany = userCompany;
+        this.userCompanies = userCompanies;
     }
 
     public int getRequestType() {
@@ -47,5 +53,29 @@ public class Message implements Serializable {
 
     public void setOk(boolean ok) {
         this.ok = ok;
+    }
+
+    public Company getCompany() {
+        return company;
+    }
+
+    public void setCompany(Company company) {
+        this.company = company;
+    }
+
+    public UserCompany getUserCompany() {
+        return userCompany;
+    }
+
+    public void setUserCompany(UserCompany userCompany) {
+        this.userCompany = userCompany;
+    }
+
+    public ArrayList<UserCompany> getUserCompanies() {
+        return userCompanies;
+    }
+
+    public void setUserCompanies(ArrayList<UserCompany> userCompanies) {
+        this.userCompanies = userCompanies;
     }
 }

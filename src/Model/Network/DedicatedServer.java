@@ -4,6 +4,7 @@ import Model.Company;
 import Model.Database.DAO.*;
 import Model.Message;
 import Model.User;
+import Model.UserCompany;
 
 import java.io.IOException;
 import java.io.ObjectInputStream;
@@ -98,25 +99,24 @@ public class DedicatedServer extends Thread {
                 }
 
                 if (message.getRequestType() == UPDATE_MONEY) {
-                    message = (Message) objectIn.readObject();
                     User user = message.getUser();
                     userDAO.setMoney(user);
+                    message.setOk(true);
+                    objectOut.writeObject(message);
                 }
-                /*
-                if (option == SELL_SHARES) {
-                    User actualUser = (User) objectIn.readObject();
-                    Company actualCompany = (Company) objectIn.readObject();
-                    float soldShares = objectIn.readFloat();
 
-                    //??? - actualitzar info a bbdd
+                if (message.getRequestType() == SELL_SHARES) {
+                    UserCompany userCompany = message.getUserCompany();
+                    userCompanyDAO.insertBuy(userCompany);
+                    //que fem al vendre accions a la BBDD????
                 }
-                if (option == BUY_SHARES) {
-                    User actualUser = (User) objectIn.readObject();
-                    Company actualCompany = (Company) objectIn.readObject();
-                    float boughtShares = objectIn.readFloat();
 
-                    //??? - actualitzar info a bbdd
-                }*/
+                if (message.getRequestType() == BUY_SHARES) {
+                    UserCompany userCompany = message.getUserCompany();
+                    userCompanyDAO.insertBuy(userCompany);
+                    message.setOk(true);
+                    objectOut.writeObject(message);
+                }
 
             }
         } catch (IOException e1) {

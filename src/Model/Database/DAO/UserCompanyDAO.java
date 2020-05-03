@@ -19,6 +19,7 @@ public class UserCompanyDAO {
         }
     }
 
+
     public ArrayList<UserCompany> getAllCompaniesFromUser(User user){
         try {
             ArrayList<UserCompany> userCompanies = new ArrayList<>();
