@@ -1,6 +1,7 @@
 package Controller;
 
 import Model.Bot;
+import Model.BotThread;
 import Model.Company;
 import Model.Database.DAO.BotDAO;
 import Model.Database.DAO.CompanyDAO;
@@ -17,6 +18,7 @@ public class BotsViewController implements ActionListener {
     private BotsView botsView;
     private CompanyDAO companyies = new CompanyDAO();
     private int botSelecionat = -1;
+    private ArrayList<BotThread> llistatThreadsBots;
 
 
     private BotDAO botBBDD = new BotDAO();
@@ -26,13 +28,14 @@ public class BotsViewController implements ActionListener {
     public BotsViewController(BotsView botsView) {
         this.botsView = botsView;
         actualitzaLlistatBots();
-
+        llistatThreadsBots = new ArrayList<BotThread>();
+        CarregaThreadsBots();
 
     }
 
     @Override
     public void actionPerformed(ActionEvent e) {
-
+        try{
         switch(e.getActionCommand()) {
             case BotsView.CREATE_BOT_BUTTON_COMMAND:
                 afegeixBot();
@@ -50,10 +53,26 @@ public class BotsViewController implements ActionListener {
                 break;
             case BotsView.DELETE_BOT_BUTTON_COMMAND:
                 if (botSelecionat != -1){
-                    cambiarEstatBot(false); // primer el desactivem i despres l'eliminem
+
+                        cambiarEstatBot(false); // primer el desactivem i despres l'eliminem
+
                     ArrayList<Bot> llistatBots = botBBDD.getAllBots();
                     Bot botActual = llistatBots.get(botSelecionat);
                     botBBDD.deleteBot(botActual);
+                    int posbotEliminar = -1;
+                    for (int i = 0; i <llistatThreadsBots.size() ; i++) {
+                        if (llistatThreadsBots.get(i).getBotid() == botActual.getBotId()){
+
+                            llistatThreadsBots.get(i).getIdThread().interrupt();                            // s'elimina aixins no em deixa ferho cridant  ales meves funcions
+                            posbotEliminar = i;
+                        }
+
+                    }
+                    llistatThreadsBots.remove(posbotEliminar);
+
+
+
+
                     botSelecionat = -1;
                     actualitzaLlistatBots();
                     botsView.esborraConfigurationBotView();// caldra cridar al clear de la vista de les adades de la
@@ -90,6 +109,10 @@ public class BotsViewController implements ActionListener {
                 botsView.refreshConfigurationBotView(nomCompanyia,percentCompra,tempsActivacio,nomBot);
         }
 
+        } catch (InterruptedException ex) {
+            ex.printStackTrace();
+        }
+
     }
 
 
@@ -120,14 +143,24 @@ public class BotsViewController implements ActionListener {
                     JOptionPane.showMessageDialog(null, "Aquesta Companyia no existeix");
                 }else{
 
-
+                    Company companyia = companyies.getCompany(idCompanyie); // comapnyia que li passarem al bot
                     // codi per afegir bots
                     Bot bot = new Bot(0,valueSlider,tempsActivacio,idCompanyie,true);  // calcdra caniar en true per false si volem que en crear el bot estigui desactivat
                     botBBDD.insertBot(bot);
                     ArrayList<Bot> llistatBots = botBBDD.getAllBots();
 
+                    // creeem Thread del Bot amb totes les seves dades
+
+                    BotThread nouThreadBotDades = new BotThread(bot.getBotId(),new BotsBuyThread(tempsActivacio,valueSlider,companyia));
+
+                    nouThreadBotDades.getIdThread().run();
+                    llistatThreadsBots.add(nouThreadBotDades);    // afegim totes les dades del thread del bot (id bot, i thread a la llista de thread no eliminats)
+
 
                     actualitzaLlistatBots();
+
+
+
                     System.out.println("");
                 }
             }
@@ -155,12 +188,30 @@ public class BotsViewController implements ActionListener {
 
 
     }
-    private void cambiarEstatBot(Boolean estat){
+    private void cambiarEstatBot(Boolean estat) throws InterruptedException {
         ArrayList<Bot> llistatBots = botBBDD.getAllBots();
         System.out.println("F");
         Bot botActual = llistatBots.get(botSelecionat);
         botActual.setActive(estat);
         botBBDD.changeBotStatus(botActual);
+
+
+        // modifiquem thread bots
+        if(estat){      // cal el volguem a activar
+            for (int i = 0; i <llistatThreadsBots.size() ; i++) {
+                if (llistatThreadsBots.get(i).getBotid() == botActual.getBotId()){
+                    llistatThreadsBots.get(i).getIdThread().wait();
+                }
+            }
+        }else{      // cas el volguem posar en suspens
+
+            for (int i = 0; i <llistatThreadsBots.size() ; i++) {
+                if (llistatThreadsBots.get(i).getBotid() == botActual.getBotId()){
+                    llistatThreadsBots.get(i).getIdThread().notify();
+                }
+            }
+        }
+
 
         actualitzaLlistatBots();
 
@@ -170,6 +221,26 @@ public class BotsViewController implements ActionListener {
     private void actualitzaLlistatBots(){
 
         botsView.refreshBotsListfromView(botBBDD.getAllBots());
+
+    }
+
+    private void CarregaThreadsBots(){
+
+
+        for (int i = 0; i < botBBDD.getAllBots().size(); i++) {
+            Company companyia = companyies.getCompany(botBBDD.getAllBots().get(i).getCompanyId()); // comapnyia que li passarem al bot
+            // codi per afegir bots
+
+
+            // creeem Thread del Bot amb totes les seves dades
+
+            BotThread nouThreadBotDades = new BotThread(botBBDD.getAllBots().get(i).getBotId(),new BotsBuyThread(botBBDD.getAllBots().get(i).getActivationTime(),(int) botBBDD.getAllBots().get(i).getBuyPercentage(),companyia));
+
+            nouThreadBotDades.getIdThread().run();
+            llistatThreadsBots.add(nouThreadBotDades);    // afegim totes les dades del thread del bot (id bot, i thread a la llista de thread no eliminats)
+
+        }
+
 
     }
 
