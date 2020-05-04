@@ -73,23 +73,12 @@ public class DedicatedServer extends Thread {
                     objectOut.writeObject(message);
                     objectOut.flush();
                 }
-                if (message.getRequestType() == LOGIN_REQUEST) {
+                if (message.getRequestType() == LOGIN_REQUEST){
                     message.setOk(userDAO.canUserLogin(message.getUser()));
                     if (message.isOk()){
                         this.user = userDAO.getUser(message.getUser().getNickName(), message.getUser().getEmail());
                         message.setUser(this.user);
-                        objectOut.writeObject(message);
-                        objectOut.flush();
-                    }
-                }
-                if (message.getRequestType() == ALL_COMPANIES){
-                    ArrayList<Company> companies = companyDAO.getAllCompanies();
-                    if (companies == null){
-                        message.setOk(false);
-                        objectOut.writeObject(message);
-                        objectOut.flush();
-                    }else{
-                        message.setCompanyList(companies);
+                        message.setCompanyList(companyDAO.getAllCompanies());
                         objectOut.writeObject(message);
                         objectOut.flush();
                     }
@@ -128,15 +117,16 @@ public class DedicatedServer extends Thread {
         }
     }
 
-    public void updateAllCompanies(){
+    public void updateAllCompanies(Message message){
         try {
             ArrayList<Company> companies = companyDAO.getAllCompanies();
-            objectOut.writeInt(ALL_COMPANIES);
-            objectOut.flush();
-            objectOut.writeInt(companies.size());
-            objectOut.flush();
-            for (Company c : companies) {
-                objectOut.writeObject(c);
+            if (companies == null){
+                message.setOk(false);
+                objectOut.writeObject(message);
+                objectOut.flush();
+            }else{
+                message.setCompanyList(companies);
+                objectOut.writeObject(message);
                 objectOut.flush();
             }
         } catch (IOException e) {
