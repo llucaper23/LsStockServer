@@ -240,6 +240,7 @@ public class BotsViewController implements ActionListener {
             nouThreadBotDades.getIdThread().run();
             llistatThreadsBots.add(nouThreadBotDades);    // afegim totes les dades del thread del bot (id bot, i thread a la llista de thread no eliminats)
 
+
         }
 
 
