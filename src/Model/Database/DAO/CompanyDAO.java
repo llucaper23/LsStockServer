@@ -17,7 +17,7 @@ public class CompanyDAO {
             ResultSet rs = DBConnector.getInstance().selectQuery(query);
             while (rs.next()) {
                 companyId = rs.getInt("company_id");
-                String companyName = rs.getString("companyName");
+                String companyName = rs.getString("company_name");
                 float sharePrice = rs.getFloat("share_price");
                 return new Company(companyId, companyName, sharePrice);
             }
