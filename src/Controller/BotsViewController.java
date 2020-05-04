@@ -29,7 +29,7 @@ public class BotsViewController implements ActionListener {
         this.botsView = botsView;
         actualitzaLlistatBots();
         llistatThreadsBots = new ArrayList<BotThread>();
-        CarregaThreadsBots();
+        //CarregaThreadsBots();                                     // sha comentat pqfalla
 
     }
 
@@ -200,14 +200,14 @@ public class BotsViewController implements ActionListener {
         if(estat){      // cal el volguem a activar
             for (int i = 0; i <llistatThreadsBots.size() ; i++) {
                 if (llistatThreadsBots.get(i).getBotid() == botActual.getBotId()){
-                    llistatThreadsBots.get(i).getIdThread().wait();
+                   // llistatThreadsBots.get(i).getIdThread().wait();                       // aixo es el que falla
                 }
             }
         }else{      // cas el volguem posar en suspens
 
             for (int i = 0; i <llistatThreadsBots.size() ; i++) {
                 if (llistatThreadsBots.get(i).getBotid() == botActual.getBotId()){
-                    llistatThreadsBots.get(i).getIdThread().notify();
+                    //llistatThreadsBots.get(i).getIdThread().notify();                       // aixo es el que falla
                 }
             }
         }
@@ -226,15 +226,16 @@ public class BotsViewController implements ActionListener {
 
     private void CarregaThreadsBots(){
 
+        ArrayList<Bot> botsactuals = botBBDD.getAllBots();
+        for (int i = 0; i < botsactuals.size(); i++) {
 
-        for (int i = 0; i < botBBDD.getAllBots().size(); i++) {
-            Company companyia = companyies.getCompany(botBBDD.getAllBots().get(i).getCompanyId()); // comapnyia que li passarem al bot
+            Company companyia = companyies.getCompany(botsactuals.get(i).getCompanyId()); // comapnyia que li passarem al bot
             // codi per afegir bots
 
 
             // creeem Thread del Bot amb totes les seves dades
 
-            BotThread nouThreadBotDades = new BotThread(botBBDD.getAllBots().get(i).getBotId(),new BotsBuyThread(botBBDD.getAllBots().get(i).getActivationTime(),(int) botBBDD.getAllBots().get(i).getBuyPercentage(),companyia));
+            BotThread nouThreadBotDades = new BotThread(botsactuals.get(i).getBotId(),new BotsBuyThread(botsactuals.get(i).getActivationTime(),(int) botsactuals.get(i).getBuyPercentage(),companyia));
 
             nouThreadBotDades.getIdThread().run();
             llistatThreadsBots.add(nouThreadBotDades);    // afegim totes les dades del thread del bot (id bot, i thread a la llista de thread no eliminats)
