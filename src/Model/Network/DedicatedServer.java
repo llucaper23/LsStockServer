@@ -24,7 +24,9 @@ public class DedicatedServer extends Thread {
     private Socket sClient;
     private ObjectOutputStream objectOut;
     private ObjectInputStream objectIn;
+    private ObjectOutputStream updateClient;
     private Server server;
+    private int port;
     private static final int REGISTER_REQUEST = 1;
     private static final int LOGIN_REQUEST = 2;
     private static final int UPDATE_MONEY = 3;
@@ -44,7 +46,13 @@ public class DedicatedServer extends Thread {
             // creem els canals de comunicacio
             this.objectOut = new ObjectOutputStream(sClient.getOutputStream());
             this.objectIn = new ObjectInputStream(sClient.getInputStream());
+            this.port = objectIn.readInt();
+            sleep(100);
+            Socket clientUpdates = new Socket("localhost", port);
+            updateClient = new ObjectOutputStream(clientUpdates.getOutputStream());
         } catch (IOException e) {
+            e.printStackTrace();
+        } catch (InterruptedException e) {
             e.printStackTrace();
         }
         this.server = server;
@@ -131,12 +139,12 @@ public class DedicatedServer extends Thread {
             ArrayList<Company> companies = companyDAO.getAllCompanies();
             if (companies == null){
                 message.setOk(false);
-                objectOut.writeObject(message);
-                objectOut.flush();
+                updateClient.writeObject(message);
+                updateClient.flush();
             }else{
                 message.setCompanyList(companies);
-                objectOut.writeObject(message);
-                objectOut.flush();
+                updateClient.writeObject(message);
+                updateClient.flush();
             }
         } catch (IOException e) {
             e.printStackTrace();
