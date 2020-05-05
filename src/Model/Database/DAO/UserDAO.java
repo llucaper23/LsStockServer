@@ -65,8 +65,10 @@ public class UserDAO {
     }
 
     public void logOut(User user){
-        String query2 = "UPDATE User SET is_logged = 0 WHERE nickname = '" + user.getNickName() + "';";
-        DBConnector.getInstance().updateQuery(query2);
+        if (user != null){
+            String query2 = "UPDATE User SET is_logged = 0 WHERE nickname = '" + user.getNickName() + "';";
+            DBConnector.getInstance().updateQuery(query2);
+        }
     }
 
     public User getUser(String nickName, String email) {
