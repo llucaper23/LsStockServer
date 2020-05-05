@@ -69,6 +69,11 @@ public class UserDAO {
         DBConnector.getInstance().updateQuery(query2);
     }
 
+    public void logOutAllUsers () {
+        String query = "UPDATE user SET is_logged = 0;";
+        DBConnector.getInstance().updateQuery(query);
+    }
+
     public User getUser(String nickName, String email) {
         try {
             String query;
