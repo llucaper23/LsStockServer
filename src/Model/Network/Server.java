@@ -2,7 +2,9 @@ package Model.Network;
 
 import Model.Company;
 import Model.Database.DAO.CompanyDAO;
+import Model.Database.DAO.UserDAO;
 import Model.Database.DBConnector;
+import Model.User;
 import com.google.gson.Gson;
 import com.google.gson.stream.JsonReader;
 
@@ -73,6 +75,9 @@ public class Server extends Thread{
         } finally {
             if (serverSocket != null && !serverSocket.isClosed()) {
                 try {
+                    UserDAO userDAO = new UserDAO();
+                    userDAO.logOutAllUsers();
+                    stopServer();
                     serverSocket.close();
                 } catch (IOException e) {
                     e.printStackTrace();
