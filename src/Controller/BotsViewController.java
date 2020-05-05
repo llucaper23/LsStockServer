@@ -12,13 +12,14 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.sql.SQLOutput;
 import java.util.ArrayList;
+import java.util.Set;
 
 public class BotsViewController implements ActionListener {
 
     private BotsView botsView;
     private CompanyDAO companyies = new CompanyDAO();
     private int botSelecionat = -1;
-    private ArrayList<BotThread> llistatThreadsBots;
+    private ArrayList<BotsBuyThread> llistatThreadsBots;
 
 
     private BotDAO botBBDD = new BotDAO();
@@ -28,8 +29,13 @@ public class BotsViewController implements ActionListener {
     public BotsViewController(BotsView botsView) {
         this.botsView = botsView;
         actualitzaLlistatBots();
-        llistatThreadsBots = new ArrayList<BotThread>();
-        //CarregaThreadsBots();                                     // sha comentat pqfalla
+        llistatThreadsBots = new ArrayList<BotsBuyThread>();
+        CarregaThreadsBots();// sha comentat pqfalla
+
+
+        showlistOfBots();
+
+
 
     }
 
@@ -63,15 +69,12 @@ public class BotsViewController implements ActionListener {
                     for (int i = 0; i <llistatThreadsBots.size() ; i++) {
                         if (llistatThreadsBots.get(i).getBotid() == botActual.getBotId()){
 
-                            llistatThreadsBots.get(i).getIdThread().interrupt();                            // s'elimina aixins no em deixa ferho cridant  ales meves funcions
+                            llistatThreadsBots.get(i).eliminaBot();                            // s'elimina aixins no em deixa ferho cridant  ales meves funcions
                             posbotEliminar = i;
                         }
 
                     }
                     llistatThreadsBots.remove(posbotEliminar);
-
-
-
 
                     botSelecionat = -1;
                     actualitzaLlistatBots();
@@ -113,6 +116,9 @@ public class BotsViewController implements ActionListener {
             ex.printStackTrace();
         }
 
+        showlistOfBots();
+
+
     }
 
 
@@ -150,10 +156,11 @@ public class BotsViewController implements ActionListener {
                     ArrayList<Bot> llistatBots = botBBDD.getAllBots();
 
                     // creeem Thread del Bot amb totes les seves dades
+                    int posUltimNouBot = llistatBots.size() -1;
+                    BotsBuyThread nouThreadBotDades = new BotsBuyThread(llistatBots.get(posUltimNouBot).getBotId(),tempsActivacio,valueSlider,companyia);
 
-                    BotThread nouThreadBotDades = new BotThread(bot.getBotId(),new BotsBuyThread(tempsActivacio,valueSlider,companyia));
+                    nouThreadBotDades.start();
 
-                    nouThreadBotDades.getIdThread().run();
                     llistatThreadsBots.add(nouThreadBotDades);    // afegim totes les dades del thread del bot (id bot, i thread a la llista de thread no eliminats)
 
 
@@ -171,6 +178,7 @@ public class BotsViewController implements ActionListener {
         } catch (NumberFormatException excepction) {
             JOptionPane.showMessageDialog(null, "Els decimals son and punt");
         }
+
         //catch (Exception ex){
         //  JOptionPane.showMessageDialog(null, "Dades Incorrectes");
         //}
@@ -200,14 +208,17 @@ public class BotsViewController implements ActionListener {
         if(estat){      // cal el volguem a activar
             for (int i = 0; i <llistatThreadsBots.size() ; i++) {
                 if (llistatThreadsBots.get(i).getBotid() == botActual.getBotId()){
-                   // llistatThreadsBots.get(i).getIdThread().wait();                       // aixo es el que falla
+                    llistatThreadsBots.get(i).activaBot();                       // aixo es el que falla
+
+
                 }
             }
         }else{      // cas el volguem posar en suspens
 
             for (int i = 0; i <llistatThreadsBots.size() ; i++) {
                 if (llistatThreadsBots.get(i).getBotid() == botActual.getBotId()){
-                    //llistatThreadsBots.get(i).getIdThread().notify();                       // aixo es el que falla
+                    llistatThreadsBots.get(i).desactivaBot();                       // aixo es el que falla
+
                 }
             }
         }
@@ -233,11 +244,10 @@ public class BotsViewController implements ActionListener {
             // codi per afegir bots
 
 
-            // creeem Thread del Bot amb totes les seves dades
+            BotsBuyThread nouThreadBotDades = new BotsBuyThread(botsactuals.get(i).getBotId(),botsactuals.get(i).getActivationTime(),(int) botsactuals.get(i).getBuyPercentage(),companyia);
+           nouThreadBotDades.setStateCarregaInicial(botsactuals.get(i).isActive());
+            nouThreadBotDades.start();
 
-            BotThread nouThreadBotDades = new BotThread(botsactuals.get(i).getBotId(),new BotsBuyThread(botsactuals.get(i).getActivationTime(),(int) botsactuals.get(i).getBuyPercentage(),companyia));
-
-            nouThreadBotDades.getIdThread().run();
             llistatThreadsBots.add(nouThreadBotDades);    // afegim totes les dades del thread del bot (id bot, i thread a la llista de thread no eliminats)
 
 
@@ -247,4 +257,19 @@ public class BotsViewController implements ActionListener {
     }
 
     public void refreshNewData(){ actualitzaLlistatBots(); }
+
+    public void showlistOfBots(){ // hi han dos
+
+        Set<Thread> threads = Thread.getAllStackTraces().keySet();
+
+        for (int i = 0; i <llistatThreadsBots.size() ; i++) {
+            String name = llistatThreadsBots.get(i).getName();
+            Thread.State state = llistatThreadsBots.get(i).getState();
+            int priority = llistatThreadsBots.get(i).getPriority();
+            String type = llistatThreadsBots.get(i).isDaemon() ? "Daemon" : "Normal";
+            System.out.printf("%-20s \t %s \t %d \t %s\n", name, state, priority, type);
+        }
+
+
+    }
 }

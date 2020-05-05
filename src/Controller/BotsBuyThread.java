@@ -4,8 +4,9 @@ import Model.Company;
 import Model.Database.DAO.CompanyDAO;
 
 import java.util.Random;
+import java.util.concurrent.TimeUnit;
 
-public class BotsBuyThread extends Thread{
+public class BotsBuyThread extends Thread   {
 
     private int tempsActivacio;
     private int percentatgeCompra;
@@ -14,26 +15,29 @@ public class BotsBuyThread extends Thread{
     private Boolean funciona;
     private Boolean isActive;
     private CompanyDAO companyies = new CompanyDAO();
+    private int botid;
 
 
 
 
 
-    public BotsBuyThread(float tempsActivacio, int percentatgeCompra, Company companyia) {
+    public BotsBuyThread(int botid,float tempsActivacio, int percentatgeCompra, Company companyia) {
         this.tempsActivacio =  (int) tempsActivacio;
         this.percentatgeCompra = percentatgeCompra;
         this.companyia = companyia;
+        this.botid = botid;
         random = new Random();
         funciona =true;
-
+        isActive = true;
     }
 
 
-    public void Run() throws InterruptedException {
+    public void run(){
 
         while(funciona){
 
             if (isActive){
+                System.out.println("Soc el bot"+ this.botid+" i estic funcionant");
                 int nombreRandom = random.nextInt(100);
                 float preuactual = companyia.getSharePrice(); // Nose Rick, no l'ahuriem d'agar el meu actualitzat de la BBDD
 
@@ -43,35 +47,47 @@ public class BotsBuyThread extends Thread{
                     preuactual = (float) (preuactual*0.99); // decrementem el preu un 1%
                 }
 
-                companyia.setSharePrice(preuactual); // actualizem a preu a companyia? Nose Rick, no huria de ser a la BBDD
-                companyies.setSharePrice(companyia);
+                //companyia.setSharePrice(preuactual); // actualizem a preu a companyia? Nose Rick, no huria de ser a la BBDD
+                //companyies.setSharePrice(companyia);
 
             }else{      // cas descativat--> no fara res
-
+                System.out.println("Soc el bot"+ this.botid+" i estic APAGAT");
             }
 
             if(funciona){
-                Thread.sleep(tempsActivacio*1000);
+                try {
+                    TimeUnit.SECONDS.sleep(tempsActivacio);
+                } catch (InterruptedException e) {
+                    e.printStackTrace();
+                }
+                // aqui tocaria dormirThread.sleep(tempsActivacio*1000);
             }
 
 
 
         }
+        System.out.println("Soc el bot"+ this.botid+"I m'acaben d'eliminar");
 
 
     }
 
-    public void EliminaBot() {
+    public synchronized void eliminaBot() {     // el bot no s'eliminara fins que hagui passt el seu temps , pero ens assegura que no tornara a comprar
         funciona = false;
     }
 
-    public void activaBot() {
+    public synchronized void activaBot() {
         isActive = true;
     }
 
-    public void desactivaBot() {
+    public synchronized void desactivaBot() {
         isActive = false;
     }
 
+    public synchronized void setStateCarregaInicial(boolean isActive){
+        this.isActive = isActive;
+    }
 
+    public int getBotid() {
+        return botid;
+    }
 }
