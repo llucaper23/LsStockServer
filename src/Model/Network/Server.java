@@ -84,7 +84,7 @@ public class Server extends Thread{
     void updateAllClients () {
         ObjectOutputStream outStream;
         for (DedicatedServer dServer : dedicatedServerList) {
-            dServer.updateAllCompanies();
+         //   dServer.updateAllCompanies();
         }
     }
 

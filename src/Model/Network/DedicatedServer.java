@@ -92,6 +92,7 @@ public class DedicatedServer extends Thread {
                     userDAO.setMoney(user);
                     message.setOk(true);
                     objectOut.writeObject(message);
+                    objectOut.flush();
                 }
 
                 if (message.getRequestType() == SELL_SHARES) {
@@ -105,6 +106,14 @@ public class DedicatedServer extends Thread {
                     userCompanyDAO.insertBuy(userCompany);
                     message.setOk(true);
                     objectOut.writeObject(message);
+                }
+
+                if (message.getRequestType() == ALL_COMPANIES){
+                    ArrayList<Company> companies = companyDAO.getAllCompanies();
+                    message.setCompanyList(companies);
+                    message.setOk(true);
+                    objectOut.writeObject(message);
+                    objectOut.flush();
                 }
 
             }
