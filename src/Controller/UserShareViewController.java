@@ -1,27 +1,29 @@
 package Controller;
 
 import Model.CompanyiesModel;
+import Model.Database.DAO.CompanyDAO;
+import Model.Database.DAO.UserCompanyDAO;
+import Model.Database.DAO.UserDAO;
+import Model.Manager;
+import Model.UserCompany;
 import View.UserShareView;
 
+import javax.swing.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
 public class UserShareViewController implements ActionListener {
 
 
-    private UserShareView userShareWindow;
 
-    public UserShareViewController(UserShareView userShareWindow) {
-        this.userShareWindow = userShareWindow;
+    private Manager manager;
+
+    public UserShareViewController(UserShareView userShareWindow, Manager manager) {
+
     }
 
     @Override
     public void actionPerformed(ActionEvent e) {
-
-        if(e.getActionCommand().equals("x")){  // caldra comprovar amb el nom de tots els usuaris que tenim, sera el Action listener que li haurem posat
-            // haurem de fer un set a les dades que ens mostrara la vista per pantalla->
-
-        }
 
     }
 }

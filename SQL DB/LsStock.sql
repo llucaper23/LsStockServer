@@ -4,13 +4,13 @@ Use LsStock;
 
 DROP TABLE IF EXISTS User;
 CREATE TABLE User(
-	user_id INT AUTO_INCREMENT,
+	userId INT AUTO_INCREMENT,
     nickname VARCHAR(255),
     email VARCHAR(255),
     password VARCHAR(255),
     money FLOAT,
     is_logged BOOLEAN,
-    PRIMARY KEY (user_id),
+    PRIMARY KEY (userId),
     UNIQUE KEY (nickname, email)
 );
 
@@ -25,12 +25,12 @@ CREATE TABLE Company(
 DROP TABLE IF EXISTS User_Company;
 CREATE TABLE User_Company(
 	user_company_id INT AUTO_INCREMENT,
-    user_id INT,
+    userId INT,
     company_id INT,
     quantity INT,
     buy_price FLOAT,
-    PRIMARY KEY (user_company_id, user_id, company_id),
-    FOREIGN KEY (user_id) REFERENCES User (user_id),
+    PRIMARY KEY (user_company_id, userId, company_id),
+    FOREIGN KEY (userId) REFERENCES User (userId),
     FOREIGN KEY (company_id) REFERENCES Company (company_id)
 );
 

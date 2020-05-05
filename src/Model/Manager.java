@@ -1,5 +1,8 @@
 package Model;
 
+import Model.Database.DAO.CompanyDAO;
+
+import java.util.ArrayList;
 import java.util.regex.Pattern;
 
 public class Manager {
@@ -29,4 +32,15 @@ public class Manager {
         boolean ok = patternMail.matcher(email).matches();
         return ok;
     }
+
+    public ArrayList<Company> getUserCompanies (ArrayList<UserCompany> userCompanies, int userId) {
+        ArrayList<Company> aux = new ArrayList<>();
+        CompanyDAO companyDAO = new CompanyDAO();
+        for (UserCompany uc : userCompanies) {
+            aux.add(companyDAO.getCompany(uc.getCompanyId()));
+        }
+        return aux;
+    }
+
+
 }

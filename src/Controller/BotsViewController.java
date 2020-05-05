@@ -32,11 +32,7 @@ public class BotsViewController implements ActionListener {
         llistatThreadsBots = new ArrayList<BotsBuyThread>();
         CarregaThreadsBots();// sha comentat pqfalla
 
-
         showlistOfBots();
-
-
-
     }
 
     @Override
@@ -245,7 +241,7 @@ public class BotsViewController implements ActionListener {
 
 
             BotsBuyThread nouThreadBotDades = new BotsBuyThread(botsactuals.get(i).getBotId(),botsactuals.get(i).getActivationTime(),(int) botsactuals.get(i).getBuyPercentage(),companyia);
-           nouThreadBotDades.setStateCarregaInicial(botsactuals.get(i).isActive());
+            nouThreadBotDades.setStateCarregaInicial(botsactuals.get(i).isActive());
             nouThreadBotDades.start();
 
             llistatThreadsBots.add(nouThreadBotDades);    // afegim totes les dades del thread del bot (id bot, i thread a la llista de thread no eliminats)

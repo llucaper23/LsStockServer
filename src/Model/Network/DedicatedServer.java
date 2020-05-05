@@ -86,7 +86,6 @@ public class DedicatedServer extends Thread {
                     if (message.isOk()){
                         this.user = userDAO.getUser(message.getUser().getNickName(), message.getUser().getEmail());
                         message.setUser(this.user);
-                        message.setCompanyList(companyDAO.getAllCompanies());
                         objectOut.writeObject(message);
                         objectOut.flush();
                     }
@@ -106,7 +105,7 @@ public class DedicatedServer extends Thread {
                 if (message.getRequestType() == SELL_SHARES) {
                     UserCompany userCompany = message.getUserCompany();
                     userCompanyDAO.insertBuy(userCompany);
-                    //que fem al vendre accions a la BBDD????
+
                 }
 
                 if (message.getRequestType() == BUY_SHARES) {

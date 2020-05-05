@@ -20,10 +20,10 @@ public class UserCompanyDAO {
     }
 
 
-    public ArrayList<UserCompany> getAllCompaniesFromUser(User user){
+    public ArrayList<UserCompany> getAllCompaniesFromUser(int id){
         try {
             ArrayList<UserCompany> userCompanies = new ArrayList<>();
-            String query = "SELECT * FROM User_Company WHERE user_id = " + user.getUser_id() + ";";
+            String query = "SELECT * FROM User_Company WHERE user_id = " + id + ";";
             ResultSet rs = DBConnector.getInstance().selectQuery(query);
             while (rs.next()){
                 int user_company_id = rs.getInt("user_company_id");

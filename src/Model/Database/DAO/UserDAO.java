@@ -5,6 +5,7 @@ import Model.User;
 
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.ArrayList;
 
 public class UserDAO {
     public boolean registerUser(User user){
@@ -113,5 +114,32 @@ public class UserDAO {
         } catch (Exception e) {
             e.printStackTrace();
         }
+    }
+
+    public ArrayList<User> getAllUsers() {
+        try {
+            ArrayList <User> userList = new ArrayList<>();
+            String query;
+            query = "SELECT * FROM User;";
+
+            ResultSet rs = DBConnector.getInstance().selectQuery(query);
+            while (rs.next()) {
+                int user_id = rs.getInt("user_id");
+                String nickName = rs.getString("nickName");
+                String email = rs.getString("email");
+                String password = rs.getString("password");
+                int money = rs.getInt("money");
+                boolean isLogged = rs.getBoolean("is_logged");
+                userList.add(new User(user_id, nickName, email, password, money, isLogged));
+            }
+
+            return userList;
+        } catch (SQLException e) {
+            e.printStackTrace();
+            System.out.println("SQL Syntax Error");
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return null;
     }
 }
