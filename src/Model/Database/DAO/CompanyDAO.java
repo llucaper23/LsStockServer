@@ -77,9 +77,9 @@ public class CompanyDAO {
         return null;
     }
 
-    public void setSharePrice(Company company){
+    public void setSharePrice(int id, float sharePrice){
         try {
-            String query = "UPDATE Company SET share_price = " + company.getSharePrice() + " WHERE company_id = " + company.getCompanyId() + ";";
+            String query = "UPDATE Company SET share_price = " + sharePrice + " WHERE company_id = " + id + ";";
             DBConnector.getInstance().updateQuery(query);
         } catch (Exception e) {
             e.printStackTrace();

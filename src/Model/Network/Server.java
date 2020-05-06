@@ -87,13 +87,12 @@ public class Server extends Thread{
     }
 
     public void updateAllClients () {
-        ObjectOutputStream outStream;
         for (DedicatedServer dServer : dedicatedServerList) {
-         //   dServer.updateAllCompanies();
+            dServer.updateAllCompanies();
         }
     }
 
-    void remove (DedicatedServer dedicatedServer) {
+    public void remove (DedicatedServer dedicatedServer) {
         dedicatedServerList.remove(dedicatedServer);
         // invoquem el metode del servidor que mostra els servidors dedicats actuals
         showClients();

@@ -1,10 +1,7 @@
 package Model.Network;
 
-import Model.Company;
+import Model.*;
 import Model.Database.DAO.*;
-import Model.Message;
-import Model.User;
-import Model.UserCompany;
 
 import java.io.IOException;
 import java.io.ObjectInputStream;
@@ -42,6 +39,7 @@ public class DedicatedServer extends Thread {
         this.sClient = sClient;
         userDAO = new UserDAO();
         companyDAO = new CompanyDAO();
+        userCompanyDAO = new UserCompanyDAO();
         try {
             // creem els canals de comunicacio
             this.objectOut = new ObjectOutputStream(sClient.getOutputStream());
@@ -105,14 +103,25 @@ public class DedicatedServer extends Thread {
                 if (message.getRequestType() == SELL_SHARES) {
                     UserCompany userCompany = message.getUserCompany();
                     userCompanyDAO.insertBuy(userCompany);
+                    int auxId = userCompany.getCompanyId();
+                    float auxPrice = userCompany.getBuyPrice();
+                    auxPrice = (float) (auxPrice - auxPrice * 0.01);
+                    companyDAO.setSharePrice(auxId, auxPrice);
+                    message.setOk(true);
+                    objectOut.writeObject(message);
 
                 }
 
                 if (message.getRequestType() == BUY_SHARES) {
                     UserCompany userCompany = message.getUserCompany();
                     userCompanyDAO.insertBuy(userCompany);
+                    int auxId = userCompany.getCompanyId();
+                    float auxPrice = userCompany.getBuyPrice();
+                    auxPrice = (float) (auxPrice * 0.01 + auxPrice);
+                    companyDAO.setSharePrice(auxId, auxPrice);
                     message.setOk(true);
                     objectOut.writeObject(message);
+                    server.updateAllClients();
                 }
 
                 if (message.getRequestType() == ALL_COMPANIES){
@@ -133,9 +142,10 @@ public class DedicatedServer extends Thread {
         }
     }
 
-    public void updateAllCompanies(Message message){
+    public void updateAllCompanies(){
         try {
             ArrayList<Company> companies = companyDAO.getAllCompanies();
+            Message message = new Message(ALL_COMPANIES, companies,null, false, null, null, null);
             if (companies == null){
                 message.setOk(false);
                 updateClient.writeObject(message);
