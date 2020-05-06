@@ -47,7 +47,7 @@ public class BotsBuyThread extends Thread   {
                     preuactual = (float) (preuactual*0.99); // decrementem el preu un 1%
                 }
 
-                //companyia.setSharePrice(preuactual); // actualizem a preu a companyia? Nose Rick, no huria de ser a la BBDD
+                //companyia.setSharePrice(preuactual); // actualizem a preu a companyia?
                 //companyies.setSharePrice(companyia);
 
             }else{      // cas descativat--> no fara res
@@ -56,11 +56,11 @@ public class BotsBuyThread extends Thread   {
 
             if(funciona){
                 try {
-                    TimeUnit.SECONDS.sleep(tempsActivacio);
+                    TimeUnit.SECONDS.sleep(tempsActivacio);     // aqui dormim una estoneta
                 } catch (InterruptedException e) {
                     e.printStackTrace();
                 }
-                // aqui tocaria dormirThread.sleep(tempsActivacio*1000);
+
             }
 
 

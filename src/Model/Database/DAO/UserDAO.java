@@ -142,4 +142,28 @@ public class UserDAO {
         }
         return null;
     }
+
+    public User getUserById (int id) {
+        try {
+            String query;
+            query = "SELECT * FROM User WHERE user_id = " + id + ";";
+
+            ResultSet rs = DBConnector.getInstance().selectQuery(query);
+            while (rs.next()) {
+                int user_id = rs.getInt("user_id");
+                String nickName = rs.getString("nickName");
+                String email = rs.getString("email");
+                String password = rs.getString("password");
+                int money = rs.getInt("money");
+                boolean isLogged = rs.getBoolean("is_logged");
+                return new User(user_id, nickName, email, password, money, isLogged);
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+            System.out.println("SQL Syntax Error");
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return null;
+    }
 }

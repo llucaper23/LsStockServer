@@ -6,6 +6,7 @@ import Model.Database.DAO.UserCompanyDAO;
 import Model.Database.DAO.UserDAO;
 import Model.Manager;
 import Model.Network.Server;
+import Model.User;
 import View.MainView;
 import View.UserShareView;
 
@@ -32,7 +33,10 @@ public class MainViewController implements ActionListener {
         this.manager = manager;
         this.userShareWindow = userShareWindow;
         userShareWindow.updateUsers(userDAO.getAllUsers(), this);
-        userShareWindow.updateUserCompanies(manager.getUserCompanies(userCompanyDAO.getAllCompaniesFromUser(1), 1));
+
+        ArrayList<User> dadesUser = userDAO.getAllUsers();
+
+        userShareWindow.updateUserCompanies(manager.getUserCompanies(userCompanyDAO.getAllCompaniesFromUser(1), 1),dadesUser.get(1).getNickName() );
 
     }
 
@@ -41,7 +45,11 @@ public class MainViewController implements ActionListener {
 
         if (e.getActionCommand().equals("USER")) {
             int userId = Integer.parseInt(((JButton)e.getSource()).getClientProperty("user_id").toString());
-            userShareWindow.updateUserCompanies(manager.getUserCompanies(userCompanyDAO.getAllCompaniesFromUser(userId), userId));
+            UserDAO userDao = new UserDAO();
+            User dadesUser = userDao.getUserById(userId);
+
+            userShareWindow.updateUserCompanies(manager.getUserCompanies(userCompanyDAO.getAllCompaniesFromUser(userId), userId),dadesUser.getNickName());
+
         }
     }
 }

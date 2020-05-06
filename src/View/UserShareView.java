@@ -2,10 +2,7 @@ package View;
 
 import Controller.MainViewController;
 import Controller.UserShareViewController;
-import Model.Company;
-import Model.CompanyiesModel;
-import Model.Manager;
-import Model.User;
+import Model.*;
 
 import javax.swing.*;
 import javax.swing.border.TitledBorder;
@@ -22,6 +19,7 @@ public class UserShareView extends JPanel {
     JPanel jpllistaUsers = new JPanel();
     ArrayList<JButton> userButtons;
     private static final String USER = "USER";
+    private JPanel jpCartera;
 
    public UserShareView(){
        userButtons = new ArrayList<>();
@@ -60,10 +58,10 @@ public class UserShareView extends JPanel {
 
        for (int i = 0; i < dades.size() ; i++) {        // Aqui omplim amb les dades de les accions que volim CALDRA MODIFIFICAR AMB DADES REALS
            Object [] fila = new Object[4];
-           fila[0] = dades.get(i).getNomCompanyia();
-           fila[1] = dades.get(i).getnAccions();
-           fila[2] = dades.get(i).getPreuAccio();
-           fila[3] = dades.get(i).getValorTotal();
+           fila[0] = "NULL";
+           fila[1] = "NULL";
+           fila[2] = "NULL";
+           fila[3] = "NULL";
            model.addRow(fila);
        }
        JScrollPane jscrollCartera = new JScrollPane(jtabla,JScrollPane.VERTICAL_SCROLLBAR_AS_NEEDED, JScrollPane.HORIZONTAL_SCROLLBAR_NEVER);
@@ -82,7 +80,7 @@ public class UserShareView extends JPanel {
 
        jpllistaAccions.setBorder(title);
 
-       JPanel jpCartera = new JPanel();
+       jpCartera =  new JPanel();
        jpCartera.add(jpllistaAccions);
 
        //************************************************************************************************************
@@ -104,7 +102,74 @@ public class UserShareView extends JPanel {
        jpllistaUsers.setLayout(new BoxLayout(jpllistaUsers,BoxLayout.Y_AXIS));
    }
 
-   public void updateUserCompanies (ArrayList<Company> companies) {
+   public void updateUserCompanies (ArrayList<Company> companies,String nomUser) {
 
+       ArrayList<CompanyiesUnitaries> companyiesUnitaries = new ArrayList<>();
+        /////////***************ORDENEM TOTES LES COMAPNYES QUE TE EL USUARI/********************************///////////
+        if (companies.size() > 0){      // mirem si el user te companyies
+
+
+
+            CompanyiesUnitaries comapnyiaSimple = new CompanyiesUnitaries(companies.get(0).getCompanyName(),companies.get(0).getSharePrice());
+
+            companyiesUnitaries.add(comapnyiaSimple);
+            for (int i = 0; i < companies.size(); i++) {     // recorrem tot l'array de companyes desordenades que ens passen
+                int posTrobat = -1;
+                for (int j = 0; j < companyiesUnitaries.size(); j++) {       // mirem si aquesta companyia ja esta afegida amb aquest preu
+                    if (companies.get(i).getCompanyName().equalsIgnoreCase(companyiesUnitaries.get(j).getNomCompany()) && (companies.get(i).getSharePrice() == companyiesUnitaries.get(j).getPreu())){
+                        posTrobat = j;
+                    }
+                }
+                if (posTrobat != -1){    // ja estava guardada amb aquest preu
+                    companyiesUnitaries.get(posTrobat).agefeixVegades();
+                }else{   // cal afegirla
+                    comapnyiaSimple = new CompanyiesUnitaries(companies.get(i).getCompanyName(),companies.get(i).getSharePrice());
+                    companyiesUnitaries.add(comapnyiaSimple);
+                }
+            }
+        }
+
+       JTable jtabla = new JTable();
+       DefaultTableModel model = (DefaultTableModel)jtabla.getModel();
+       model.addColumn("Companyia");
+       model.addColumn("Accions");
+       model.addColumn("Preu/Accio");
+       model.addColumn("ValorTotal");
+
+       for (int i = 0; i < companyiesUnitaries.size() ; i++) {        // Aqui omplim amb les dades de les accions que volim CALDRA MODIFIFICAR AMB DADES REALS
+           Object [] fila = new Object[4];
+
+           fila[0] = companyiesUnitaries.get(i).getNomCompany();
+           fila[1] = companyiesUnitaries.get(i).getVegades(); // nombre accions--> caldra recorrer tot per mirar si tenen el mateix preu
+           fila[2] = companyiesUnitaries.get(i).getPreu();
+           fila[3] =  companyiesUnitaries.get(i).getVegades() * companyiesUnitaries.get(i).getPreu(); // caldra fer el calcul
+           model.addRow(fila);
+       }
+       JScrollPane jscrollCartera = new JScrollPane(jtabla,JScrollPane.VERTICAL_SCROLLBAR_AS_NEEDED, JScrollPane.HORIZONTAL_SCROLLBAR_NEVER);
+       jscrollCartera.setPreferredSize(new Dimension(MAX_WIDTH_ACCIONS , MAX_HEIGHT));
+       jscrollCartera.setMaximumSize(new Dimension(MAX_WIDTH_ACCIONS, MAX_HEIGHT));
+
+       JPanel jpllistaAccions = new JPanel();
+       jpllistaAccions.add(jscrollCartera);
+       //jpllistaAccions.setAlignmentX(Component.LEFT_ALIGNMENT);
+       jpllistaAccions.setPreferredSize(new Dimension(MAX_WIDTH_ACCIONS, MAX_HEIGHT));
+       jpllistaAccions.setMaximumSize(new Dimension(MAX_WIDTH_ACCIONS, MAX_HEIGHT));
+
+       TitledBorder title = BorderFactory.createTitledBorder(BorderFactory.createEmptyBorder(),"Cartera d'accions - Usuari: "+nomUser);// caldra posar el nom del usuari aqui
+       title.setTitleJustification(TitledBorder.CENTER);
+       title.setTitlePosition(TitledBorder.ABOVE_TOP);
+
+       jpllistaAccions.setBorder(title);
+
+       jpCartera.removeAll();
+       jpCartera.add(jpllistaAccions);
+
+       jpCartera.revalidate();
+       jpCartera.repaint();
+   }
+
+   public void initPanellUSV(){
+       jpCartera =  new JPanel();
+       jpCartera.removeAll();
    }
 }
