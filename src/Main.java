@@ -25,8 +25,6 @@ public class Main {
         botsView.registerController(botsVC);
         botsVC.refreshNewData();        // necesari per a l'incorporacio dels listneres al ultim lllistat de bots creats
 
-
-
         mainView.setVisible(true);
         //BotsViewController botsController = new BotsViewController();
     }

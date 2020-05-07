@@ -37,7 +37,8 @@ public class Manager {
         ArrayList<Company> aux = new ArrayList<>();
         CompanyDAO companyDAO = new CompanyDAO();
         for (UserCompany uc : userCompanies) {
-            aux.add(companyDAO.getCompany(uc.getCompanyId()));
+            Company c = companyDAO.getCompany(uc.getCompanyId());
+            aux.add(new Company(c.getCompanyId(), c.getCompanyName(), uc.getBuyPrice()));
         }
         return aux;
     }
