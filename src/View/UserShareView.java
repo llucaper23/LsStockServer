@@ -3,6 +3,7 @@ package View;
 import Controller.MainViewController;
 import Controller.UserShareViewController;
 import Model.*;
+import Model.Database.DAO.UserCompanyDAO;
 
 import javax.swing.*;
 import javax.swing.border.TitledBorder;
@@ -106,9 +107,8 @@ public class UserShareView extends JPanel {
 
        ArrayList<CompanyiesUnitaries> companyiesUnitaries = new ArrayList<>();
         /////////***************ORDENEM TOTES LES COMAPNYES QUE TE EL USUARI/********************************///////////
+
         if (companies.size() > 0){      // mirem si el user te companyies
-
-
 
             CompanyiesUnitaries comapnyiaSimple = new CompanyiesUnitaries(companies.get(0).getCompanyName(),companies.get(0).getSharePrice());
 
