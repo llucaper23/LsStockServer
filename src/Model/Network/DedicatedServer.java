@@ -132,6 +132,14 @@ public class DedicatedServer extends Thread {
                     objectOut.flush();
                 }
 
+                if(message.getRequestType() == USER_COMPANIES) {
+                    ArrayList<UserCompany> companies = userCompanyDAO.getAllCompaniesFromUser(user.getUserId());
+                    message.setUserCompanies(companies);
+                    message.setOk(true);
+                    objectOut.writeObject(message);
+                    objectOut.flush();
+                }
+
             }
         } catch (IOException e1) {
             // en cas derror aturem el servidor dedicat
