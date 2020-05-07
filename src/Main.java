@@ -1,7 +1,4 @@
-import Controller.BotsViewController;
-import Controller.MainViewController;
-import Controller.Top10ViewController;
-import Controller.UserShareViewController;
+import Controller.*;
 import Model.Bot;
 import Model.Manager;
 import Model.Network.Server;
@@ -21,6 +18,8 @@ public class Main {
         server.startServer();
         MainViewController mvc = new MainViewController(mainView, server, manager, userShareView);
         Top10ViewController t10c = new Top10ViewController(top10View);
+        Top10Thread actualitzacioTop10Time = new Top10Thread(t10c);     // actualitzacio cada X temps de la pestanya top10
+        actualitzacioTop10Time.start();
         BotsViewController botsVC = new BotsViewController(botsView);
         botsView.registerController(botsVC);
         botsVC.refreshNewData();        // necesari per a l'incorporacio dels listneres al ultim lllistat de bots creats

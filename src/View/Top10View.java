@@ -2,6 +2,7 @@ package View;
 
 import Model.Company;
 import Model.Database.DAO.CompanyDAO;
+import javafx.scene.layout.Pane;
 
 import javax.swing.*;
 import java.awt.*;
@@ -36,7 +37,13 @@ public class Top10View extends JPanel {
 
         panel.layoutHistogram();
 
+        panel.revalidate();
+        panel.repaint();
+
+        this.removeAll();
         this.add(panel);
+        this.revalidate();
+        this.repaint();
 
 
     }

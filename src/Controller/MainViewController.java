@@ -36,7 +36,7 @@ public class MainViewController implements ActionListener {
 
         ArrayList<User> dadesUser = userDAO.getAllUsers();
 
-        userShareWindow.updateUserCompanies(manager.getUserCompanies(userCompanyDAO.getAllCompaniesFromUser(9), 9),dadesUser.get(1).getNickName() );
+        userShareWindow.updateUserCompanies(manager.getUserCompanies(userCompanyDAO.getAllCompaniesFromUser(0), 0),dadesUser.get(0).getNickName() );
 
     }
 
