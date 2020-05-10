@@ -103,14 +103,14 @@ public class UserShareView extends JPanel {
        jpllistaUsers.setLayout(new BoxLayout(jpllistaUsers,BoxLayout.Y_AXIS));
    }
 
-   public void updateUserCompanies (ArrayList<Company> companies,String nomUser) {
+   public void updateUserCompanies (ArrayList<Company> companies, ArrayList<UserCompany> userCompanies,String nomUser) {
 
        ArrayList<CompanyiesUnitaries> companyiesUnitaries = new ArrayList<>();
         /////////***************ORDENEM TOTES LES COMAPNYES QUE TE EL USUARI/********************************///////////
 
         if (companies.size() > 0){      // mirem si el user te companyies
 
-            CompanyiesUnitaries comapnyiaSimple = new CompanyiesUnitaries(companies.get(0).getCompanyName(),companies.get(0).getSharePrice());
+            CompanyiesUnitaries comapnyiaSimple = new CompanyiesUnitaries(companies.get(0).getCompanyName(), companies.get(0).getSharePrice(), userCompanies.get(0).getQuantity());
 
             companyiesUnitaries.add(comapnyiaSimple);
             for (int i = 0; i < companies.size(); i++) {     // recorrem tot l'array de companyes desordenades que ens passen
@@ -123,7 +123,7 @@ public class UserShareView extends JPanel {
                 if (posTrobat != -1){    // ja estava guardada amb aquest preu
                     companyiesUnitaries.get(posTrobat).agefeixVegades();
                 }else{   // cal afegirla
-                    comapnyiaSimple = new CompanyiesUnitaries(companies.get(i).getCompanyName(),companies.get(i).getSharePrice());
+                    comapnyiaSimple = new CompanyiesUnitaries(companies.get(i).getCompanyName(),companies.get(i).getSharePrice(), userCompanies.get(i).getQuantity());
                     companyiesUnitaries.add(comapnyiaSimple);
                 }
             }

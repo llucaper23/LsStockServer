@@ -33,7 +33,7 @@ public class Manager {
         return ok;
     }
 
-    public ArrayList<Company> getUserCompanies (ArrayList<UserCompany> userCompanies, int userId) {
+    public ArrayList<Company> getUserCompanies (ArrayList<UserCompany> userCompanies) {
         ArrayList<Company> aux = new ArrayList<>();
         CompanyDAO companyDAO = new CompanyDAO();
         for (UserCompany uc : userCompanies) {

@@ -6,10 +6,10 @@ public class CompanyiesUnitaries {
     private float preu;
     private int vegades;
 
-    public CompanyiesUnitaries(String nomCompany, float preu) {
+    public CompanyiesUnitaries(String nomCompany, float preu, int vegades) {
         this.nomCompany = nomCompany;
         this.preu = preu;
-        this.vegades = 1;
+        this.vegades = vegades;
     }
 
     public String getNomCompany() {
