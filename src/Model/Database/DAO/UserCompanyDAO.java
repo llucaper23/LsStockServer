@@ -52,7 +52,7 @@ public class UserCompanyDAO {
                 int company_id = rs.getInt("company_id");
                 int quantity = rs.getInt("quantity");
                 float buy_price = rs.getFloat("buy_price");
-                userCompanies.add(new UserCompany(user_company_id,user_id,company_id,quantity,buy_price));
+                userCompanies.add(new UserCompany(user_company_id, user_id, company_id, quantity, buy_price));
             }
             return userCompanies;
         } catch (SQLException e) {

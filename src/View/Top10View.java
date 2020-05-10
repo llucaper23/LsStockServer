@@ -1,8 +1,6 @@
 package View;
 
 import Model.Company;
-import Model.Database.DAO.CompanyDAO;
-import javafx.scene.layout.Pane;
 
 import javax.swing.*;
 import java.awt.*;

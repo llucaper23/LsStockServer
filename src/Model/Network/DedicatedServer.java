@@ -152,7 +152,8 @@ public class DedicatedServer extends Thread {
     public void updateAllCompanies(){
         try {
             ArrayList<Company> companies = companyDAO.getAllCompanies();
-            Message message = new Message(ALL_COMPANIES, companies,null, false, null, null, null);
+            ArrayList<UserCompany> userCompanies = userCompanyDAO.getAllCompaniesFromUser(user.getUserId());
+            Message message = new Message(ALL_COMPANIES, companies,null, false, null, null, userCompanies);
             if (companies == null){
                 message.setOk(false);
                 updateClient.writeObject(message);
