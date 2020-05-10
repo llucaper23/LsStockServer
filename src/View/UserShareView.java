@@ -120,9 +120,7 @@ public class UserShareView extends JPanel {
                         posTrobat = j;
                     }
                 }
-                if (posTrobat != -1){    // ja estava guardada amb aquest preu
-                    companyiesUnitaries.get(posTrobat).agefeixVegades();
-                }else{   // cal afegirla
+                if (posTrobat == -1){// cal afegirla
                     comapnyiaSimple = new CompanyiesUnitaries(companies.get(i).getCompanyName(),companies.get(i).getSharePrice(), userCompanies.get(i).getQuantity());
                     companyiesUnitaries.add(comapnyiaSimple);
                 }

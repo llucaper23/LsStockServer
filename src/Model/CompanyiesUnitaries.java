@@ -32,7 +32,4 @@ public class CompanyiesUnitaries {
         return vegades;
     }
 
-    public void agefeixVegades() {
-        this.vegades++;
-    }
 }
