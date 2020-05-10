@@ -102,14 +102,13 @@ public class DedicatedServer extends Thread {
 
                 if (message.getRequestType() == SELL_SHARES) {
                     UserCompany userCompany = message.getUserCompany();
-                    userCompanyDAO.insertBuy(userCompany);
+                    userCompanyDAO.sell(userCompany);
                     int auxId = userCompany.getCompanyId();
                     float auxPrice = userCompany.getBuyPrice();
                     auxPrice = (float) (auxPrice - auxPrice * 0.01);
                     companyDAO.setSharePrice(auxId, auxPrice);
                     message.setOk(true);
                     objectOut.writeObject(message);
-
                 }
 
                 if (message.getRequestType() == BUY_SHARES) {

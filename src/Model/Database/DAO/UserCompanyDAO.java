@@ -20,6 +20,27 @@ public class UserCompanyDAO {
     }
 
 
+    public void sell(UserCompany userCompany){
+        try{
+            String query = "SELECT * FROm User_Company WHERE user_company_id = " + userCompany.getUserCompanyId() + ";";
+            ResultSet rs = DBConnector.getInstance().selectQuery(query);
+            int quantity = 0;
+            while (rs.next()){
+                quantity = rs.getInt("quantity");
+            }
+            if (userCompany.getQuantity()-quantity == 0){
+                String query2 = "DELETE FROM User_Company WHERE user_company_id = " + userCompany.getUserCompanyId() + ";";
+                DBConnector.getInstance().deleteQuery(query2);
+            }else{
+                String query2 = "UPDATE User_Company SET quantity = " + userCompany.getQuantity() + " WHERE user_company_id = " + userCompany.getUserCompanyId() + ";";
+                DBConnector.getInstance().updateQuery(query2);
+            }
+        }catch (Exception e){
+            e.printStackTrace();
+        }
+    }
+
+
     public ArrayList<UserCompany> getAllCompaniesFromUser(int id){
         try {
             ArrayList<UserCompany> userCompanies = new ArrayList<>();
