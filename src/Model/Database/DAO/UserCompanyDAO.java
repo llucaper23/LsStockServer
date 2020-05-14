@@ -44,7 +44,7 @@ public class UserCompanyDAO {
         try {
             String query = "SELECT * FROm User_Company WHERE company_id = " + idCompany + " AND user_id = " + idUser + ";";
             ResultSet rs = DBConnector.getInstance().selectQuery(query);
-            int quantity = 0;
+            int quantity;
             while (rs.next()) {
                 quantity = rs.getInt("quantity");
                 int auxId = rs.getInt("user_company_id");
