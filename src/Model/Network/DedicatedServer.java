@@ -33,6 +33,7 @@ public class DedicatedServer extends Thread {
     private static final int ALL_COMPANIES = 7;
     private static final int COMPANY_DETAIL = 8;
     private static final int LOGOUT = 9;
+    private static final int SELL_SOME_SHARES = 10;
 
     public DedicatedServer(Socket sClient, Server server) {
         this.isOn = false;
@@ -139,6 +140,16 @@ public class DedicatedServer extends Thread {
                     objectOut.flush();
                 }
 
+                if (message.getRequestType() == SELL_SOME_SHARES) {
+                    userCompanyDAO.sellSomeShares(message.getCompany().getCompanyId(), user.getUserId(), message.getNumSharesToSell());
+                    float auxPrice = message.getCompany().getSharePrice();
+                    auxPrice = (float) (auxPrice - auxPrice * 0.01);
+                    companyDAO.setSharePrice(message.getCompany().getCompanyId(), auxPrice);
+                    message.setOk(true);
+                    objectOut.writeObject(message);
+                    server.updateAllClients();
+                }
+
             }
         } catch (IOException e1) {
             // en cas derror aturem el servidor dedicat
@@ -153,7 +164,7 @@ public class DedicatedServer extends Thread {
         try {
             ArrayList<Company> companies = companyDAO.getAllCompanies();
             ArrayList<UserCompany> userCompanies = userCompanyDAO.getAllCompaniesFromUser(user.getUserId());
-            Message message = new Message(ALL_COMPANIES, companies,null, false, null, null, userCompanies);
+            Message message = new Message(ALL_COMPANIES, companies,null, false, null, null, userCompanies, 0);
             if (companies == null){
                 message.setOk(false);
                 updateClient.writeObject(message);
