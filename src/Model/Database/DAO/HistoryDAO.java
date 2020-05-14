@@ -54,4 +54,26 @@ public class HistoryDAO {
             return null;
         }
     }
+
+    public History get5MinBeforePrice(int company_id){
+        try{
+            String query = "SELECT * FROM History WHERE company_id = " + company_id + ";";
+            ResultSet rs = DBConnector.getInstance().selectQuery(query);
+            ArrayList<History> historicPrices = new ArrayList<>();
+            while (rs.next()){
+                int historyId = rs.getInt("history_id");
+                float max = rs.getFloat("max_share_price");
+                float min = rs.getFloat("min_share_price");
+                float open = rs.getFloat("open_share_price");
+                float close = rs.getFloat("close_share_price");
+                Date datetime = rs.getDate("datetime");
+                int companyId = rs.getInt("company_id");
+                historicPrices.add(new History(historyId, max, min, open, close, datetime, companyId));
+            }
+            return historicPrices.get(5);
+        }catch (Exception e){
+            e.printStackTrace();
+            return null;
+        }
+    }
 }
