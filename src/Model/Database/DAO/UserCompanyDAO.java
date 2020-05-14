@@ -46,17 +46,19 @@ public class UserCompanyDAO {
             ResultSet rs = DBConnector.getInstance().selectQuery(query);
             int quantity;
             while (rs.next()) {
-                quantity = rs.getInt("quantity");
-                int auxId = rs.getInt("user_company_id");
-                if (numShares >= quantity) {
-                    String query2 = "DELETE FROM User_Company WHERE user_company_id = " + auxId + ";";
-                    DBConnector.getInstance().deleteQuery(query2);
-                } else {
-                    String query2 = "UPDATE User_Company SET quantity = " + (numShares - quantity) + " WHERE user_company_id = " + auxId + ";";
-                    DBConnector.getInstance().updateQuery(query2);
+                    quantity = rs.getInt("quantity");
+                    int auxId = rs.getInt("user_company_id");
+                    if (numShares >= quantity) {
+                        String query2 = "DELETE FROM User_Company WHERE user_company_id = " + auxId + ";";
+                        DBConnector.getInstance().deleteQuery(query2);
+                    } else {
+                        if (numShares > 0){
+                            String query2 = "UPDATE User_Company SET quantity = " + (quantity - numShares) + " WHERE user_company_id = " + auxId + ";";
+                            DBConnector.getInstance().updateQuery(query2);
+                        }
+                    }
+                    numShares = numShares - quantity;
                 }
-                numShares = numShares - quantity;
-            }
 
         }catch (Exception e) {
             e.printStackTrace();
