@@ -90,8 +90,7 @@ public class History implements Serializable {
 
     @Override
     public String toString() {
-        return history_id +
-                ", " + max_share_price +
+        return max_share_price +
                 ", " + min_share_price +
                 ", " + open_share_price +
                 ", " + close_share_price +
