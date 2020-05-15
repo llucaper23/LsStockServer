@@ -4,7 +4,9 @@ import Model.Company;
 import Model.Database.DAO.CompanyDAO;
 import Model.Database.DAO.UserDAO;
 import Model.Database.DBConnector;
+import Model.Manager;
 import Model.User;
+import View.MainView;
 import com.google.gson.Gson;
 import com.google.gson.stream.JsonReader;
 
@@ -21,6 +23,7 @@ public class Server extends Thread{
     private ArrayList<DedicatedServer> dedicatedServerList;
     private boolean isRunning;
     private boolean isOn;
+    private Manager manager;
     NetworkConfiguration nc;
 
     public Server() {
@@ -34,6 +37,7 @@ public class Server extends Thread{
             dedicatedServerList = new ArrayList<>();
             this.serverSocket = new ServerSocket(nc.getServerPort());
             DBConnector.init(nc);
+            manager = new Manager();
         } catch (IOException e) {
             e.printStackTrace();
         }
@@ -77,6 +81,7 @@ public class Server extends Thread{
                 try {
                     UserDAO userDAO = new UserDAO();
                     userDAO.logOutAllUsers();
+                    manager.stopAllHistories();
                     stopServer();
                     serverSocket.close();
                 } catch (IOException e) {

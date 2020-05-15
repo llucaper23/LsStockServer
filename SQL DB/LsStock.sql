@@ -16,22 +16,22 @@ CREATE TABLE User(
 
 DROP TABLE IF EXISTS Company;
 CREATE TABLE Company(
-	company_id INT AUTO_INCREMENT,
+	companyId INT AUTO_INCREMENT,
     company_name VARCHAR(255),
     share_price FLOAT,
-    PRIMARY KEY (company_id)
+    PRIMARY KEY (companyId)
 );
 
 DROP TABLE IF EXISTS User_Company;
 CREATE TABLE User_Company(
 	user_company_id INT AUTO_INCREMENT,
     userId INT,
-    company_id INT,
+    companyId INT,
     quantity INT,
     buy_price FLOAT,
-    PRIMARY KEY (user_company_id, userId, company_id),
+    PRIMARY KEY (user_company_id, userId, companyId),
     FOREIGN KEY (userId) REFERENCES User (userId),
-    FOREIGN KEY (company_id) REFERENCES Company (company_id)
+    FOREIGN KEY (companyId) REFERENCES Company (companyId)
 );
 
 DROP TABLE IF EXISTS Bot;
@@ -39,10 +39,10 @@ CREATE TABLE Bot(
 	bot_id INT AUTO_INCREMENT,
     buy_percentage FLOAT,
     activation_time FLOAT,
-    company_id INT,
+    companyId INT,
     isActive boolean,
     PRIMARY KEY (bot_id),
-    FOREIGN KEY (company_id) REFERENCES Company (company_id)
+    FOREIGN KEY (companyId) REFERENCES Company (companyId)
 );
 
 DROP TABLE IF EXISTS History;
@@ -52,7 +52,8 @@ CREATE TABLE History(
     min_share_price FLOAT,
     open_share_price FLOAT,
     close_share_price FLOAT,
-    datetime DATE,
+    date DATE,
+    time TIME,
     company_id INT,
     PRIMARY KEY (history_id),
     FOREIGN KEY (company_id) REFERENCES Company (company_id)

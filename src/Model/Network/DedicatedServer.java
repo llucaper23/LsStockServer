@@ -3,6 +3,7 @@ package Model.Network;
 import Model.*;
 import Model.Database.DAO.*;
 
+import javax.net.ssl.HostnameVerifier;
 import java.io.IOException;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
@@ -31,7 +32,7 @@ public class DedicatedServer extends Thread {
     private static final int SELL_SHARES = 5;
     private static final int USER_COMPANIES = 6;
     private static final int ALL_COMPANIES = 7;
-    private static final int COMPANY_DETAIL = 8;
+    private static final int HISTORY = 8;
     private static final int LOGOUT = 9;
     private static final int SELL_SOME_SHARES = 10;
 
@@ -150,6 +151,13 @@ public class DedicatedServer extends Thread {
                     server.updateAllClients();
                 }
 
+                if (message.getRequestType() == HISTORY) {
+                    message.setHistories(historyDAO.getHistoricFromCompany(message.getCompany().getCompanyId()));
+                    message.setOk(true);
+                    objectOut.writeObject(true);
+                    objectOut.flush();
+                }
+
             }
         } catch (IOException e1) {
             // en cas derror aturem el servidor dedicat
@@ -164,7 +172,8 @@ public class DedicatedServer extends Thread {
         try {
             ArrayList<Company> companies = companyDAO.getAllCompanies();
             ArrayList<UserCompany> userCompanies = userCompanyDAO.getAllCompaniesFromUser(user.getUserId());
-            Message message = new Message(ALL_COMPANIES, companies,null, false, null, null, userCompanies, 0);
+            ArrayList<History> histories = historyDAO.getAllHistories();
+            Message message = new Message(ALL_COMPANIES, companies,null, null, null,userCompanies,false, 0, histories);
             if (companies == null){
                 message.setOk(false);
                 updateClient.writeObject(message);

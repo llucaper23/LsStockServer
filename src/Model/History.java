@@ -1,6 +1,8 @@
 package Model;
 
 import java.io.Serializable;
+import java.sql.Time;
+import java.sql.Timestamp;
 import java.util.Date;
 
 public class History implements Serializable {
@@ -10,26 +12,29 @@ public class History implements Serializable {
     private float min_share_price;
     private float open_share_price;
     private float close_share_price;
-    private Date datetime;
-    private int company_id;
+    private Date date;
+    private Time time;
+    private int companyId;
 
-    public History(float max_share_price, float min_share_price, float open_share_price, float close_share_price, Date datetime, int company_id) {
-        this.max_share_price = max_share_price;
-        this.min_share_price = min_share_price;
-        this.open_share_price = open_share_price;
-        this.close_share_price = close_share_price;
-        this.datetime = datetime;
-        this.company_id = company_id;
-    }
-
-    public History(int history_id, float max_share_price, float min_share_price, float open_share_price, float close_share_price, Date datetime, int company_id) {
+    public History(int history_id, float max_share_price, float min_share_price, float open_share_price, float close_share_price, Date date, Time time, int companyId) {
         this.history_id = history_id;
         this.max_share_price = max_share_price;
         this.min_share_price = min_share_price;
         this.open_share_price = open_share_price;
         this.close_share_price = close_share_price;
-        this.datetime = datetime;
-        this.company_id = company_id;
+        this.date = date;
+        this.time = time;
+        this.companyId = companyId;
+    }
+
+    public History(float max_share_price, float min_share_price, float open_share_price, float close_share_price, Date date, Time time, int companyId) {
+        this.max_share_price = max_share_price;
+        this.min_share_price = min_share_price;
+        this.open_share_price = open_share_price;
+        this.close_share_price = close_share_price;
+        this.date = date;
+        this.time = time;
+        this.companyId = companyId;
     }
 
     public int getHistory_id() {
@@ -72,20 +77,12 @@ public class History implements Serializable {
         this.close_share_price = close_share_price;
     }
 
-    public Date getDatetime() {
-        return datetime;
+    public int getCompanyId() {
+        return companyId;
     }
 
-    public void setDatetime(Date datetime) {
-        this.datetime = datetime;
-    }
-
-    public int getCompany_id() {
-        return company_id;
-    }
-
-    public void setCompany_id(int company_id) {
-        this.company_id = company_id;
+    public void setCompanyId(int companyId) {
+        this.companyId = companyId;
     }
 
     @Override
@@ -94,7 +91,8 @@ public class History implements Serializable {
                 ", " + min_share_price +
                 ", " + open_share_price +
                 ", " + close_share_price +
-                ", '" + datetime + '\'' +
-                ", " + company_id;
+                ", '" + date + '\'' +
+                ", '" + time + '\'' +
+                ", " + companyId;
     }
 }
