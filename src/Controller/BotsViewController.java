@@ -5,6 +5,7 @@ import Model.BotThread;
 import Model.Company;
 import Model.Database.DAO.BotDAO;
 import Model.Database.DAO.CompanyDAO;
+import Model.Manager;
 import View.BotsView;
 
 import javax.swing.*;
@@ -19,8 +20,8 @@ public class BotsViewController implements ActionListener {
     private BotsView botsView;
     private CompanyDAO companyies = new CompanyDAO();
     private int botSelecionat = -1;
-    private ArrayList<BotsBuyThread> llistatThreadsBots;
 
+    private Manager llistBots = new Manager();
 
     private BotDAO botBBDD = new BotDAO();
 
@@ -29,14 +30,16 @@ public class BotsViewController implements ActionListener {
     public BotsViewController(BotsView botsView) {
         this.botsView = botsView;
         actualitzaLlistatBots();
-        llistatThreadsBots = new ArrayList<BotsBuyThread>();
-        CarregaThreadsBots();// sha comentat pqfalla
 
-        showlistOfBots();
+        CarregaThreadsBots();
+
+        //showlistOfBots();
     }
 
     @Override
     public void actionPerformed(ActionEvent e) {
+        ArrayList<BotsBuyThread> llistatThreadsBots = llistBots.getLlistatThreadsBots();
+
         try{
         switch(e.getActionCommand()) {
             case BotsView.CREATE_BOT_BUTTON_COMMAND:
@@ -72,6 +75,7 @@ public class BotsViewController implements ActionListener {
                     }
                     llistatThreadsBots.remove(posbotEliminar);
 
+                    llistBots.setLlistatThreadsBots(llistatThreadsBots);
                     botSelecionat = -1;
                     actualitzaLlistatBots();
                     botsView.esborraConfigurationBotView();// caldra cridar al clear de la vista de les adades de la
@@ -112,7 +116,7 @@ public class BotsViewController implements ActionListener {
             ex.printStackTrace();
         }
 
-        showlistOfBots();
+        //showlistOfBots();
 
 
     }
@@ -157,8 +161,11 @@ public class BotsViewController implements ActionListener {
 
                     nouThreadBotDades.start();
 
+                    ArrayList<BotsBuyThread> llistatThreadsBots = llistBots.getLlistatThreadsBots();
+
                     llistatThreadsBots.add(nouThreadBotDades);    // afegim totes les dades del thread del bot (id bot, i thread a la llista de thread no eliminats)
 
+                    llistBots.setLlistatThreadsBots(llistatThreadsBots);
 
                     actualitzaLlistatBots();
 
@@ -198,6 +205,9 @@ public class BotsViewController implements ActionListener {
         Bot botActual = llistatBots.get(botSelecionat);
         botActual.setActive(estat);
         botBBDD.changeBotStatus(botActual);
+        ArrayList<BotsBuyThread> llistatThreadsBots = llistBots.getLlistatThreadsBots();
+
+
 
 
         // modifiquem thread bots
@@ -219,7 +229,7 @@ public class BotsViewController implements ActionListener {
             }
         }
 
-
+        llistBots.setLlistatThreadsBots(llistatThreadsBots);
         actualitzaLlistatBots();
 
         // falta cridar a la funcio que getiona tots el threads del bots
@@ -232,6 +242,9 @@ public class BotsViewController implements ActionListener {
     }
 
     private void CarregaThreadsBots(){
+
+        ArrayList<BotsBuyThread> llistatThreadsBots = llistBots.getLlistatThreadsBots();
+
 
         ArrayList<Bot> botsactuals = botBBDD.getAllBots();
         for (int i = 0; i < botsactuals.size(); i++) {
@@ -250,11 +263,12 @@ public class BotsViewController implements ActionListener {
         }
 
 
+        llistBots.setLlistatThreadsBots(llistatThreadsBots);
     }
 
     public void refreshNewData(){ actualitzaLlistatBots(); }
 
-    public void showlistOfBots(){ // hi han dos
+    /*public void showlistOfBots(){ // hi han dos
 
         Set<Thread> threads = Thread.getAllStackTraces().keySet();
 
@@ -267,5 +281,5 @@ public class BotsViewController implements ActionListener {
         }
 
 
-    }
+    }*/
 }

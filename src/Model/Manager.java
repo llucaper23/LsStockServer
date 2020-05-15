@@ -1,5 +1,6 @@
 package Model;
 
+import Controller.BotsBuyThread;
 import Model.Database.DAO.CompanyDAO;
 
 import java.util.ArrayList;
@@ -12,6 +13,9 @@ public class Manager {
     private Pattern patterPass;
     private Pattern patternMail;
     ArrayList<HistoryThread> historyThreads;
+
+
+    private ArrayList<BotsBuyThread> llistatThreadsBots = new ArrayList<BotsBuyThread>();
 
     public Manager() {
 
@@ -61,4 +65,11 @@ public class Manager {
     }
 
 
+    public ArrayList<BotsBuyThread> getLlistatThreadsBots() {
+        return llistatThreadsBots;
+    }
+
+    public void setLlistatThreadsBots(ArrayList<BotsBuyThread> llistatThreadsBots) {
+        this.llistatThreadsBots = llistatThreadsBots;
+    }
 }
