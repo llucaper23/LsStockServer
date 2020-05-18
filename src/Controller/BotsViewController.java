@@ -30,9 +30,7 @@ public class BotsViewController implements ActionListener {
     public BotsViewController(BotsView botsView) {
         this.botsView = botsView;
         actualitzaLlistatBots();
-
         CarregaThreadsBots();
-
         //showlistOfBots();
     }
 
@@ -82,8 +80,8 @@ public class BotsViewController implements ActionListener {
                 }
                 break;
             default:
+
                 // si no han clicat els altres botons, vol dir que ha estat el del id del boto correponent
-                System.out.println("Boto BOts premut amb ID "+e.getActionCommand());
 
                 ArrayList<Bot> llistatBots = botBBDD.getAllBots();
                 int posBot = 0;
@@ -122,9 +120,6 @@ public class BotsViewController implements ActionListener {
     }
 
 
-
-
-
     // funcio per afegir bots a la base de dades una vega ens han premut el boto crear bot, altrmaent tambe farem tota la logica ssiociada lacorrecio d'errors
     private void afegeixBot(){
 
@@ -139,8 +134,6 @@ public class BotsViewController implements ActionListener {
                 JOptionPane.showMessageDialog(null, "Temps fora dels rangs possibles");
 
             }else{
-
-
 
                 ArrayList<Company> totesCompanyies = companyies.getAllCompanies(); // predelete
 

@@ -14,8 +14,6 @@ import java.awt.event.ActionListener;
 
 public class UserShareViewController implements ActionListener {
 
-
-
     private Manager manager;
 
     public UserShareViewController(UserShareView userShareWindow, Manager manager) {

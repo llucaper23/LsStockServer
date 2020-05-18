@@ -15,11 +15,11 @@ public class HistoryDAO {
             String query = "SELECT COUNT(history_id) as numHistory FROM History WHERE company_id = " + history.getCompanyId() + ";";
             ResultSet rs = DBConnector.getInstance().selectQuery(query);
             while (rs.next()){
-                if (rs.getInt("numHistory") <= 10){
+                if (rs.getInt("numHistory") < 10){
                     String query2 = "INSERT INTO History (max_share_price, min_share_price, open_share_price, close_share_price, date, time, company_id) VALUES (" + history.toString() + ");";
                     DBConnector.getInstance().insertQuery(query2);
                 }else{
-                    String query2 = "SELECT * FROM History WHERE company_id = " + history.getCompanyId() + " ORDER BY datetime ASC LIMIT 1;";
+                    String query2 = "SELECT * FROM History WHERE company_id = " + history.getCompanyId() + " ORDER BY date, time ASC LIMIT 1;";
                     ResultSet rs1 = DBConnector.getInstance().selectQuery(query2);
                     while (rs1.next()){
                         int id = rs1.getInt("history_id");

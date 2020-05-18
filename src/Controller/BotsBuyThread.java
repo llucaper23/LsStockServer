@@ -43,10 +43,12 @@ public class BotsBuyThread extends Thread   {
 
                 if(nombreRandom <= percentatgeCompra){      //cas que compra
                     preuactual = (float) (preuactual*1.01); // augmentem el preu un 1%
+                    System.out.println("BOT: "+ this.botid + " - BUY: "+preuactual);
                 }else{                                      // cas que ven
                     preuactual = (float) (preuactual*0.99); // decrementem el preu un 1%
+                    System.out.println("BOT: "+ this.botid + " - SELL: "+preuactual);
                 }
-                System.out.println("Soc el bot "+ this.botid+" i acabu de comprar per:"+preuactual);
+
                 companyia.setSharePrice(preuactual); // actualizem a preu a companyia?
                 companyies.setSharePrice(companyia.getCompanyId(),preuactual);
 
@@ -66,7 +68,7 @@ public class BotsBuyThread extends Thread   {
 
 
         }
-        System.out.println("Soc el bot"+ this.botid+"I m'acaben d'eliminar");
+        System.out.println("BOT: " + this.botid + " - DELETED");
 
 
     }
