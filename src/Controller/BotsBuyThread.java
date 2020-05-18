@@ -37,7 +37,6 @@ public class BotsBuyThread extends Thread   {
         while(funciona){
 
             if (isActive){
-                //System.out.println("Soc el bot"+ this.botid+" i estic funcionant");
                 int nombreRandom = random.nextInt(100);
                 float preuactual = companyia.getSharePrice(); // Nose Rick, no l'ahuriem d'agar el meu actualitzat de la BBDD
 
@@ -64,12 +63,8 @@ public class BotsBuyThread extends Thread   {
                 }
 
             }
-
-
-
         }
         System.out.println("BOT: " + this.botid + " - DELETED");
-
 
     }
 

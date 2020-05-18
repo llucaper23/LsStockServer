@@ -53,7 +53,7 @@ public class HistoryThread extends Thread {
                     historyDAO.insertPrice(new History(max, min, open, close, sqlDate, sqlTime, aux.getCompanyId()));
                     counter = 0;
                     prices = new ArrayList<>();
-                    System.out.println("Minut guardat a history");
+                    System.out.println("");
                 } else {
                     counter ++;
                 }
