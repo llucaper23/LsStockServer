@@ -42,6 +42,7 @@ public class DedicatedServer extends Thread {
         userDAO = new UserDAO();
         companyDAO = new CompanyDAO();
         userCompanyDAO = new UserCompanyDAO();
+        historyDAO = new HistoryDAO();
         try {
             // creem els canals de comunicacio
             this.objectOut = new ObjectOutputStream(sClient.getOutputStream());
@@ -154,7 +155,7 @@ public class DedicatedServer extends Thread {
                 if (message.getRequestType() == HISTORY) {
                     message.setHistories(historyDAO.getHistoricFromCompany(message.getCompany().getCompanyId()));
                     message.setOk(true);
-                    objectOut.writeObject(true);
+                    objectOut.writeObject(message);
                     objectOut.flush();
                 }
 

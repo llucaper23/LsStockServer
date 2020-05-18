@@ -194,7 +194,6 @@ public class BotsViewController implements ActionListener {
     }
     private void cambiarEstatBot(Boolean estat) throws InterruptedException {
         ArrayList<Bot> llistatBots = botBBDD.getAllBots();
-        System.out.println("F");
         Bot botActual = llistatBots.get(botSelecionat);
         botActual.setActive(estat);
         botBBDD.changeBotStatus(botActual);

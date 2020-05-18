@@ -17,8 +17,8 @@ public class Top10Thread extends Thread {
             controladortop10.actualitzaTop10();
             try {
                 TimeUnit.SECONDS.sleep( TEMPS_ACTUALITZACIO_EN_SECS );     // aqui dormim una estoneta
-            } catch (InterruptedException e) {
 
+            } catch (InterruptedException e) {
                 e.printStackTrace();
             }
 

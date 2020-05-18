@@ -37,6 +37,7 @@ public class HistoryThread extends Thread {
         prices = new ArrayList<>();
         while (isAlive()) {
             try {
+
                 Company aux = companyDAO.getCompany(company.getCompanyId());
                 prices.add(aux.getSharePrice());
 
@@ -53,7 +54,7 @@ public class HistoryThread extends Thread {
                     historyDAO.insertPrice(new History(max, min, open, close, sqlDate, sqlTime, aux.getCompanyId()));
                     counter = 0;
                     prices = new ArrayList<>();
-                    System.out.println("");
+                    System.out.println("id: " + aux.getCompanyId() + " - commpany: " + aux.getCompanyName() + " - time: " + sqlTime);
                 } else {
                     counter ++;
                 }
