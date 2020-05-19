@@ -36,23 +36,20 @@ public class BotsBuyThread extends Thread   {
 
         while(funciona){
 
-            if (isActive){
+            if (isActive) {
                 int nombreRandom = random.nextInt(100);
-                float preuactual = companyia.getSharePrice(); // Nose Rick, no l'ahuriem d'agar el meu actualitzat de la BBDD
+                float preuactual = companyia.getSharePrice();
 
-                if(nombreRandom <= percentatgeCompra){      //cas que compra
-                    preuactual = (float) (preuactual*1.01); // augmentem el preu un 1%
-                    System.out.println("BOT: "+ this.botid + " - BUY: "+preuactual);
-                }else{                                      // cas que ven
-                    preuactual = (float) (preuactual*0.99); // decrementem el preu un 1%
-                    System.out.println("BOT: "+ this.botid + " - SELL: "+preuactual);
+                if (nombreRandom <= percentatgeCompra) {      //cas que compra
+                    preuactual = (float) (preuactual * 1.01); // augmentem el preu un 1%
+                    System.out.println("BOT: " + this.botid + " - BUY: " + preuactual);
+                } else {                                      // cas que ven
+                    preuactual = (float) (preuactual * 0.99); // decrementem el preu un 1%
+                    System.out.println("BOT: " + this.botid + " - SELL: " + preuactual);
                 }
 
-                companyia.setSharePrice(preuactual); // actualizem a preu a companyia?
-                companyies.setSharePrice(companyia.getCompanyId(),preuactual);
-
-            }else{      // cas descativat--> no fara res
-                //System.out.println("Soc el bot"+ this.botid+" i estic APAGAT");
+                companyia.setSharePrice(preuactual); // actualizem a preu a companyia
+                companyies.setSharePrice(companyia.getCompanyId(), preuactual);
             }
 
             if(funciona){
@@ -64,7 +61,7 @@ public class BotsBuyThread extends Thread   {
 
             }
         }
-        System.out.println("BOT: " + this.botid + " - DELETED");
+
 
     }
 

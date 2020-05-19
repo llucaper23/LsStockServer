@@ -1,19 +1,16 @@
 package Controller;
 
 import Model.Bot;
-import Model.BotThread;
 import Model.Company;
 import Model.Database.DAO.BotDAO;
 import Model.Database.DAO.CompanyDAO;
 import Model.Manager;
 import View.BotsView;
-
 import javax.swing.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.sql.SQLOutput;
 import java.util.ArrayList;
-import java.util.Set;
+
 
 public class BotsViewController implements ActionListener {
 
@@ -31,7 +28,7 @@ public class BotsViewController implements ActionListener {
         this.botsView = botsView;
         actualitzaLlistatBots();
         CarregaThreadsBots();
-        //showlistOfBots();
+
     }
 
     @Override
@@ -105,7 +102,7 @@ public class BotsViewController implements ActionListener {
 
                 float percentCompra = llistatBots.get(posBot).getBuyPercentage();
                 float tempsActivacio = llistatBots.get(posBot).getActivationTime();
-                String nomBot = e.getActionCommand(); // caldra cnaviar pel nom del bot corresponent
+                String nomBot = e.getActionCommand();
 
                 botsView.refreshConfigurationBotView(nomCompanyia,percentCompra,tempsActivacio,nomBot);
         }
@@ -113,8 +110,6 @@ public class BotsViewController implements ActionListener {
         } catch (InterruptedException ex) {
             ex.printStackTrace();
         }
-
-        //showlistOfBots();
 
 
     }
@@ -163,21 +158,15 @@ public class BotsViewController implements ActionListener {
                     actualitzaLlistatBots();
 
 
-
-                    System.out.println("");
                 }
             }
 
-
-            System.out.println("");
 
         } catch (NumberFormatException excepction) {
             JOptionPane.showMessageDialog(null, "Els decimals son and punt");
         }
 
-        //catch (Exception ex){
-        //  JOptionPane.showMessageDialog(null, "Dades Incorrectes");
-        //}
+
 
 
         botsView.resetTextFieldNameCompanyia();
@@ -186,9 +175,6 @@ public class BotsViewController implements ActionListener {
 
 
 
-
-        //Bot nouBot = new Bot(0,botsView.getSliderPercetnCompra(),botsView.getTextFieldTempsActivacio(),idCompanyie);
-        System.out.println("");
 
 
     }
@@ -202,11 +188,11 @@ public class BotsViewController implements ActionListener {
 
 
 
-        // modifiquem thread bots
+        // modifiquem thread bots--> es a dir canviem estat
         if(estat){      // cal el volguem a activar
             for (int i = 0; i <llistatThreadsBots.size() ; i++) {
                 if (llistatThreadsBots.get(i).getBotid() == botActual.getBotId()){
-                    llistatThreadsBots.get(i).activaBot();                       // aixo es el que falla
+                    llistatThreadsBots.get(i).activaBot();
 
 
                 }
@@ -215,7 +201,7 @@ public class BotsViewController implements ActionListener {
 
             for (int i = 0; i <llistatThreadsBots.size() ; i++) {
                 if (llistatThreadsBots.get(i).getBotid() == botActual.getBotId()){
-                    llistatThreadsBots.get(i).desactivaBot();                       // aixo es el que falla
+                    llistatThreadsBots.get(i).desactivaBot();
 
                 }
             }
@@ -224,7 +210,6 @@ public class BotsViewController implements ActionListener {
         llistBots.setLlistatThreadsBots(llistatThreadsBots);
         actualitzaLlistatBots();
 
-        // falta cridar a la funcio que getiona tots el threads del bots
     }
 
     private void actualitzaLlistatBots(){
@@ -260,18 +245,5 @@ public class BotsViewController implements ActionListener {
 
     public void refreshNewData(){ actualitzaLlistatBots(); }
 
-    /*public void showlistOfBots(){ // hi han dos
 
-        Set<Thread> threads = Thread.getAllStackTraces().keySet();
-
-        for (int i = 0; i <llistatThreadsBots.size() ; i++) {
-            String name = llistatThreadsBots.get(i).getName();
-            Thread.State state = llistatThreadsBots.get(i).getState();
-            int priority = llistatThreadsBots.get(i).getPriority();
-            String type = llistatThreadsBots.get(i).isDaemon() ? "Daemon" : "Normal";
-            System.out.printf("%-20s \t %s \t %d \t %s\n", name, state, priority, type);
-        }
-
-
-    }*/
 }
