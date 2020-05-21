@@ -17,10 +17,6 @@ public class BotsBuyThread extends Thread   {
     private CompanyDAO companyies = new CompanyDAO();
     private int botid;
 
-
-
-
-
     public BotsBuyThread(int botid,float tempsActivacio, int percentatgeCompra, Company companyia) {
         this.tempsActivacio =  (int) tempsActivacio;
         this.percentatgeCompra = percentatgeCompra;
@@ -30,7 +26,6 @@ public class BotsBuyThread extends Thread   {
         funciona =true;
         isActive = true;
     }
-
 
     public void run(){
 
@@ -61,7 +56,6 @@ public class BotsBuyThread extends Thread   {
 
             }
         }
-
 
     }
 

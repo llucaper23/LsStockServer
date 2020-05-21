@@ -156,8 +156,6 @@ public class BotsViewController implements ActionListener {
                     llistBots.setLlistatThreadsBots(llistatThreadsBots);
 
                     actualitzaLlistatBots();
-
-
                 }
             }
 
@@ -229,14 +227,11 @@ public class BotsViewController implements ActionListener {
             Company companyia = companyies.getCompany(botsactuals.get(i).getCompanyId()); // comapnyia que li passarem al bot
             // codi per afegir bots
 
-
             BotsBuyThread nouThreadBotDades = new BotsBuyThread(botsactuals.get(i).getBotId(),botsactuals.get(i).getActivationTime(),(int) botsactuals.get(i).getBuyPercentage(),companyia);
             nouThreadBotDades.setStateCarregaInicial(botsactuals.get(i).isActive());
             nouThreadBotDades.start();
 
             llistatThreadsBots.add(nouThreadBotDades);    // afegim totes les dades del thread del bot (id bot, i thread a la llista de thread no eliminats)
-
-
         }
 
 

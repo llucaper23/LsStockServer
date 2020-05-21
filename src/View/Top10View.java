@@ -21,8 +21,6 @@ public class Top10View extends JPanel {
     }
     public void novesAccions(ArrayList<Company> llistaCompany){
         this.llistaCompany = llistaCompany;
-        System.out.println("");
-
         HistogramPanel panel = new HistogramPanel();
 
         // agefim les 10 comapnyies !!!WARNING nomes esta dimensionat per 10, si els volguessin posat mes o reduir tocaraia cnviar la capçalera de HistogrmPanel
