@@ -19,6 +19,7 @@ import java.util.ArrayList;
 
 public class Server extends Thread{
 
+
     private ServerSocket serverSocket;
     private ArrayList<DedicatedServer> dedicatedServerList;
     private boolean isRunning;

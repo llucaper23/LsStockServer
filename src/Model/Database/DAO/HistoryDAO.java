@@ -10,7 +10,7 @@ import java.util.ArrayList;
 import java.util.Date;
 
 public class HistoryDAO {
-    public void insertPrice(History history){
+    public synchronized void insertPrice(History history){
         try {
             String query = "SELECT COUNT(history_id) as numHistory FROM History WHERE company_id = " + history.getCompanyId() + ";";
             ResultSet rs = DBConnector.getInstance().selectQuery(query);
@@ -35,7 +35,7 @@ public class HistoryDAO {
         }
     }
 
-    public ArrayList<History> getHistoricFromCompany(int companyId){
+    public synchronized ArrayList<History> getHistoricFromCompany(int companyId){
         try{
             String query = "SELECT * FROM History WHERE company_id = " + companyId + ";";
             ResultSet rs = DBConnector.getInstance().selectQuery(query);
@@ -58,7 +58,7 @@ public class HistoryDAO {
         }
     }
 
-    public History get5MinBeforePrice(int companyId){
+    public synchronized History get5MinBeforePrice(int companyId){
         try{
             String query = "SELECT * FROM History WHERE company_id = " + companyId + ";";
             ResultSet rs = DBConnector.getInstance().selectQuery(query);
@@ -81,7 +81,7 @@ public class HistoryDAO {
         }
     }
 
-    public ArrayList<History> getAllHistories() {
+    public synchronized ArrayList<History> getAllHistories() {
         try{
             String query = "SELECT * FROM History;";
             ResultSet rs = DBConnector.getInstance().selectQuery(query);

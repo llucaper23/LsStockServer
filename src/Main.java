@@ -20,6 +20,8 @@ public class Main {
         Top10ViewController t10c = new Top10ViewController(top10View);
         Top10Thread actualitzacioTop10Time = new Top10Thread(t10c);     // actualitzacio cada X temps de la pestanya top10
         actualitzacioTop10Time.start();
+        UserThread userThread = new UserThread(mvc);
+        userThread.start();
         BotsViewController botsVC = new BotsViewController(botsView);
         botsView.registerController(botsVC);
         botsVC.refreshNewData();        // necesari per a l'incorporacio dels listneres al ultim lllistat de bots creats

@@ -1,9 +1,7 @@
 package View;
 
 import Controller.MainViewController;
-import Controller.UserShareViewController;
 import Model.*;
-import Model.Database.DAO.UserCompanyDAO;
 
 import javax.swing.*;
 import javax.swing.border.TitledBorder;

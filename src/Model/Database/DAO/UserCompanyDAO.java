@@ -40,7 +40,7 @@ public class UserCompanyDAO {
         }
     }
 
-    public void sellSomeShares(int idCompany, int  idUser, int numShares){
+    public synchronized void sellSomeShares(int idCompany, int  idUser, int numShares){
         try {
             String query = "SELECT * FROm User_Company WHERE company_id = " + idCompany + " AND user_id = " + idUser + ";";
             ResultSet rs = DBConnector.getInstance().selectQuery(query);
@@ -66,7 +66,7 @@ public class UserCompanyDAO {
     }
 
 
-    public ArrayList<UserCompany> getAllCompaniesFromUser(int id){
+    public synchronized ArrayList<UserCompany> getAllCompaniesFromUser(int id){
         try {
             ArrayList<UserCompany> userCompanies = new ArrayList<>();
             String query = "SELECT * FROM User_Company WHERE user_id = " + id + ";";

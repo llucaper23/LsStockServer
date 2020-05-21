@@ -81,6 +81,7 @@ public class DedicatedServer extends Thread {
                     message.setOk(userDAO.registerUser(message.getUser()));
                     objectOut.writeObject(message);
                     objectOut.flush();
+
                 }
                 if (message.getRequestType() == LOGIN_REQUEST){
                     message.setOk(userDAO.canUserLogin(message.getUser()));

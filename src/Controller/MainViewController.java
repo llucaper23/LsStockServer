@@ -7,13 +7,18 @@ import Model.Database.DAO.UserDAO;
 import Model.Manager;
 import Model.Network.Server;
 import Model.User;
+import Model.UserCompany;
 import View.MainView;
 import View.UserShareView;
 
 import javax.swing.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.time.Instant;
+import java.time.LocalDateTime;
+import java.time.ZoneId;
 import java.util.ArrayList;
+import java.util.Date;
 
 public class MainViewController implements ActionListener {
 
@@ -33,22 +38,23 @@ public class MainViewController implements ActionListener {
         this.manager = manager;
         this.userShareWindow = userShareWindow;
         userShareWindow.updateUsers(userDAO.getAllUsers(), this);
-
         ArrayList<User> dadesUser = userDAO.getAllUsers();
-
-        userShareWindow.updateUserCompanies(manager.getUserCompanies(userCompanyDAO.getAllCompaniesFromUser(0)), userCompanyDAO.getAllCompaniesFromUser(0),dadesUser.get(0).getNickName() );
-
+        userShareWindow.updateUserCompanies(manager.getUserCompanies(userCompanyDAO.getAllCompaniesFromUser(1)), userCompanyDAO.getAllCompaniesFromUser(1),dadesUser.get(0).getNickName() );
     }
+
+
 
     @Override
     public void actionPerformed(ActionEvent e) {
-
         if (e.getActionCommand().equals("USER")) {
             int userId = Integer.parseInt(((JButton)e.getSource()).getClientProperty("user_id").toString());
             UserDAO userDao = new UserDAO();
             User dadesUser = userDao.getUserById(userId);
-
             userShareWindow.updateUserCompanies(manager.getUserCompanies(userCompanyDAO.getAllCompaniesFromUser(userId)), userCompanyDAO.getAllCompaniesFromUser(userId),dadesUser.getNickName());
         }
+    }
+
+    public void actualitzaUser(){
+        userShareWindow.updateUsers(userDAO.getAllUsers(), this);
     }
 }

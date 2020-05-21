@@ -8,7 +8,7 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 
 public class UserDAO {
-    public boolean registerUser(User user){
+    public synchronized boolean registerUser(User user){
         boolean ok = false;
         try{
             String query = "SELECT COUNT(user_id) as num_users FROM User WHERE nickname = '" + user.getNickName() + "' AND email = '" + user.getEmail() + "';";
@@ -31,7 +31,7 @@ public class UserDAO {
 
     }
 
-    public boolean canUserLogin(User user){
+    public synchronized boolean canUserLogin(User user){
         boolean logged = false;
         try{
             ResultSet rs;
@@ -107,7 +107,7 @@ public class UserDAO {
         return null;
     }
 
-    public void setMoney(User user){
+    public synchronized void setMoney(User user){
         try {
             String query = "UPDATE User SET money = " + user.getMoney() + " WHERE nickname = '" + user.getNickName() + "';";
             DBConnector.getInstance().updateQuery(query);
@@ -116,7 +116,7 @@ public class UserDAO {
         }
     }
 
-    public ArrayList<User> getAllUsers() {
+    public synchronized ArrayList<User> getAllUsers() {
         try {
             ArrayList <User> userList = new ArrayList<>();
             String query;
@@ -143,7 +143,7 @@ public class UserDAO {
         return null;
     }
 
-    public User getUserById (int id) {
+    public synchronized User getUserById (int id) {
         try {
             String query;
             query = "SELECT * FROM User WHERE user_id = " + id + ";";

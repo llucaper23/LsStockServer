@@ -9,7 +9,7 @@ import java.util.ArrayList;
 
 public class CompanyDAO {
 
-    public Company getCompany(int companyId) {
+    public synchronized Company getCompany(int companyId) {
         try {
             String query;
             query = "SELECT * FROM Company as c WHERE c.company_id = '" + companyId + "';";
@@ -30,7 +30,7 @@ public class CompanyDAO {
         return null;
     }
 
-    public ArrayList<Company> getAllCompanies() {
+    public synchronized ArrayList<Company> getAllCompanies() {
         try {
             ArrayList <Company> companyList = new ArrayList<>();
             String query;
@@ -54,7 +54,7 @@ public class CompanyDAO {
         return null;
     }
 
-    public ArrayList<Company> getTop10Companies() {
+    public synchronized ArrayList<Company> getTop10Companies() {
         try {
             ArrayList <Company> top10 = new ArrayList<>();
             String query;
@@ -77,7 +77,7 @@ public class CompanyDAO {
         return null;
     }
 
-    public void setSharePrice(int id, float sharePrice){
+    public synchronized void setSharePrice(int id, float sharePrice){
         try {
             String query = "UPDATE Company SET share_price = " + sharePrice + " WHERE company_id = " + id + ";";
             DBConnector.getInstance().updateQuery(query);
@@ -86,7 +86,7 @@ public class CompanyDAO {
         }
     }
 
-    public int getCompanyId(String companyName){
+    public synchronized int getCompanyId(String companyName){
         int companyId = -1;
         try{
             String query = "SELECT c.company_id FROM Company as c WHERE c.company_name = '" + companyName + "';";
@@ -101,7 +101,7 @@ public class CompanyDAO {
         return companyId;
     }
 
-    public void insertCompany(Company company){
+    public synchronized void insertCompany(Company company){
         try {
             String query = "INSERT INTO Company (company_name, share_price) VALUES (" + company.toString() + ");";
             DBConnector.getInstance().insertQuery(query);

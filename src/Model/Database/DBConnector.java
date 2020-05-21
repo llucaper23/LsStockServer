@@ -36,7 +36,7 @@ public class DBConnector {
      *Método estático que genera una intancia de la clase para implementar JavaSingleton.
      * @return instancia de la clase.
      */
-    public static DBConnector getInstance(){
+    public synchronized static DBConnector getInstance(){
         return  instance;
     }
 
@@ -45,13 +45,13 @@ public class DBConnector {
      * @param  nc network config
      * @return instancia de la clase
      */
-    public static DBConnector init(NetworkConfiguration nc){
+    public synchronized static DBConnector init(NetworkConfiguration nc){
         instance = new DBConnector(nc.getDbUser(), nc.getDbPass(), nc.getDbAddress(), nc);
         instance.connect();
         return instance;
     }
 
-    public static DBConnector end(){
+    public synchronized static DBConnector end(){
         //instance = new DBConnector(usr,psw);
         instance.disconnect();
         return instance;
@@ -62,11 +62,11 @@ public class DBConnector {
     /**
      *Método que permite la conexión con la BBDD.
      */
-    public void connect() {
+    public synchronized  void connect() {
         try {
             Class.forName("com.mysql.jdbc.Connection");
 
-            String url ="jdbc:mysql://" + nc.getDbAddress() + ":3306/lsstock?useSSL=true&requireSSL=false";
+            String url ="jdbc:mysql://" + nc.getDbAddress() + ":3306/lsstock";
             conn = DriverManager.getConnection(url, nc.getDbUser(), nc.getDbPass());
 
             if (conn != null) {
@@ -87,7 +87,7 @@ public class DBConnector {
      *Método que permite insertar una query en la BBDD.
      * @param query query
      */
-    public void insertQuery(String query){
+    public synchronized void insertQuery(String query){
         try {
             s =(Statement) conn.createStatement();
             s.execute(query);
@@ -102,7 +102,7 @@ public class DBConnector {
      *Método que permite hacer un update en la BBDD.
      * @param query query
      */
-    public void updateQuery(String query){
+    public synchronized void updateQuery(String query){
         try {
             s =(Statement) conn.createStatement();
             s.executeUpdate(query);
@@ -117,7 +117,7 @@ public class DBConnector {
      *Método que permite hacer un delete en la BBDD.
      * @param query query
      */
-    public void deleteQuery(String query){
+    public synchronized void deleteQuery(String query){
         try {
             s =(Statement) conn.createStatement();
             s.executeUpdate(query);
@@ -133,7 +133,7 @@ public class DBConnector {
      * @param query query
      * @return resultado
      */
-    public ResultSet selectQuery(String query){
+    public synchronized ResultSet selectQuery(String query){
         ResultSet rs = null;
         try {
             s =(Statement) conn.createStatement();
@@ -146,7 +146,7 @@ public class DBConnector {
     }
 
 
-    public void disconnect(){
+    public synchronized void disconnect(){
         try {
             conn.close();
             System.out.printf("Desconexión de la base de datos " + url);
