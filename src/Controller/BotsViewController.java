@@ -213,7 +213,7 @@ public class BotsViewController implements ActionListener {
 
     }
 
-    private void actualitzaLlistatBots(){
+    public void actualitzaLlistatBots(){
 
         botsView.refreshBotsListfromView(botBBDD.getAllBots());
 
@@ -240,8 +240,4 @@ public class BotsViewController implements ActionListener {
 
         llistBots.setLlistatThreadsBots(llistatThreadsBots);
     }
-
-    public void refreshNewData(){ actualitzaLlistatBots(); }
-
-
 }
