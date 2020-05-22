@@ -91,7 +91,11 @@ public class DedicatedServer extends Thread {
                         message.setUser(this.user);
                         objectOut.writeObject(message);
                         objectOut.flush();
+                    } else {
+                        objectOut.writeObject(message);
+                        objectOut.flush();
                     }
+
                 }
                 if (message.getRequestType() == LOGOUT) {
                    userDAO.logOut(user);
