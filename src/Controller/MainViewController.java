@@ -1,24 +1,17 @@
 package Controller;
 
-import Model.Company;
-import Model.Database.DAO.CompanyDAO;
 import Model.Database.DAO.UserCompanyDAO;
 import Model.Database.DAO.UserDAO;
 import Model.Manager;
 import Model.Network.Server;
 import Model.User;
-import Model.UserCompany;
 import View.MainView;
 import View.UserShareView;
 
 import javax.swing.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.time.Instant;
-import java.time.LocalDateTime;
-import java.time.ZoneId;
 import java.util.ArrayList;
-import java.util.Date;
 
 public class MainViewController implements ActionListener {
 
@@ -39,7 +32,9 @@ public class MainViewController implements ActionListener {
         this.userShareWindow = userShareWindow;
         userShareWindow.updateUsers(userDAO.getAllUsers(), this);
         ArrayList<User> dadesUser = userDAO.getAllUsers();
-        userShareWindow.updateUserCompanies(manager.getUserCompanies(userCompanyDAO.getAllCompaniesFromUser(1)), userCompanyDAO.getAllCompaniesFromUser(1),dadesUser.get(0).getNickName() );
+        if (dadesUser.size() != 0) {
+            userShareWindow.updateUserCompanies(manager.getUserCompanies(userCompanyDAO.getAllCompaniesFromUser(1)), userCompanyDAO.getAllCompaniesFromUser(1), dadesUser.get(0).getNickName());
+        }
     }
 
 
