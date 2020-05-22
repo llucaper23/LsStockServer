@@ -5,7 +5,9 @@ import Model.Company;
 import Model.Database.DAO.BotDAO;
 import Model.Database.DAO.CompanyDAO;
 import Model.Manager;
+import Model.Network.Server;
 import View.BotsView;
+
 import javax.swing.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -17,17 +19,18 @@ public class BotsViewController implements ActionListener {
     private BotsView botsView;
     private CompanyDAO companyies = new CompanyDAO();
     private int botSelecionat = -1;
-
     private Manager llistBots = new Manager();
-
     private BotDAO botBBDD = new BotDAO();
-
     final float MIN_TEMPS = 0;
     final float MAX_TEMPS = 2000;
-    public BotsViewController(BotsView botsView) {
+    private Server server;
+
+    public BotsViewController(BotsView botsView, Server server) {
         this.botsView = botsView;
+        this.server = server;
         actualitzaLlistatBots();
-        CarregaThreadsBots();
+        carregaThreadsBots();
+
 
     }
 
@@ -145,7 +148,7 @@ public class BotsViewController implements ActionListener {
 
                     // creeem Thread del Bot amb totes les seves dades
                     int posUltimNouBot = llistatBots.size() -1;
-                    BotsBuyThread nouThreadBotDades = new BotsBuyThread(llistatBots.get(posUltimNouBot).getBotId(),tempsActivacio,valueSlider,companyia);
+                    BotsBuyThread nouThreadBotDades = new BotsBuyThread(llistatBots.get(posUltimNouBot).getBotId(),tempsActivacio,valueSlider,companyia,server);
 
                     nouThreadBotDades.start();
 
@@ -216,7 +219,7 @@ public class BotsViewController implements ActionListener {
 
     }
 
-    private void CarregaThreadsBots(){
+    private void carregaThreadsBots(){
 
         ArrayList<BotsBuyThread> llistatThreadsBots = llistBots.getLlistatThreadsBots();
 
@@ -227,7 +230,7 @@ public class BotsViewController implements ActionListener {
             Company companyia = companyies.getCompany(botsactuals.get(i).getCompanyId()); // comapnyia que li passarem al bot
             // codi per afegir bots
 
-            BotsBuyThread nouThreadBotDades = new BotsBuyThread(botsactuals.get(i).getBotId(),botsactuals.get(i).getActivationTime(),(int) botsactuals.get(i).getBuyPercentage(),companyia);
+            BotsBuyThread nouThreadBotDades = new BotsBuyThread(botsactuals.get(i).getBotId(),botsactuals.get(i).getActivationTime(),(int) botsactuals.get(i).getBuyPercentage(),companyia,server);
             nouThreadBotDades.setStateCarregaInicial(botsactuals.get(i).isActive());
             nouThreadBotDades.start();
 

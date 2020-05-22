@@ -58,23 +58,33 @@ public class HistoryDAO {
         }
     }
 
-    public synchronized History get5MinBeforePrice(int companyId){
+    public synchronized ArrayList<History> get5MinBeforePrice(){
         try{
-            String query = "SELECT * FROM History WHERE company_id = " + companyId + ";";
-            ResultSet rs = DBConnector.getInstance().selectQuery(query);
+            int numCompanies = 0;
             ArrayList<History> historicPrices = new ArrayList<>();
-            while (rs.next()){
-                int historyId = rs.getInt("history_id");
-                float max = rs.getFloat("max_share_price");
-                float min = rs.getFloat("min_share_price");
-                float open = rs.getFloat("open_share_price");
-                float close = rs.getFloat("close_share_price");
-                Date date = rs.getDate("date");
-                Time time = rs.getTime("time");
-                companyId = rs.getInt("company_id");
-                historicPrices.add(new History(historyId, max, min, open, close, date, time, companyId));
+            String query2 = "SELECT COUNT(*) as numCompanies FROM Company;";
+            ResultSet rs2 = DBConnector.getInstance().selectQuery(query2);
+            while (rs2.next()){
+                numCompanies = rs2.getInt("numCompanies");
             }
-            return historicPrices.get(5);
+            for (int i = 1; i <= numCompanies; i++) {
+                String query = "SELECT * FROM History WHERE company_id = " + i + ";";
+                ResultSet rs = DBConnector.getInstance().selectQuery(query);
+                ArrayList<History> historicPricesAux = new ArrayList<>();
+                while (rs.next()){
+                    int historyId = rs.getInt("history_id");
+                    float max = rs.getFloat("max_share_price");
+                    float min = rs.getFloat("min_share_price");
+                    float open = rs.getFloat("open_share_price");
+                    float close = rs.getFloat("close_share_price");
+                    Date date = rs.getDate("date");
+                    Time time = rs.getTime("time");
+                    int company_id = rs.getInt("company_id");
+                    historicPricesAux.add(new History(historyId, max, min, open, close, date, time, company_id));
+                }
+                historicPrices.add(historicPricesAux.get(5));
+            }
+            return historicPrices;
         }catch (Exception e){
             e.printStackTrace();
             return null;

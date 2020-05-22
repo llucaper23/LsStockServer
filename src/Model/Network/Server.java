@@ -1,18 +1,13 @@
 package Model.Network;
 
-import Model.Company;
-import Model.Database.DAO.CompanyDAO;
 import Model.Database.DAO.UserDAO;
 import Model.Database.DBConnector;
 import Model.Manager;
-import Model.User;
-import View.MainView;
 import com.google.gson.Gson;
 import com.google.gson.stream.JsonReader;
 
 import java.io.FileReader;
 import java.io.IOException;
-import java.io.ObjectOutputStream;
 import java.net.ServerSocket;
 import java.net.Socket;
 import java.util.ArrayList;
@@ -92,7 +87,7 @@ public class Server extends Thread{
         }
     }
 
-    public void updateAllClients () {
+    public synchronized void updateAllClients () {
         for (DedicatedServer dServer : dedicatedServerList) {
             dServer.updateAllCompanies();
         }

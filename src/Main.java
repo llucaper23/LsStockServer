@@ -22,7 +22,7 @@ public class Main {
         actualitzacioTop10Time.start();
         UserThread userThread = new UserThread(mvc);
         userThread.start();
-        BotsViewController botsVC = new BotsViewController(botsView);
+        BotsViewController botsVC = new BotsViewController(botsView, server);
         botsView.registerController(botsVC);
         botsVC.refreshNewData();        // necesari per a l'incorporacio dels listneres al ultim lllistat de bots creats
         manager.initHistories();

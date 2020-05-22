@@ -35,6 +35,7 @@ public class DedicatedServer extends Thread {
     private static final int HISTORY = 8;
     private static final int LOGOUT = 9;
     private static final int SELL_SOME_SHARES = 10;
+    private static final int FIVE_MIN_PRICE = 11;
 
     public DedicatedServer(Socket sClient, Server server) {
         this.isOn = false;
@@ -94,6 +95,11 @@ public class DedicatedServer extends Thread {
                 }
                 if (message.getRequestType() == LOGOUT) {
                    userDAO.logOut(user);
+                   message.setOk(true);
+                   updateClient.writeObject(message);
+                   updateClient.flush();
+                   stopDedicatedServer();
+
                 }
 
                 if (message.getRequestType() == UPDATE_MONEY) {
@@ -160,6 +166,13 @@ public class DedicatedServer extends Thread {
                     objectOut.flush();
                 }
 
+                if (message.getRequestType() == FIVE_MIN_PRICE){
+                    message.setHistories(historyDAO.get5MinBeforePrice());
+                    message.setOk(true);
+                    objectOut.writeObject(message);
+                    objectOut.flush();
+                }
+
             }
         } catch (IOException e1) {
             // en cas derror aturem el servidor dedicat
@@ -170,7 +183,7 @@ public class DedicatedServer extends Thread {
         }
     }
 
-    public void updateAllCompanies(){
+    public synchronized void updateAllCompanies(){
         try {
             ArrayList<Company> companies = companyDAO.getAllCompanies();
             ArrayList<UserCompany> userCompanies = userCompanyDAO.getAllCompaniesFromUser(user.getUserId());

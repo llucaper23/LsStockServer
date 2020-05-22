@@ -1,17 +1,24 @@
 package Controller;
 
+import Model.Company;
+import Model.Database.DAO.CompanyDAO;
 import Model.Database.DAO.UserCompanyDAO;
 import Model.Database.DAO.UserDAO;
 import Model.Manager;
 import Model.Network.Server;
 import Model.User;
+import Model.UserCompany;
 import View.MainView;
 import View.UserShareView;
 
 import javax.swing.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.time.Instant;
+import java.time.LocalDateTime;
+import java.time.ZoneId;
 import java.util.ArrayList;
+import java.util.Date;
 
 public class MainViewController implements ActionListener {
 

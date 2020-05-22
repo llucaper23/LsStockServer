@@ -2,6 +2,7 @@ package Controller;
 
 import Model.Company;
 import Model.Database.DAO.CompanyDAO;
+import Model.Network.Server;
 
 import java.util.Random;
 import java.util.concurrent.TimeUnit;
@@ -16,8 +17,9 @@ public class BotsBuyThread extends Thread   {
     private Boolean isActive;
     private CompanyDAO companyies = new CompanyDAO();
     private int botid;
+    private Server server;
 
-    public BotsBuyThread(int botid,float tempsActivacio, int percentatgeCompra, Company companyia) {
+    public BotsBuyThread(int botid,float tempsActivacio, int percentatgeCompra, Company companyia, Server server) {
         this.tempsActivacio =  (int) tempsActivacio;
         this.percentatgeCompra = percentatgeCompra;
         this.companyia = companyia;
@@ -25,6 +27,7 @@ public class BotsBuyThread extends Thread   {
         random = new Random();
         funciona =true;
         isActive = true;
+        this.server = server;
     }
 
     public void run(){
@@ -45,6 +48,7 @@ public class BotsBuyThread extends Thread   {
 
                 companyia.setSharePrice(preuactual); // actualizem a preu a companyia
                 companyies.setSharePrice(companyia.getCompanyId(), preuactual);
+                server.updateAllClients();
             }
 
             if(funciona){
