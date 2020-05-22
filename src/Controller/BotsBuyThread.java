@@ -30,6 +30,9 @@ public class BotsBuyThread extends Thread   {
         this.server = server;
     }
 
+    /**
+     * Prodeciment run del thread que controla la compra/venta de un dels bots
+     */
     public void run(){
 
         while(funciona){
@@ -63,18 +66,31 @@ public class BotsBuyThread extends Thread   {
 
     }
 
+    /**
+     * Procediment que elimina un bot.
+     */
     public synchronized void eliminaBot() {     // el bot no s'eliminara fins que hagui passt el seu temps , pero ens assegura que no tornara a comprar
         funciona = false;
     }
 
+    /**
+     * Procediment que activa un bot ja creat.
+     */
     public synchronized void activaBot() {
         isActive = true;
     }
 
+    /**
+     * Procediment que desactiva un bot
+     */
     public synchronized void desactivaBot() {
         isActive = false;
     }
 
+    /**
+     * Procediment que posa el estat inicial d'un bot.
+     * @param isActive
+     */
     public synchronized void setStateCarregaInicial(boolean isActive){
         this.isActive = isActive;
     }

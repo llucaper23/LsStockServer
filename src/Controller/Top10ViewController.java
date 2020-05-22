@@ -21,11 +21,13 @@ public class Top10ViewController implements ActionListener {
     }
 
 
+    /**
+     * Procediment que actualitza el Top 10 de companyies.
+     */
     public void actualitzaTop10(){
         ArrayList<Company> llistaCompany = dadesCompany.getTop10Companies();
         top10View.novesAccions(llistaCompany);
     }
-
 
 
     @Override

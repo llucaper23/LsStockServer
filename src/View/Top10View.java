@@ -19,6 +19,11 @@ public class Top10View extends JPanel {
         // farem el set dels valors que tinguem en la nostre BD --> son inventants , tocara canviarlos despres per les dades reals, s'ha d'eliinar la classe
 
     }
+
+    /**
+     * Procediment que mostra les 10 companyies.
+     * @param llistaCompany ArrayList amb les companyies a mostrar.
+     */
     public void novesAccions(ArrayList<Company> llistaCompany){
         this.llistaCompany = llistaCompany;
         HistogramPanel panel = new HistogramPanel();

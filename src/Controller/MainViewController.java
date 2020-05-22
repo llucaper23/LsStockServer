@@ -45,7 +45,6 @@ public class MainViewController implements ActionListener {
     }
 
 
-
     @Override
     public void actionPerformed(ActionEvent e) {
         if (e.getActionCommand().equals("USER")) {
@@ -56,6 +55,9 @@ public class MainViewController implements ActionListener {
         }
     }
 
+    /**
+     * Procediment que actualitza un usuari.
+     */
     public void actualitzaUser(){
         userShareWindow.updateUsers(userDAO.getAllUsers(), this);
     }

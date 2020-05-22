@@ -18,8 +18,7 @@ public class HistogramPanel extends JPanel {            // es l'encarregat d'anr
 
     private List<Bar> bars = new ArrayList<Bar>();
 
-    public HistogramPanel()
-    {
+    public HistogramPanel() {
         setBorder( new EmptyBorder(10, 10, 10, 10) );
         setLayout( new BorderLayout() );
 
@@ -41,14 +40,21 @@ public class HistogramPanel extends JPanel {            // es l'encarregat d'anr
         add(labelPanel, BorderLayout.PAGE_END);
     }
 
-    public void addHistogramColumn(String label, float value, Color color)
-    {
+    /**
+     * Procediment que afegeix una columa.
+     * @param label String amb el nom de la companyia.
+     * @param value Float amb el valor.
+     * @param color Color amb el color de la bar.
+     */
+    public void addHistogramColumn(String label, float value, Color color) {
         Bar bar = new Bar(label, value, color);
         bars.add( bar );
     }
 
-    public void layoutHistogram()
-    {
+    /**
+     * Procediment que mostra el Histogram
+     */
+    public void layoutHistogram() {
         barPanel.removeAll();
         labelPanel.removeAll();
 
@@ -75,8 +81,7 @@ public class HistogramPanel extends JPanel {            // es l'encarregat d'anr
         }
     }
 
-    private class Bar
-    {
+    private class Bar {
         private String label;
         private float value;
         private Color color;
@@ -104,8 +109,7 @@ public class HistogramPanel extends JPanel {            // es l'encarregat d'anr
         }
     }
 
-    private class ColorIcon implements Icon
-    {
+    private class ColorIcon implements Icon {
         private int shadow = 3;
 
         private Color color;

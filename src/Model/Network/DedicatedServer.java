@@ -60,12 +60,18 @@ public class DedicatedServer extends Thread {
         this.server = server;
     }
 
+    /**
+     * Procediment que inicia el Dedicated Server.
+     */
     public void startDedicatedServer() {
         // iniciem el servidor dedicat
         isOn = true;
         this.start();
     }
 
+    /**
+     * Procediment que atura el Dedicated Server.
+     */
     public void stopDedicatedServer() {
         // aturem el servidor dedicat
         this.isOn = false;
@@ -74,6 +80,10 @@ public class DedicatedServer extends Thread {
         server.remove(this);
     }
 
+    /**
+     * Procediment run del Dedicated Server. Llegeix les peticions d'entrada i segons el valor de RequestType executa un
+     * cas o un altre.
+     */
     public void run() {
         try {
             while (isOn) {
@@ -186,6 +196,9 @@ public class DedicatedServer extends Thread {
         }
     }
 
+    /**
+     * Procediment que actualitza la llista de totes les companyies.
+     */
     public synchronized void updateAllCompanies(){
         try {
             ArrayList<Company> companies = companyDAO.getAllCompanies();

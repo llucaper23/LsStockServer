@@ -117,8 +117,9 @@ public class BotsViewController implements ActionListener {
 
     }
 
-
-    // funcio per afegir bots a la base de dades una vega ens han premut el boto crear bot, altrmaent tambe farem tota la logica ssiociada lacorrecio d'errors
+    /**
+     * Funcio per afegir bots a la base de dades una vegada ens han premut el boto crear bot, altrament tambe farem tota la logica assiociada a la correcio d'errors.
+     */
     private void afegeixBot(){
 
         try {
@@ -179,6 +180,12 @@ public class BotsViewController implements ActionListener {
 
 
     }
+
+    /**
+     * Procediment que canvia l'estat d'un bot.
+     * @param estat boolean amb l'estat d'un bot.
+     * @throws InterruptedException
+     */
     private void cambiarEstatBot(Boolean estat) throws InterruptedException {
         ArrayList<Bot> llistatBots = botBBDD.getAllBots();
         Bot botActual = llistatBots.get(botSelecionat);
@@ -213,12 +220,18 @@ public class BotsViewController implements ActionListener {
 
     }
 
+    /**
+     * Procediment que actualitza la llista de bots.
+     */
     public void actualitzaLlistatBots(){
 
         botsView.refreshBotsListfromView(botBBDD.getAllBots());
 
     }
 
+    /**
+     * Procediment que agafa els bots de la base de dades i els posa en una llista amb els threads.
+     */
     private void carregaThreadsBots(){
 
         ArrayList<BotsBuyThread> llistatThreadsBots = llistBots.getLlistatThreadsBots();

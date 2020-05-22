@@ -40,22 +40,35 @@ public class Server extends Thread{
 
     }
 
+    /**Procediment que inicia el Server.
+     *
+     */
     public void startServer() {
         // iniciem el thread del servidor
         isOn = true;
         this.start();
     }
 
+    /**
+     * Procediment que atura el Server.
+     */
     public void stopServer() {
         // aturem el thread del servidor
         isOn = false;
         this.interrupt();
     }
 
+    /**
+     * Procediment que mostra els clients per consola.
+     */
     public void showClients() {
         System.out.println("***** SERVER ***** (" + dedicatedServerList.size() +" clients / dedicated servers running)");
     }
 
+    /**
+     * Procediment run del Server. Espera a que es conecti un client, li assigna un Dedicated Server i l'afegeix a la
+     * llista amb tots els clients connectats.
+     */
     public void run() {
         try {
 
@@ -87,12 +100,19 @@ public class Server extends Thread{
         }
     }
 
+    /**
+     * Procediment que actualitza tots els clients.
+     */
     public synchronized void updateAllClients () {
         for (DedicatedServer dServer : dedicatedServerList) {
             dServer.updateAllCompanies();
         }
     }
 
+    /**
+     * Procediment que esborra un Dedicated Server de la llista.
+     * @param dedicatedServer Dedicated Server a esborrar.
+     */
     public void remove (DedicatedServer dedicatedServer) {
         dedicatedServerList.remove(dedicatedServer);
         // invoquem el metode del servidor que mostra els servidors dedicats actuals

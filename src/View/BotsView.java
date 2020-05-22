@@ -240,6 +240,13 @@ public class BotsView extends JPanel {
         this.add(jpBotInfo,BorderLayout.CENTER);
     }
 
+    /**
+     * Funcio que refresca la vista amb la info dels bots.
+     * @param nomCompanyia String amb el nom de la companyia.
+     * @param percentCompra Float amb el percentatge de compra del bot.
+     * @param tempsActivacio Float amb el temps que esta actiu el bot.
+     * @param nomBot String amb el nom del bot.
+     */
     public void refreshConfigurationBotView(String nomCompanyia, float percentCompra, float tempsActivacio, String nomBot){
 
         JTable jtabla = new JTable();
@@ -277,6 +284,9 @@ public class BotsView extends JPanel {
 
     }
 
+    /**
+     * Procediment que esborra la part que s'ha d'actualitzar.
+     */
     public void esborraConfigurationBotView(){
 
         JTable jtabla = new JTable();
@@ -312,6 +322,10 @@ public class BotsView extends JPanel {
         jpTaula.repaint();
     }
 
+    /**
+     * Procediment que resfresca la llista de bots.
+     * @param llistatBots ArrayList amb els bots.
+     */
     public void refreshBotsListfromView(ArrayList<Bot> llistatBots){
 
         jpcontainer.removeAll();
@@ -348,6 +362,10 @@ public class BotsView extends JPanel {
         jpcontainer.repaint();
     }
 
+    /**
+     * Procediment que registra els controladors.
+     * @param listener
+     */
     public void registerController(ActionListener listener){
         jbCrearBot.addActionListener(listener);
         jbActivarBot.addActionListener(listener);
@@ -357,12 +375,37 @@ public class BotsView extends JPanel {
         this.listener = listener;
     }
 
-    public  String getTextFieldNameCompanyia(){ return  jtfCompanyia.getText(); }
-    public  float getTextFieldTempsActivacio(){ return  Float.parseFloat(jtfTempsActivacio.getText()); }
-    public  int getSliderPercetnCompra(){ return jsliPercentCompra.getValue()  ;}
+    /**
+     * Funcio que agafa el nom de la companyia.
+     * @return String amb el nom.
+     */
+    public String getTextFieldNameCompanyia(){ return  jtfCompanyia.getText(); }
 
-    public  void resetTextFieldNameCompanyia(){ jtfCompanyia.setText(""); }
-    public  void resetTextFieldTempsActivacio(){ jtfTempsActivacio.setText(""); }
+    /**
+     * Funcio que agafa el temps d'activacio.
+     * @return Float amb el temps d'activacio.
+     */
+    public float getTextFieldTempsActivacio(){ return  Float.parseFloat(jtfTempsActivacio.getText()); }
+
+    /**
+     * Funcio que agafa el percentatge de venta.
+     * @return Int amb el percentatge de compra.
+     */
+    public int getSliderPercetnCompra(){ return jsliPercentCompra.getValue()  ;}
+
+    /**
+     * Procediment de reset del TextFlied amb el nom.
+     */
+    public void resetTextFieldNameCompanyia(){ jtfCompanyia.setText(""); }
+
+    /**
+     * Procediment de reset del TextFlied amb el temps d'activacio.
+     */
+    public void resetTextFieldTempsActivacio(){ jtfTempsActivacio.setText(""); }
+
+    /**
+     * Procediment de reset del Slider.
+     */
     public void resetSliderPercetnCompra(){jsliPercentCompra.setValue(50);}
 
 

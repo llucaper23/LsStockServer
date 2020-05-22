@@ -25,19 +25,28 @@ public class Manager {
      * Funcio que comprova si el password compleix els requeriments
      * @param password es el password a comprovar
      */
-
     public boolean checkPassword(String password){
         patterPass = Pattern.compile(regexPass);
         boolean ok = patterPass.matcher(password).matches();
         return ok;
     }
 
+    /**
+     * Funcio que comprova si el email es correcte.
+     * @param email email a comprovar.
+     * @return boolean que ens diu si el email es correcte o no.
+     */
     public boolean checkEmail(String email) {
         patternMail = Pattern.compile(regexMail);
         boolean ok = patternMail.matcher(email).matches();
         return ok;
     }
 
+    /**
+     * Funcio per agafar les companyies d'un usuari.
+     * @param userCompanies ArrayList amb les comapnyies de l'usuari
+     * @return ArrayList de tipus Companyia amb les companyies que te l'usuari.
+     */
     public ArrayList<Company> getUserCompanies (ArrayList<UserCompany> userCompanies) {
         ArrayList<Company> aux = new ArrayList<>();
         CompanyDAO companyDAO = new CompanyDAO();
@@ -48,6 +57,9 @@ public class Manager {
         return aux;
     }
 
+    /**
+     * Procediment que inicia els threads del History de cada companyia i els afegeix a la llista.
+     */
     public void initHistories() {
         historyThreads = new ArrayList<>();
         CompanyDAO companyDAO = new CompanyDAO();
@@ -58,17 +70,27 @@ public class Manager {
         }
     }
 
+    /**
+     * Procediment que atura tots els threads de History.
+     */
     public void stopAllHistories() {
         for (HistoryThread ht : historyThreads) {
             ht.interrupt();
         }
     }
 
-
+    /**
+     * Funcio per agafar els threads que controlen els bots
+     * @return ArrayList de Thread amb tots els threads de bots
+     */
     public ArrayList<BotsBuyThread> getLlistatThreadsBots() {
         return llistatThreadsBots;
     }
 
+    /**
+     * Funcio que posa la llista de threads de bots.
+     * @param llistatThreadsBots ArrayList a posar.
+     */
     public void setLlistatThreadsBots(ArrayList<BotsBuyThread> llistatThreadsBots) {
         this.llistatThreadsBots = llistatThreadsBots;
     }

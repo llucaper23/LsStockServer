@@ -10,6 +10,10 @@ public class Top10Thread extends Thread {
         this.controladortop10 = controladortop10;
     }
 
+
+    /**
+     * Procediment run del thread que controla el mostratge del Top 10 copanyies.
+     */
     public void run(){
 
         while (true){

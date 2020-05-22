@@ -7,6 +7,9 @@ public class UserThread extends Thread {
         this.mainViewController = mainViewController;
     }
 
+    /**
+     * Procediment run del thread que actualitza la info dels usuaris a la finestra principal.
+     */
     public void run(){
         while (isAlive()){
             mainViewController.actualitzaUser();

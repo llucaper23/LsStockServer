@@ -87,6 +87,11 @@ public class UserShareView extends JPanel {
        this.add(jpCartera,BorderLayout.CENTER);
    }
 
+    /**
+     * Procediment que actualitza la llista de usuaris.
+     * @param usersList ArrayList amb els usuaris.
+     * @param mvc MainViewController amb el controlador.
+     */
    public void updateUsers (ArrayList<User> usersList, MainViewController mvc) {
        jpllistaUsers.removeAll();
        for (User u : usersList) {
@@ -101,6 +106,12 @@ public class UserShareView extends JPanel {
        jpllistaUsers.setLayout(new BoxLayout(jpllistaUsers,BoxLayout.Y_AXIS));
    }
 
+    /**
+     * Procediment que actualitza la llista de companyies de cada usuari.
+     * @param companies ArrayList amb les comapnyies.
+     * @param userCompanies ArrayList amb les companyies de l'usuari.
+     * @param nomUser String amb el nom de l'usuari.
+     */
    public void updateUserCompanies (ArrayList<Company> companies, ArrayList<UserCompany> userCompanies,String nomUser) {
 
        ArrayList<CompanyiesUnitaries> companyiesUnitaries = new ArrayList<>();
