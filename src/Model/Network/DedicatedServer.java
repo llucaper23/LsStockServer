@@ -99,7 +99,6 @@ public class DedicatedServer extends Thread {
                    updateClient.writeObject(message);
                    updateClient.flush();
                    stopDedicatedServer();
-
                 }
 
                 if (message.getRequestType() == UPDATE_MONEY) {

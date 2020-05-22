@@ -11,7 +11,7 @@ public class UserDAO {
     public synchronized boolean registerUser(User user){
         boolean ok = false;
         try{
-            String query = "SELECT COUNT(user_id) as num_users FROM User WHERE nickname = '" + user.getNickName() + "' AND email = '" + user.getEmail() + "';";
+            String query = "SELECT COUNT(user_id) as num_users FROM User WHERE nickname = '" + user.getNickName() + "' OR email = '" + user.getEmail() + "';";
             ResultSet rs = DBConnector.getInstance().selectQuery(query);
             while (rs.next()){
                 if (rs.getInt("num_users") == 0){
