@@ -39,7 +39,7 @@ public class BotsBuyThread extends Thread   {
 
             if (isActive) {
                 int nombreRandom = random.nextInt(100);
-                float preuactual = companyia.getSharePrice();
+                float preuactual = companyies.getCompany(companyia.getCompanyId()).getSharePrice();
 
                 if (nombreRandom <= percentatgeCompra) {      //cas que compra
                     preuactual = (float) (preuactual * 1.01); // augmentem el preu un 1%

@@ -218,4 +218,8 @@ public class DedicatedServer extends Thread {
             e.printStackTrace();
         }
     }
+
+    public User getUser() {
+        return user;
+    }
 }

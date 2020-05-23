@@ -105,7 +105,9 @@ public class Server extends Thread{
      */
     public synchronized void updateAllClients () {
         for (DedicatedServer dServer : dedicatedServerList) {
-            dServer.updateAllCompanies();
+            if (dServer.getUser() != null) {
+                dServer.updateAllCompanies();
+            }
         }
     }
 

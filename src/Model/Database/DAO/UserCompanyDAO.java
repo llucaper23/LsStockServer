@@ -82,7 +82,8 @@ public class UserCompanyDAO {
             return userCompanies;
         } catch (SQLException e) {
             e.printStackTrace();
-            return null;
+
         }
+        return null;
     }
 }
