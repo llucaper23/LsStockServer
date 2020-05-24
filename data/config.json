@@ -3,5 +3,5 @@
   "serverPort": 34567,
   "dbAddress": "localhost",
   "dbUser": "root",
-  "dbPass": "12345678"
+  "dbPass": "root"
 }
