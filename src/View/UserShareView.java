@@ -57,10 +57,10 @@ public class UserShareView extends JPanel {
 
        for (int i = 0; i < dades.size() ; i++) {        // Aqui omplim amb les dades de les accions que volim CALDRA MODIFIFICAR AMB DADES REALS
            Object [] fila = new Object[4];
-           fila[0] = "NULL";
-           fila[1] = "NULL";
-           fila[2] = "NULL";
-           fila[3] = "NULL";
+           fila[0] = " ";
+           fila[1] = " ";
+           fila[2] = " ";
+           fila[3] = " ";
            model.addRow(fila);
        }
        JScrollPane jscrollCartera = new JScrollPane(jtabla,JScrollPane.VERTICAL_SCROLLBAR_AS_NEEDED, JScrollPane.HORIZONTAL_SCROLLBAR_NEVER);
@@ -73,7 +73,7 @@ public class UserShareView extends JPanel {
        jpllistaAccions.setPreferredSize(new Dimension(MAX_WIDTH_ACCIONS, MAX_HEIGHT));
        jpllistaAccions.setMaximumSize(new Dimension(MAX_WIDTH_ACCIONS, MAX_HEIGHT));
 
-       title = BorderFactory.createTitledBorder(BorderFactory.createEmptyBorder(),"Cartera d'accions - Usuari: "+"<NOM_USER>");// caldra posar el nom del usuari aqui
+       title = BorderFactory.createTitledBorder(BorderFactory.createEmptyBorder(),"Cartera d'accions - Usuari: "+" ");// caldra posar el nom del usuari aqui
        title.setTitleJustification(TitledBorder.CENTER);
        title.setTitlePosition(TitledBorder.ABOVE_TOP);
 
