@@ -1,7 +1,6 @@
 package View;
 
 import Model.Bot;
-import Model.CompanyiesModel;
 
 import javax.swing.*;
 import javax.swing.border.TitledBorder;
@@ -274,7 +273,7 @@ public class BotsView extends JPanel {
         jpTaula.setLayout(new BorderLayout());
         jpTaula.add(jscrollInfooBot,BorderLayout.CENTER);
 
-        TitledBorder title = BorderFactory.createTitledBorder(BorderFactory.createEmptyBorder(), "Confguracio - Bot:" + nomBot);// caldra posar el nom del usuari aqui
+        TitledBorder title = BorderFactory.createTitledBorder(BorderFactory.createEmptyBorder(), "Confguracio - Bot:" + nomBot);
         title.setTitleJustification(TitledBorder.CENTER);
         title.setTitlePosition(TitledBorder.ABOVE_TOP);
 
@@ -333,7 +332,7 @@ public class BotsView extends JPanel {
         JPanel jpllistaUsers = new JPanel();
         jpllistaUsers.setLayout(new BoxLayout(jpllistaUsers,BoxLayout.Y_AXIS));
 
-        for (int i = 0; i < llistatBots.size(); i++) {       // caldra canviarho pels size de bots que tinguem i fer els acctions listeneres
+        for (int i = 0; i < llistatBots.size(); i++) {
             JButton bottnet = new JButton("ID: "+llistatBots.get(i).getBotId());
             bottnet.setActionCommand(String.valueOf(llistatBots.get(i).getBotId()));
             bottnet.addActionListener(listener);
@@ -342,13 +341,11 @@ public class BotsView extends JPanel {
 
             if(llistatBots.get(i).isActive()){
                 bottnet.setBackground(Color.GREEN);
-                // these next two lines do the magic..
                 bottnet.setContentAreaFilled(false);
                 bottnet.setOpaque(true);
 
             }else{
                 bottnet.setBackground(Color.RED);
-                // these next two lines do the magic..
                 bottnet.setContentAreaFilled(false);
                 bottnet.setOpaque(true);
 

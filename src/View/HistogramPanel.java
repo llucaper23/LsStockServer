@@ -23,15 +23,13 @@ public class HistogramPanel extends JPanel {            // es l'encarregat d'anr
         setLayout( new BorderLayout() );
 
         barPanel = new JPanel( new GridLayout(1, 0, barGap, 0) );
-        //Border outer = new MatteBorder(1, 1, 1, 1, Color.BLACK);
+
 
         TitledBorder title;
         title = BorderFactory.createTitledBorder(BorderFactory.createLoweredBevelBorder(), "Valor accions per Empresa");
         title.setTitleJustification(TitledBorder.CENTER);
 
-        //Border inner = new EmptyBorder(10, 10, 0, 10);
-        //Border compound = new CompoundBorder(outer, inner);
-        //barPanel.setBorder( compound );
+
         barPanel.setBorder(title);
         labelPanel = new JPanel( new GridLayout(1, 0, barGap, 0) );
         labelPanel.setBorder( new EmptyBorder(5, 10, 0, 10) );

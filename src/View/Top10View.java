@@ -9,14 +9,11 @@ import java.util.ArrayList;
 
 public class Top10View extends JPanel {
 
-    final int MAX_HEIGHT = 700;
-    final int MAX_WIDTH = 1250;
+
     final int MAX_COMPANYIES = 9;
     ArrayList<Company> llistaCompany = new ArrayList<>();
 
     public Top10View() {
-
-        // farem el set dels valors que tinguem en la nostre BD --> son inventants , tocara canviarlos despres per les dades reals, s'ha d'eliinar la classe
 
     }
 

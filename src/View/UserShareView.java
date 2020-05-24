@@ -11,7 +11,7 @@ import java.util.ArrayList;
 
 
 public class UserShareView extends JPanel {
-    ArrayList<CompanyiesModel> dades; // aqui no pots tenir dades  trenca el MVC
+    ArrayList<CompanyiesModel> dades;
     final int MAX_HEIGHT = 700;
     final int MAX_WIDTH_USERS = 350;
     final int MAX_WIDTH_ACCIONS = 700;
@@ -24,7 +24,7 @@ public class UserShareView extends JPanel {
        userButtons = new ArrayList<>();
        dades = new ArrayList<CompanyiesModel>();
        for (int i = 0; i < 50 ; i++) {
-           dades.add(i,new CompanyiesModel("Telefonica S.A. "+i));      // aqui obtindrem  les adades que ha
+           dades.add(i,new CompanyiesModel("Telefonica S.A. "+i));      // aqui obtindrem  les adades que hi ha
        }
        setLayout(new BorderLayout());
 
@@ -40,7 +40,7 @@ public class UserShareView extends JPanel {
        jspUsers.setPreferredSize(new Dimension(MAX_WIDTH_USERS, MAX_HEIGHT));
        jspUsers.setMaximumSize(new Dimension(MAX_WIDTH_USERS, MAX_HEIGHT));
 
-       TitledBorder title = BorderFactory.createTitledBorder(BorderFactory.createEmptyBorder(),"Usuaris");// caldra posar el nom del usuari aqui
+       TitledBorder title = BorderFactory.createTitledBorder(BorderFactory.createEmptyBorder(),"Usuaris");
        title.setTitleJustification(TitledBorder.CENTER);
        title.setTitlePosition(TitledBorder.ABOVE_TOP);
        jspUsers.setBorder(title);
@@ -55,7 +55,7 @@ public class UserShareView extends JPanel {
        model.addColumn("Preu/Accio");
        model.addColumn("ValorTotal");
 
-       for (int i = 0; i < dades.size() ; i++) {        // Aqui omplim amb les dades de les accions que volim CALDRA MODIFIFICAR AMB DADES REALS
+       for (int i = 0; i < dades.size() ; i++) {        // Aqui omplim amb les dades de les accions que volem
            Object [] fila = new Object[4];
            fila[0] = " ";
            fila[1] = " ";
@@ -82,7 +82,7 @@ public class UserShareView extends JPanel {
        jpCartera =  new JPanel();
        jpCartera.add(jpllistaAccions);
 
-       //************************************************************************************************************
+       //**********************AFEGIM VISTES A LA PRINCIPAL**************************************************************************************
        this.add(jpUsuaris,BorderLayout.WEST);
        this.add(jpCartera,BorderLayout.CENTER);
    }
@@ -143,26 +143,26 @@ public class UserShareView extends JPanel {
        model.addColumn("Preu/Accio");
        model.addColumn("ValorTotal");
 
-       for (int i = 0; i < companyiesUnitaries.size() ; i++) {        // Aqui omplim amb les dades de les accions que volim CALDRA MODIFIFICAR AMB DADES REALS
+       for (int i = 0; i < companyiesUnitaries.size() ; i++) {
            Object [] fila = new Object[4];
 
            fila[0] = companyiesUnitaries.get(i).getNomCompany();
-           fila[1] = companyiesUnitaries.get(i).getVegades(); // nombre accions--> caldra recorrer tot per mirar si tenen el mateix preu
+           fila[1] = companyiesUnitaries.get(i).getVegades(); // nombre accions
            fila[2] = companyiesUnitaries.get(i).getPreu();
-           fila[3] =  companyiesUnitaries.get(i).getVegades() * companyiesUnitaries.get(i).getPreu(); // caldra fer el calcul
+           fila[3] =  companyiesUnitaries.get(i).getVegades() * companyiesUnitaries.get(i).getPreu();
            model.addRow(fila);
        }
+
        JScrollPane jscrollCartera = new JScrollPane(jtabla,JScrollPane.VERTICAL_SCROLLBAR_AS_NEEDED, JScrollPane.HORIZONTAL_SCROLLBAR_NEVER);
        jscrollCartera.setPreferredSize(new Dimension(MAX_WIDTH_ACCIONS , MAX_HEIGHT));
        jscrollCartera.setMaximumSize(new Dimension(MAX_WIDTH_ACCIONS, MAX_HEIGHT));
 
        JPanel jpllistaAccions = new JPanel();
        jpllistaAccions.add(jscrollCartera);
-       //jpllistaAccions.setAlignmentX(Component.LEFT_ALIGNMENT);
        jpllistaAccions.setPreferredSize(new Dimension(MAX_WIDTH_ACCIONS, MAX_HEIGHT));
        jpllistaAccions.setMaximumSize(new Dimension(MAX_WIDTH_ACCIONS, MAX_HEIGHT));
 
-       TitledBorder title = BorderFactory.createTitledBorder(BorderFactory.createEmptyBorder(),"Cartera d'accions - Usuari: "+nomUser);// caldra posar el nom del usuari aqui
+       TitledBorder title = BorderFactory.createTitledBorder(BorderFactory.createEmptyBorder(),"Cartera d'accions - Usuari: "+nomUser);
        title.setTitleJustification(TitledBorder.CENTER);
        title.setTitlePosition(TitledBorder.ABOVE_TOP);
 
@@ -175,8 +175,5 @@ public class UserShareView extends JPanel {
        jpCartera.repaint();
    }
 
-   public void initPanellUSV(){
-       jpCartera =  new JPanel();
-       jpCartera.removeAll();
-   }
+
 }

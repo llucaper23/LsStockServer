@@ -1,7 +1,6 @@
 package Model.Database.DAO;
 
 import Model.Database.DBConnector;
-import Model.User;
 import Model.UserCompany;
 
 import java.sql.ResultSet;

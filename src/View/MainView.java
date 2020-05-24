@@ -1,10 +1,7 @@
 package View;
 
-import Controller.MainViewController;
-import Controller.Top10ViewController;
-
 import javax.swing.*;
-import java.util.ArrayList;
+
 
 
 public class MainView extends JFrame {
@@ -45,7 +42,7 @@ public class MainView extends JFrame {
         // ho posem al contenidor general
         getContentPane().add(jTPpestanyes);
 
-        //Dimension mida = this.getSize();
+
         setSize(1300,800);// fixem el tamany de la finestra
 
     }

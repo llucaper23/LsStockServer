@@ -3,13 +3,10 @@ package Model;
 import Model.Database.DAO.CompanyDAO;
 import Model.Database.DAO.HistoryDAO;
 
-import java.text.ParseException;
-import java.text.SimpleDateFormat;
-import java.time.Instant;
-import java.time.LocalDateTime;
+
 import java.util.ArrayList;
 import java.util.Collections;
-import java.util.Date;
+
 
 
 public class HistoryThread extends Thread {
