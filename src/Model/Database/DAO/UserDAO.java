@@ -8,6 +8,12 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 
 public class UserDAO {
+
+    /**
+     * registra un usuari dins la bbdd
+     * @param user usuari a registrar
+     * @return true o false segons hagi sigut satisfactoria la funcio o no
+     */
     public synchronized boolean registerUser(User user){
         boolean ok = false;
         try{
@@ -31,6 +37,11 @@ public class UserDAO {
 
     }
 
+    /**
+     * Comprova si el usuari pot fer login o no
+     * @param user usuari a loguejar
+     * @return true o false segons hagi sigut satisfactoria la funcio o no
+     */
     public synchronized boolean canUserLogin(User user){
         boolean logged = false;
         try{
@@ -65,6 +76,10 @@ public class UserDAO {
         return logged;
     }
 
+    /**
+     * fa logout d'un usuari
+     * @param user usuari a fer logout
+     */
     public void logOut(User user){
         if (user != null){
             String query2 = "UPDATE User SET is_logged = 0 WHERE nickname = '" + user.getNickName() + "';";
@@ -72,11 +87,20 @@ public class UserDAO {
         }
     }
 
+    /**
+     * fa logout de tots els usuaris
+     */
     public void logOutAllUsers () {
         String query = "UPDATE user SET is_logged = 0;";
         DBConnector.getInstance().updateQuery(query);
     }
 
+    /**
+     * Agafa tota la info d'un usuari
+     * @param nickName nickname del usuari
+     * @param email email del usuari
+     * @return usuari buscat
+     */
     public User getUser(String nickName, String email) {
         try {
             String query;
@@ -107,6 +131,10 @@ public class UserDAO {
         return null;
     }
 
+    /**
+     * actualitza el diner d'un usuari
+     * @param user usuari a actualitzar
+     */
     public synchronized void setMoney(User user){
         try {
             String query = "UPDATE User SET money = " + user.getMoney() + " WHERE nickname = '" + user.getNickName() + "';";
@@ -116,6 +144,10 @@ public class UserDAO {
         }
     }
 
+    /**
+     * retorna tots els usuaris
+     * @return arraylist de usuaris
+     */
     public synchronized ArrayList<User> getAllUsers() {
         try {
             ArrayList <User> userList = new ArrayList<>();
@@ -143,6 +175,11 @@ public class UserDAO {
         return null;
     }
 
+    /**
+     * retorna un usuari segons un id
+     * @param id id del usuari dessitjat
+     * @return usuari dessitjat
+     */
     public synchronized User getUserById (int id) {
         try {
             String query;

@@ -9,6 +9,11 @@ import java.util.ArrayList;
 
 public class CompanyDAO {
 
+    /**
+     * Agafa la companyia desitjada
+     * @param companyId id de la companyia que volem
+     * @return companyia amb tota la informacio
+     */
     public synchronized Company getCompany(int companyId) {
         try {
             String query;
@@ -30,6 +35,10 @@ public class CompanyDAO {
         return null;
     }
 
+    /**
+     *Agafa totes les companyies de la bbdd
+     * @return arraylist de companyies
+     */
     public synchronized ArrayList<Company> getAllCompanies() {
         try {
             ArrayList <Company> companyList = new ArrayList<>();
@@ -54,6 +63,10 @@ public class CompanyDAO {
         return null;
     }
 
+    /**
+     * Selecciona el top 10 de companyies
+     * @return arraylist de companyies
+     */
     public synchronized ArrayList<Company> getTop10Companies() {
         try {
             ArrayList <Company> top10 = new ArrayList<>();
@@ -77,6 +90,11 @@ public class CompanyDAO {
         return null;
     }
 
+    /**
+     * Actualitza la informacio de una accio
+     * @param id id de la companyia
+     * @param sharePrice preu a inserir
+     */
     public synchronized void setSharePrice(int id, float sharePrice){
         try {
             String query = "UPDATE Company SET share_price = " + sharePrice + " WHERE company_id = " + id + ";";
@@ -86,6 +104,11 @@ public class CompanyDAO {
         }
     }
 
+    /**
+     * A partir del nom d'una companyia retorna el id
+     * @param companyName nom de la companyia
+     * @return id de la companyia
+     */
     public synchronized int getCompanyId(String companyName){
         int companyId = -1;
         try{
@@ -99,14 +122,5 @@ public class CompanyDAO {
             return -1;
         }
         return companyId;
-    }
-
-    public synchronized void insertCompany(Company company){
-        try {
-            String query = "INSERT INTO Company (company_name, share_price) VALUES (" + company.toString() + ");";
-            DBConnector.getInstance().insertQuery(query);
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
     }
 }

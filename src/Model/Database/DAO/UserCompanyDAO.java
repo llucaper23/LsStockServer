@@ -9,6 +9,10 @@ import java.util.ArrayList;
 
 public class UserCompanyDAO {
 
+    /**
+     * Insereix una compra a la bbdd
+     * @param userCompany informacio que ha de inserir
+     */
     public void insertBuy(UserCompany userCompany){
         try {
             String query = "INSERT INTO User_Company (user_id, company_id, quantity, buy_price) VALUES (" + userCompany.toString() + ");";
@@ -18,7 +22,10 @@ public class UserCompanyDAO {
         }
     }
 
-
+    /**
+     * Insereix una venta a la bbdd
+     * @param userCompany informacio que ha de inserir
+     */
     public void sell(UserCompany userCompany){
         try{
             String query = "SELECT * FROm User_Company WHERE user_company_id = " + userCompany.getUserCompanyId() + ";";
@@ -39,6 +46,12 @@ public class UserCompanyDAO {
         }
     }
 
+    /**
+     * Actualitza o esborra la venta d'accions
+     * @param idCompany id de la companyia
+     * @param idUser id del usuari
+     * @param numShares nombre d'accions a vendre
+     */
     public synchronized void sellSomeShares(int idCompany, int  idUser, int numShares){
         try {
             String query = "SELECT * FROm User_Company WHERE company_id = " + idCompany + " AND user_id = " + idUser + ";";
@@ -64,7 +77,11 @@ public class UserCompanyDAO {
         }
     }
 
-
+    /**
+     * Agafa totes les compres i ventes d'un usuari
+     * @param id id del usuari
+     * @return arraylist de usercompany
+     */
     public synchronized ArrayList<UserCompany> getAllCompaniesFromUser(int id){
         try {
             ArrayList<UserCompany> userCompanies = new ArrayList<>();
@@ -81,7 +98,6 @@ public class UserCompanyDAO {
             return userCompanies;
         } catch (SQLException e) {
             e.printStackTrace();
-
         }
         return null;
     }

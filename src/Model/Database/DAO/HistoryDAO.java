@@ -9,6 +9,11 @@ import java.util.ArrayList;
 import java.util.Date;
 
 public class HistoryDAO {
+
+    /**
+     * Insereix fila de historial
+     * @param history historial
+     */
     public synchronized void insertPrice(History history){
         try {
             String query = "SELECT COUNT(history_id) as numHistory FROM History WHERE company_id = " + history.getCompanyId() + ";";
@@ -34,6 +39,11 @@ public class HistoryDAO {
         }
     }
 
+    /**
+     * Agafa el historial d'una companyia
+     * @param companyId id de la companyia
+     * @return  Arraylist amb el historial
+     */
     public synchronized ArrayList<History> getHistoricFromCompany(int companyId){
         try{
             String query = "SELECT * FROM History WHERE company_id = " + companyId + ";";
@@ -57,6 +67,10 @@ public class HistoryDAO {
         }
     }
 
+    /**
+     * Agafa el hiostorial de fa 5 mins
+     * @return arraylist amb el historial
+     */
     public synchronized ArrayList<History> get5MinBeforePrice(){
         try{
             int numCompanies = 0;
@@ -90,6 +104,10 @@ public class HistoryDAO {
         }
     }
 
+    /**
+     * tot els historials de les diferents comapanyies
+     * @return arraylist de historials
+     */
     public synchronized ArrayList<History> getAllHistories() {
         try{
             String query = "SELECT * FROM History;";

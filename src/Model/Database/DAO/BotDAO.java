@@ -10,6 +10,10 @@ import java.util.ArrayList;
 
 public class BotDAO {
 
+    /**
+     * Insereix un bot dins la taula de bots
+     * @param bot bot que volem inserir
+     */
     public synchronized void insertBot(Bot bot){
         try {
             String query = "INSERT INTO Bot (buy_percentage, activation_time, company_id, is_active) VALUES (" + bot.toString() + ");";
@@ -19,6 +23,10 @@ public class BotDAO {
         }
     }
 
+    /**
+     * Agafa tots els bots de la bbdd
+     * @return els bots que hi han al server
+     */
     public synchronized ArrayList<Bot> getAllBots(){
         try{
             String query = "SELECT * FROM Bot;";
@@ -39,25 +47,10 @@ public class BotDAO {
         }
     }
 
-    public synchronized ArrayList<Bot> getAllBotsFromCompany(int company_id){
-        try{
-            String query = "SELECT * FROM Bot WHERE company_id = " + company_id + ";";
-            ResultSet rs = DBConnector.getInstance().selectQuery(query);
-            ArrayList<Bot> bots = new ArrayList<>();
-            while (rs.next()){
-                int bot_id = rs.getInt("bot_id");
-                float buy_percentage = rs.getFloat("buy_percentage");
-                float activation_time = rs.getFloat("activation_time");
-                boolean isActive = rs.getBoolean("is_active");
-                bots.add(new Bot(bot_id,buy_percentage,activation_time,company_id, isActive));
-            }
-            return bots;
-        } catch (SQLException e) {
-            e.printStackTrace();
-            return null;
-        }
-    }
-
+    /**
+     * Actualitza la informacio del bot, segons si esta actiu o no
+     * @param bot bot que volem actualitzar
+     */
     public synchronized void changeBotStatus(Bot bot){
         try{
             String query = "UPDATE Bot SET is_active = " + bot.isActive() + " WHERE bot_id = " + bot.getBotId() + ";";
@@ -67,6 +60,10 @@ public class BotDAO {
         }
     }
 
+    /**
+     * Esborra un bot de la bbdd
+     * @param bot bot que volem esborrar
+     */
     public synchronized void deleteBot(Bot bot){
         try {
             String query = "DELETE FROM Bot WHERE bot_id = " + bot.getBotId() + ";";
